@@ -26,6 +26,10 @@ dependencies:
     - sec-edgar-downloader
     - xlwings
     - borb
-    - poppler
     - pandoc
     - wkhtmltopdf
+    # - popplerqt5 Only available in linux systems
+    - pdfannots
+    - fitz
+    - frontend
+    
