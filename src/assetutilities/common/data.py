@@ -3,7 +3,7 @@ import yaml
 import operator
 from functools import reduce
 
-from assetutilties.common.utilities import is_file_valid_func
+from assetutilities.common.utilities import is_file_valid_func
 
 
 class ReadFromExcel():

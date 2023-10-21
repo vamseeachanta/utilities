@@ -5,9 +5,9 @@ import logging
 import functools
 import pkgutil
 
-from assetutilties.common.update_deep import update_deep_dictionary
-from assetutilties.common.data import AttributeDict
-from assetutilties.common.set_logging import set_logging
+from assetutilities.common.update_deep import update_deep_dictionary
+from assetutilities.common.data import AttributeDict
+from assetutilities.common.set_logging import set_logging
 # from common.database import Database
 
 
@@ -148,8 +148,9 @@ class ConfigureApplicationInputs():
     def __init__(self, basename):
         self.basename = basename
 
-    def configure(self, run_dict):
-        self.unify_application_and_default_and_custom_yamls(run_dict=run_dict)
+    def configure(self, run_dict, library_name):
+        self.unify_application_and_default_and_custom_yamls(
+            run_dict, library_name)
         self.get_application_configuration_parameters(run_dict=run_dict)
         self.configure_overwrite_filenames()
         self.convert_cfg_to_attribute_dictionary()
@@ -159,19 +160,19 @@ class ConfigureApplicationInputs():
 
         return self.cfg
 
-    def unify_application_and_default_and_custom_yamls(self, run_dict):
-        self.ApplicationInputFile = os.getcwd(
-        ) + '\\src\\digitalmodel\\tests\\test_data\\' + self.basename + '.yml'
+    def unify_application_and_default_and_custom_yamls(self, run_dict,
+                                                       library_name):
+        application_input_file_path = os.getcwd(
+        ) + '\\src\\' + library_name + '\\tests\\test_data\\' + self.basename + '.yml'
+        self.ApplicationInputFile = application_input_file_path
         self.get_custom_file()
         if not os.path.isfile(self.ApplicationInputFile):
             try:
                 self.ApplicationInputFile = 'tests/test_data/' + self.basename + "/" + self.basename + '.yml'
-                data = pkgutil.get_data('digitalmodel',
-                                        self.ApplicationInputFile)
+                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             except:
                 self.ApplicationInputFile = 'tests/test_data/' + self.basename + '.yml'
-                data = pkgutil.get_data('digitalmodel',
-                                        self.ApplicationInputFile)
+                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             self.ApplicationInputFile_dict = yaml.safe_load(data)
 
         # Get updated configuration file for Analysis
