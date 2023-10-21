@@ -10,12 +10,12 @@ Contact:
 
 More information is available at:
 
-- https://pypi.org/project/py_package/
-- https://github.com/vamseeachanta/py_package
+- https://pypi.org/project/assetutilities/
+- https://github.com/vamseeachanta/assetutilities
 
 
 Version:
 --------
 
-- py_package v0.0.1
+- assetutilities v0.0.1
 """

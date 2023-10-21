@@ -1,3 +1,3 @@
-def pressure_pipe():
+def calculation():
     print(10)
     return 10

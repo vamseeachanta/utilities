@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "assetutilities"
 version = "0.0.1"
-description = "Python Package Cookiecutter Code"
+description = "utilities for general use"
 readme = "README.md"
 authors = [{ name = "Vamsee Achanta", email = "vamsee.achanta@aceengineer.com" }]
 license = { file = "LICENSE" }
@@ -23,7 +23,7 @@ requires-python = ">=3.7"
     dev   = ["black", "bumpver", "isort", "pytest"]
 
     [project.scripts]
-    pressure_pipe = "assetutilities.pressure_pipe"
+    sample_calculation = "assetutilities:__main__"
 
     [project.urls]
     repository    = "https://github.com/vamseeachanta/assetutilities"
