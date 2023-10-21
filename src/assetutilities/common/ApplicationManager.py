@@ -5,9 +5,9 @@ import logging
 import functools
 import pkgutil
 
-from digitalmodel.common.update_deep import update_deep_dictionary
-from digitalmodel.common.data import AttributeDict
-from digitalmodel.common.set_logging import set_logging
+from assetutilties.common.update_deep import update_deep_dictionary
+from assetutilties.common.data import AttributeDict
+from assetutilties.common.set_logging import set_logging
 # from common.database import Database
 
 

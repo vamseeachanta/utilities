@@ -9,13 +9,13 @@ from pathlib import Path
 
 from pathlib import Path
 from collections.abc import Mapping
-from digitalmodel.common.saveData import saveDataYaml
-from digitalmodel.common.utilities import is_file_valid_func, get_common_name_from_2_filenames
-from digitalmodel.common.data import ReadData
+from assetutilties.common.saveData import saveDataYaml
+from assetutilties.common.utilities import is_file_valid_func, get_common_name_from_2_filenames
+from assetutiltiesassetutilties.common.data import ReadData
 
 read_data = ReadData()
 
-library_name = 'digitalmodel'
+library_name = 'assetutilties'
 
 
 def ymlInput(defaultYml, updateYml=None):
