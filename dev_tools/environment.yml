@@ -6,6 +6,10 @@ dependencies:
   - python
   - pip
   - pip:
+    - build
+    - twine
+    - chardet
+    - python-certifi-win32
     - plotly-express==0.4.1
     - pyyaml
     - pandoc
