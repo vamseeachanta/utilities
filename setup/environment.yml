@@ -29,3 +29,6 @@ dependencies:
     - poppler
     - pandoc
     - wkhtmltopdf
+    - pytest
+    - webcolors
+    - deepdiff
