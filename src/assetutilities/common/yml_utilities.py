@@ -15,8 +15,6 @@ from assetutilities.common.data import ReadData
 
 read_data = ReadData()
 
-library_name = 'assetutilties'
-
 
 def ymlInput(defaultYml, updateYml=None):
 
@@ -163,6 +161,7 @@ class WorkingWithYAML():
 
     def get_library_yaml_file(self, cfg):
         library_yaml_filename = cfg['filename']
+        library_name = cfg['library_name']
         if os.path.isfile(library_yaml_filename):
             with open(library_yaml_filename, 'r') as ymlfile:
                 library_yaml = yaml.load(ymlfile, Loader=yaml.Loader)
@@ -175,6 +174,7 @@ class WorkingWithYAML():
     def get_library_filename(self, cfg):
 
         filename_with_lib_path = cfg['filename']
+        library_name = cfg['library_name']
         if not os.path.isfile(cfg['filename']):
             lib_spec = importlib.util.find_spec(library_name)
             lib_path = Path(lib_spec.origin).parent

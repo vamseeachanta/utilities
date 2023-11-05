@@ -10,7 +10,6 @@ class VisualizationComponents():
         self.cfg = cfg
 
     def get_raw_data(self):
-        import logging
         if self.cfg.default['input_data']['source'] == 'db':
             self.get_environments()
             for env_index in range(0, len(self.environments)):
@@ -51,7 +50,8 @@ class VisualizationComponents():
             return False
 
     def save_raw_data(self):
-        if self.cfg.default['input_data'].__contains__('save') and self.cfg.default['input_data']['save']['flag']:
+        if self.cfg.default['input_data'].__contains__(
+                'save') and self.cfg.default['input_data']['save']['flag']:
             from common.data import SaveData
             save_data = SaveData()
             cfg_input = self.cfg.default['input_data'].copy()
@@ -62,15 +62,19 @@ class VisualizationComponents():
                 sheet_array.append(set_info['label'])
                 df = getattr(self.dbe, 'input_data_' + set_info['label'])
                 if cfg_input['save']['to_csv']:
-                    file_name = self.cfg['Analysis']['result_folder'] + self.cfg['Analysis'][
-                        'file_name'] + '_' + sheet_array[set_index] + '.csv'
+                    file_name = self.cfg['Analysis'][
+                        'result_folder'] + self.cfg['Analysis'][
+                            'file_name'] + '_' + sheet_array[set_index] + '.csv'
                     df.to_csv(file_name, index=False)
                 df_array.append(df)
 
             if cfg_input['save']['to_xlsx']:
                 cfg_temp = {
-                    'SheetNames': sheet_array,
-                    'FileName': self.cfg['Analysis']['result_folder'] + self.cfg['Analysis']['file_name'] + '.xlsx'
+                    'SheetNames':
+                        sheet_array,
+                    'FileName':
+                        self.cfg['Analysis']['result_folder'] +
+                        self.cfg['Analysis']['file_name'] + '.xlsx'
                 }
                 save_data.DataFrameArray_To_xlsx_openpyxl(df_array, cfg_temp)
 
@@ -90,7 +94,8 @@ class VisualizationComponents():
 
             plt_settings.update({
                 'file_name':
-                    self.cfg['Analysis']['result_folder'] + self.cfg['Analysis']['file_name'] + '_' +
+                    self.cfg['Analysis']['result_folder'] +
+                    self.cfg['Analysis']['file_name'] + '_' +
                     plt_settings['file_name_extension'] + '.png'
             })
 
@@ -119,7 +124,9 @@ class VisualizationComponents():
                     df = getattr(app_object, data_set_cfg['df'])
             else:
                 import pandas as pd
-                print("Data frame with label: {} can not be found in class object".format(data_set_cfg['df']))
+                print(
+                    "Data frame with label: {} can not be found in class object"
+                    .format(data_set_cfg['df']))
                 df = pd.DataFrame()
 
         df = self.get_filtered_df(data_set_cfg, df)
@@ -140,7 +147,8 @@ class VisualizationComponents():
         if data_set_cfg.__contains__('scale'):
             for column_index in range(0, len(data_set_cfg['scale']['columns'])):
                 column_name = data_set_cfg['scale']['columns'][column_index]
-                df[column_name] = df[column_name] * data_set_cfg['scale']['factors'][column_index]
+                df[column_name] = df[column_name] * data_set_cfg['scale'][
+                    'factors'][column_index]
         return df
 
     def prepare_multiple(self, app_object):
@@ -164,12 +172,16 @@ class VisualizationComponents():
         if cfg_mult['file_name_extension'] is not None:
             cfg_mult.update({
                 'file_name':
-                    self.cfg['Analysis']['result_folder'] + self.cfg['Analysis']['file_name'] + '_' +
+                    self.cfg['Analysis']['result_folder'] +
+                    self.cfg['Analysis']['file_name'] + '_' +
                     cfg_mult['file_name_extension'] + '.png'
             })
         else:
-            cfg_mult.update(
-                {'file_name': self.cfg['Analysis']['result_folder'] + self.cfg['Analysis']['file_name'] + '.png'})
+            cfg_mult.update({
+                'file_name':
+                    self.cfg['Analysis']['result_folder'] +
+                    self.cfg['Analysis']['file_name'] + '.png'
+            })
         self.viz_data.multiple_plots(cfg_mult)
         for plt_index in range(0, nrows * ncols):
             plt_settings = cfg_mult['sets'][plt_index]
@@ -202,7 +214,8 @@ class VisualizationComponents():
                 self.viz_data.add_legend()
                 self.viz_data.add_text_fields()
         except Exception as e:
-            print("See Error below. Can not process {}. ".format(str(data_set_cfg)))
+            print("See Error below. Can not process {}. ".format(
+                str(data_set_cfg)))
             print("Error: {}".format(e))
 
     def plotting_for_no_data_object(self, plt_settings, app_object):
@@ -218,7 +231,9 @@ class VisualizationComponents():
                 self.plot_a_data_set(app_object, data_set_cfg)
         else:
             import sys
-            print("Could not find data object. So exiting application without plotting")
+            print(
+                "Could not find data object. So exiting application without plotting"
+            )
             sys.exit()
 
     def add_fft_peaks_notes(self, df, color=None):
@@ -228,7 +243,11 @@ class VisualizationComponents():
         for notes_index in range(0, len(notes_df)):
             x = notes_df['fft_freq'].iloc[notes_index]
             y = notes_df['power'].iloc[notes_index]
-            notes_element = {'x': x, 'y': y, 'text': ' {0} s, {1} Hz'.format(round(1 / x, 2), round(x, 2))}
+            notes_element = {
+                'x': x,
+                'y': y,
+                'text': ' {0} s, {1} Hz'.format(round(1 / x, 2), round(x, 2))
+            }
             notes_element.update({'color': color})
             notes_array.append(notes_element)
 
