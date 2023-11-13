@@ -1,4 +1,7 @@
+import pandas as pd
 import logging
+
+import matplotlib.pyplot as plt
 
 
 class VisualizationComponents():
@@ -6,8 +9,27 @@ class VisualizationComponents():
     # http://scipy-lectures.org/intro/scipy/auto_examples/plot_fftpack.html
     # https://dsp.stackexchange.com/questions/724/low-pass-filter-and-fft-for-beginners-with-python
 
-    def __init__(self, cfg):
+    def __init__(self, cfg=None):
         self.cfg = cfg
+
+    def visualization_router(self, cfg):
+        #TODO program to handle multiple plots with a single input file. Architecture exists but refinement needed with tests.
+        data_df = self.get_data(cfg)
+        plt_settings = cfg['settings']
+        if 'polar' in cfg['settings']['plt_kind']:
+            if cfg['settings']['plt_engine'] == 'plotly':
+                plt = self.get_polar_plot_plotly(data_df, plt_settings)
+                self.save_polar_plot_and_close_plotly(plt, cfg)
+            elif cfg['settings']['plt_engine'] == 'matplotlib':
+                plt = self.get_polar_plot_matplotlib(data_df, plt_settings)
+                self.save_polar_plot_and_close_matplotlib(plt, cfg)
+        else:
+            raise (Exception(f'Other plots coding to be completed ... FAIL'))
+
+    def get_data(self, cfg):
+        data_dict = {'r': cfg['data']['r'], 'theta': cfg['data']['theta']}
+        data_df = pd.DataFrame.from_dict(data_dict)
+        return data_df
 
     def get_raw_data(self):
         if self.cfg.default['input_data']['source'] == 'db':
@@ -85,7 +107,7 @@ class VisualizationComponents():
             self.prepare_multiple(app_object)
 
     def prepare_single(self):
-        from common.visualizations import Visualization
+        from assetutilities.common.visualizations import Visualization
         viz_data = Visualization()
 
         for plt_index in range(0, len(self.cfg['plot_settings'])):
@@ -257,3 +279,79 @@ class VisualizationComponents():
     def run_example(self):
         pass
         # TBA
+
+    def get_polar_plot_plotly(self, df, plt_settings):
+        if plt_settings['plt_kind'] == 'polar':
+            # Radial line
+
+            plt.polar(df['x'], df['y'], label=plt_settings['label'])
+        elif plt_settings['plt_kind'] == 'polar_scatter':
+            # Radial scatter
+            import plotly.express as px
+            plt = px.scatter_polar(df, r=df['r'], theta=df['theta'])
+
+        return plt
+
+    def get_polar_plot_matplotlib(self, df, plt_settings):
+
+        import matplotlib.pyplot as plt
+        if plt_settings['plt_kind'] == 'polar':
+            fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+            ax.plot(df['theta'], df['r'])
+            ax.set_rmax(10)
+            # ax.set_rticks([0.5, 1, 1.5, 2])  # Less radial ticks
+            # ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
+            ax.grid(True)
+            ax.set_title("A line plot on a polar axis", va='bottom')
+
+            #TODO abstract annotation and move to another function.
+            ax.annotate(
+                'a polar annotation',
+                xy=(30, 5),    # theta, radius
+                xytext=(0.05, 0.05),    # fraction, fraction
+                textcoords='figure fraction',
+                arrowprops=dict(facecolor='black', shrink=0.05),
+                horizontalalignment='left',
+                verticalalignment='bottom')
+
+        return plt
+
+    def save_plot(self, plt, plt_settings):
+        file_name = plt_settings['file_name']
+        if plt_settings['multiple']:
+            self.fig.savefig(file_name, dpi=500)
+        else:
+            try:
+                self.plt.savefig(file_name, dpi=800)
+            except:
+                self.plt.savefig(file_name, dpi=100)
+            self.plt.close()
+
+    def save_polar_plot_and_close_plotly(self, plt, cfg):
+        plot_name_paths = self.get_plot_name_path(cfg)
+        for file_name in plot_name_paths:
+            # plt.write_image(file_name)
+            plt.write_html(file_name)
+
+            plt.savefig(file_name, dpi=100)
+
+        plt.close()
+
+    def save_polar_plot_and_close_matplotlib(self, plt, cfg):
+        #TODO Fix saving an empty image.
+        plot_name_paths = self.get_plot_name_path(cfg)
+        for file_name in plot_name_paths:
+            plt.show()
+            plt.savefig(file_name, dpi=800)
+
+        plt.close()
+
+    def get_plot_name_path(self, cfg):
+        file_name = cfg['settings']['file_name']
+        extensions = cfg['settings']['plt_save_extensions']
+        plot_name_paths = [
+            cfg['Analysis']['result_folder'] + 'Plot\\' + file_name + extension
+            for extension in extensions
+        ]
+
+        return plot_name_paths

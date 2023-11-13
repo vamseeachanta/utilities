@@ -29,3 +29,10 @@ Templates configuration
         ['ggplot2', 'seaborn', 'simple_white', 'plotly',
          'plotly_white', 'plotly_dark', 'presentation', 'xgridoff',
          'ygridoff', 'gridon', 'none']
+
+## Radial Plot
+
+https://stackoverflow.com/questions/73649994/arrows-in-plotly-python
+https://plotly.com/python/text-and-annotations/
+
+

@@ -34,7 +34,9 @@ class Visualization():
         self.plt = plt
 
         levels = np.array([-5, 5, -3, 3, -1, 1])
-        self.fig, ax = self.plt.subplots(figsize=(plt_settings['size']['length'], plt_settings['size']['height']))
+        self.fig, ax = self.plt.subplots(
+            figsize=(plt_settings['size']['length'],
+                     plt_settings['size']['height']))
         # Create the base line
         start = min(data.index)
         stop = max(data.index)
@@ -44,19 +46,34 @@ class Visualization():
             level = levels[ii % 6]
             vert = 'top' if level < 0 else 'bottom'
 
-            ax.scatter(idate, 0, s=100, facecolor='w', edgecolor='k', zorder=9999)
+            ax.scatter(idate,
+                       0,
+                       s=100,
+                       facecolor='w',
+                       edgecolor='k',
+                       zorder=9999)
             # Plot a line up to the text
             ax.plot((idate, idate), (0, level), c='r', alpha=.7)
             # Give the text a faint background and align it properly
-            ax.text(idate, level, iname, ha='right', va=vert, fontsize=14, backgroundcolor=(1., 1., 1., .3))
+            ax.text(idate,
+                    level,
+                    iname,
+                    ha='right',
+                    va=vert,
+                    fontsize=14,
+                    backgroundcolor=(1., 1., 1., .3))
         ax.set(title=plt_settings['title'])
         # Set the xticks formatting
         # format xaxis with days intervals
-        ax.get_xaxis().set_major_locator(mdates.DayLocator(interval=plt_settings['day_interval']))
-        ax.get_xaxis().set_major_formatter(mdates.DateFormatter(plt_settings['xaxis_format']))
+        ax.get_xaxis().set_major_locator(
+            mdates.DayLocator(interval=plt_settings['day_interval']))
+        ax.get_xaxis().set_major_formatter(
+            mdates.DateFormatter(plt_settings['xaxis_format']))
         self.fig.autofmt_xdate()
         # Remove components for a cleaner look
-        self.plt.setp((ax.get_yticklabels() + ax.get_yticklines() + list(ax.spines.values())), visible=False)
+        self.plt.setp((ax.get_yticklabels() + ax.get_yticklines() +
+                       list(ax.spines.values())),
+                      visible=False)
 
         self.plt.savefig(plt_settings['file_name'], dpi=800)
         return ax
@@ -101,11 +118,13 @@ class Visualization():
                 markerfacecolor = None
                 markersize = None
                 if plt_settings.__contains__('marker'):
-                    if (plt_settings['marker'] is not None) and (plt_settings['marker'].__contains__('edge_color')):
+                    if (plt_settings['marker'] is not None) and (
+                            plt_settings['marker'].__contains__('edge_color')):
                         markerfacecolor = plt_settings['marker']['edge_color']
                     if plt_settings.__contains__('color'):
                         markerfacecolor = plt_settings['color']
-                    if plt_settings['marker'] is not None and plt_settings['marker'].__contains__('size'):
+                    if plt_settings['marker'] is not None and plt_settings[
+                            'marker'].__contains__('size'):
                         markersize = plt_settings['marker']['size']
                     else:
                         markersize = 2
@@ -116,7 +135,8 @@ class Visualization():
                     if self.current_ax is None:
                         self.plot_object.plot(x, y, label=label)
                     else:
-                        if (not plt_settings.__contains__('marker')) or (plt_settings['marker'] is None):
+                        if (not plt_settings.__contains__('marker')) or (
+                                plt_settings['marker'] is None):
                             self.plot_object.plot(x,
                                                   y,
                                                   label=label,
@@ -124,19 +144,23 @@ class Visualization():
                                                   linestyle=linestyle,
                                                   color=color)
                         else:
-                            self.plot_object.plot(x,
-                                                  y,
-                                                  label=label,
-                                                  linewidth=linewidth,
-                                                  linestyle=linestyle,
-                                                  color=color,
-                                                  marker=plt_settings['marker']['type'],
-                                                  markersize=markersize,
-                                                  markerfacecolor=markerfacecolor)
+                            self.plot_object.plot(
+                                x,
+                                y,
+                                label=label,
+                                linewidth=linewidth,
+                                linestyle=linestyle,
+                                color=color,
+                                marker=plt_settings['marker']['type'],
+                                markersize=markersize,
+                                markerfacecolor=markerfacecolor)
                 elif plt_settings['plt_kind'] == 'scatter':
                     try:
                         # https://jakevdp.github.io/PythonDataScienceHandbook/04.02-simple-scatter-plots.html
-                        self.plot_object.scatter(x, y, label=label, s=markersize)
+                        self.plot_object.scatter(x,
+                                                 y,
+                                                 label=label,
+                                                 s=markersize)
                         self.annotate(df, x, y)
                     except Exception as e:
                         print(e)
@@ -147,15 +171,9 @@ class Visualization():
                             )
                             sys.exit()
 
-                elif plt_settings['plt_kind'] == 'polar':
-                    # Radial line
-                    self.plot_object.polar(x, y, label=label)
-                elif plt_settings['plt_kind'] == 'polar_scatter':
-                    # Radial scatter
-                    import plotly.express as px
-                    self.plot_object = px.scatter_polar(df,
-                                                        r=plt_settings['y'][column_index],
-                                                        theta=plt_settings['x'][0])
+                elif 'polar' in plt_settings['plt_kind']:
+                    self.prepare_polar_plot(df, plt_settings, x, column_index,
+                                            y, label)
 
                 elif plt_settings['plt_kind'] == 'bar':
                     if len(plt_settings['y']) == 1:
@@ -165,39 +183,62 @@ class Visualization():
                         no_of_bar_groups = len(x)
                         ind = np.arange(no_of_bar_groups)
                         width = 0.3
-                        self.plot_object.bar(ind + width * column_index, y, label=label)
+                        self.plot_object.bar(ind + width * column_index,
+                                             y,
+                                             label=label)
                         self.plot_object.xticks(ind + width / 2, x)
 
         if len(plt_settings['y']) == 1 and len(plt_settings['x']) > 1:
             for column_index in range(0, len((plt_settings['x']))):
                 if not plt_settings.__contains__('plt_kind'):
-                    self.plot_object.plot(df[plt_settings['x'][column_index]],
-                                          df[plt_settings['y'][0]],
-                                          label=plt_settings['label'][column_index])
+                    self.plot_object.plot(
+                        df[plt_settings['x'][column_index]],
+                        df[plt_settings['y'][0]],
+                        label=plt_settings['label'][column_index])
                 elif plt_settings['plt_kind'] == 'line':
-                    self.plot_object.plot(df[plt_settings['x'][column_index]],
-                                          df[plt_settings['y'][0]],
-                                          label=plt_settings['label'][column_index])
+                    self.plot_object.plot(
+                        df[plt_settings['x'][column_index]],
+                        df[plt_settings['y'][0]],
+                        label=plt_settings['label'][column_index])
                 elif plt_settings['plt_kind'] == 'bar':
-                    self.plot_object.bar(df[plt_settings['x'][column_index]],
-                                         df[plt_settings['y'][0]],
-                                         label=plt_settings['label'][column_index])
+                    self.plot_object.bar(
+                        df[plt_settings['x'][column_index]],
+                        df[plt_settings['y'][0]],
+                        label=plt_settings['label'][column_index])
 
         self.add_x_y_scale_formats()
         self.add_x_y_lim_formats()
 
+    def prepare_polar_plot(self, df, plt_settings, x, column_index, y, label):
+        if plt_settings['plt_kind'] == 'polar':
+            # Radial line
+            self.plot_object.polar(x, y, label=label)
+        elif plt_settings['plt_kind'] == 'polar_scatter':
+            # Radial scatter
+            import plotly.express as px
+            self.plot_object = px.scatter_polar(
+                df,
+                r=plt_settings['y'][column_index],
+                theta=plt_settings['x'][0])
+
     def set_plot_size_orientation(self):
-        if self.plt_settings['size'] == 'A4' and self.plt_settings['orientation'] == 'landscape':
+        if self.plt_settings['size'] == 'A4' and self.plt_settings[
+                'orientation'] == 'landscape':
             self.fig.set_size_inches(11.69, 8.27)
-        elif self.plt_settings['size'] == 'A4' and self.plt_settings['orientation'] == 'portrait':
+        elif self.plt_settings['size'] == 'A4' and self.plt_settings[
+                'orientation'] == 'portrait':
             self.fig.set_size_inches(8.27, 11.69)
-        elif self.plt_settings['size'] == 'A3' and self.plt_settings['orientation'] == 'landscape':
+        elif self.plt_settings['size'] == 'A3' and self.plt_settings[
+                'orientation'] == 'landscape':
             self.fig.set_size_inches(16.53, 11.69)
-        elif self.plt_settings['size'] == 'A3' and self.plt_settings['orientation'] == 'portrait':
+        elif self.plt_settings['size'] == 'A3' and self.plt_settings[
+                'orientation'] == 'portrait':
             self.fig.set_size_inches(11.69, 16.53)
-        elif self.plt_settings['size'] == 'half_letter' and self.plt_settings['orientation'] == 'landscape':
+        elif self.plt_settings['size'] == 'half_letter' and self.plt_settings[
+                'orientation'] == 'landscape':
             self.fig.set_size_inches(8.5, 5.5)
-        elif self.plt_settings['size'] == 'half_letter' and self.plt_settings['orientation'] == 'portrait':
+        elif self.plt_settings['size'] == 'half_letter' and self.plt_settings[
+                'orientation'] == 'portrait':
             self.fig.set_size_inches(5.5, 8.5)
 
     def from_df_get_plot(self, df, plt_settings):
@@ -313,36 +354,58 @@ class Visualization():
             self.plt_settings = plt_settings
 
         if self.plt_settings.__contains__('suptitle'):
-            self.plot_object.suptitle(self.plt_settings['suptitle'], fontsize=12, fontweight='bold', color='black')
+            self.plot_object.suptitle(self.plt_settings['suptitle'],
+                                      fontsize=12,
+                                      fontweight='bold',
+                                      color='black')
         if self.cfg_mult is not None:
             if not self.fig_suptitle_flag:
-                self.fig.suptitle(self.cfg_mult['suptitle'], fontsize=12, fontweight='bold', color='black')
+                self.fig.suptitle(self.cfg_mult['suptitle'],
+                                  fontsize=12,
+                                  fontweight='bold',
+                                  color='black')
                 # self.fig_suptitle_flag = True
 
         if self.plt_settings.__contains__('title'):
             if self.cfg_mult is None:
-                self.plot_object.title(self.plt_settings['title'], fontsize=11, fontweight='bold', color='black')
+                self.plot_object.title(self.plt_settings['title'],
+                                       fontsize=11,
+                                       fontweight='bold',
+                                       color='black')
             else:
-                self.plot_object.set_title(self.plt_settings['title'], fontsize=10, color='black')
+                self.plot_object.set_title(self.plt_settings['title'],
+                                           fontsize=10,
+                                           color='black')
 
         try:
             ax = self.plot_object.axes()
             if max(ax.get_yticks().tolist()) < 0.001:
-                ax.set_yticklabels(['{:.1e}'.format(item) for item in ax.get_yticks().tolist()])
+                ax.set_yticklabels([
+                    '{:.1e}'.format(item) for item in ax.get_yticks().tolist()
+                ])
         except:
             print("Axis not formatted")
         try:
             ax = self.plot_object.axes()
             if max(ax.get_xticks().tolist()) < 0.001:
-                ax.set_xticklabels(['{:.1e}'.format(item) for item in ax.get_xticks().tolist()])
+                ax.set_xticklabels([
+                    '{:.1e}'.format(item) for item in ax.get_xticks().tolist()
+                ])
         except:
             print("Axis not formatted")
 
         if self.cfg_mult is None:
-            self.plot_object.xlabel(self.plt_settings['xlabel'], fontsize=8, fontweight='bold', color='black')
-            self.plot_object.ylabel(self.plt_settings['ylabel'], fontsize=8, fontweight='bold', color='black')
+            self.plot_object.xlabel(self.plt_settings['xlabel'],
+                                    fontsize=8,
+                                    fontweight='bold',
+                                    color='black')
+            self.plot_object.ylabel(self.plt_settings['ylabel'],
+                                    fontsize=8,
+                                    fontweight='bold',
+                                    color='black')
         else:
-            self.plot_object.set(xlabel=self.plt_settings['xlabel'], ylabel=self.plt_settings['ylabel'])
+            self.plot_object.set(xlabel=self.plt_settings['xlabel'],
+                                 ylabel=self.plt_settings['ylabel'])
             self.plot_object.label_outer()
 
         self.axis_autoformat()
@@ -365,17 +428,22 @@ class Visualization():
                 if self.cfg_mult is None:
                     self.plt.grid(which='minor', linestyle='--', axis='x')
                 else:
-                    self.plot_object.grid(which='minor', linestyle='--', axis='x')
+                    self.plot_object.grid(which='minor',
+                                          linestyle='--',
+                                          axis='x')
             elif self.plt_settings['grid_minor']['y']['flag']:
                 if self.cfg_mult is None:
                     self.plt.grid(which='minor', linestyle='--', axis='y')
                 else:
-                    self.plot_object.grid(which='minor', linestyle='--', axis='y')
+                    self.plot_object.grid(which='minor',
+                                          linestyle='--',
+                                          axis='y')
 
             self.plt.minorticks_on()
 
     def add_legend(self):
-        if self.plt_settings.__contains__('legend') and self.plt_settings['legend']:
+        if self.plt_settings.__contains__(
+                'legend') and self.plt_settings['legend']:
             if self.plt_settings.__contains__('legend_location'):
                 legend_location = self.plt_settings['legend_location']
             else:
@@ -409,18 +477,24 @@ class Visualization():
                     try:
                         self.plot_object.locator_params(nbins=10, axis='x')
                     except Exception as e:
-                        print("Error encountered while autoformat : {}".format(e))
+                        print(
+                            "Error encountered while autoformat : {}".format(e))
 
     def add_text_fields(self):
         if self.plt_settings.__contains__('text_fields'):
-            for text_fields_index in range(0, len(self.plt_settings['text_fields'])):
+            for text_fields_index in range(
+                    0, len(self.plt_settings['text_fields'])):
                 text_field = self.plt_settings['text_fields'][text_fields_index]
-                if text_field.__contains__('color') and (text_field['color'] is not None):
+                if text_field.__contains__('color') and (text_field['color']
+                                                         is not None):
                     color = text_field['color']
                 else:
                     color = 'k'
                 if self.cfg_mult is None:
-                    self.plt.text(text_field['x'], text_field['y'], text_field['text'], color=color)
+                    self.plt.text(text_field['x'],
+                                  text_field['y'],
+                                  text_field['text'],
+                                  color=color)
                 else:
                     self.plot_object.text(text_field['x'],
                                           text_field['y'],
@@ -440,17 +514,22 @@ class Visualization():
                     label = "({:.1f}, {:.1f})".format(xa, ya)
 
                 self.plt.annotate(
-                    label,  # this is the text
-                    (xa, ya),  # this is the point to label
-                    textcoords="offset points",  # how to position the text
-                    xytext=(0, 10),  # distance from text to points (x,y)
-                    ha='center')  # horizontal alignment can be left, right or center
+                    label,    # this is the text
+                    (xa, ya),    # this is the point to label
+                    textcoords="offset points",    # how to position the text
+                    xytext=(0, 10),    # distance from text to points (x,y)
+                    ha='center'
+                )    # horizontal alignment can be left, right or center
 
     def add_reference_lines_and_spans(self):
         if self.plt_settings.__contains__('axhline'):
-            self.plt.ayvline(y=self.plt_settings['axhline'], color='r', dashes=[4, 2])
+            self.plt.ayvline(y=self.plt_settings['axhline'],
+                             color='r',
+                             dashes=[4, 2])
         if self.plt_settings.__contains__('ayhline'):
-            self.plt.axhline(y=self.plt_settings['ayhline'], color='r', dashes=[4, 2])
+            self.plt.axhline(y=self.plt_settings['ayhline'],
+                             color='r',
+                             dashes=[4, 2])
 
         if self.plt_settings.__contains__('axvspan'):
             facecolor = self.plt_settings['axvspan']['facecolor']
@@ -465,7 +544,11 @@ class Visualization():
                 x0 = date2num(x0)
                 x1 = date2num(x1)
 
-            self.plt.axvspan(x0, x1, facecolor=facecolor, alpha=alpha, label=label)
+            self.plt.axvspan(x0,
+                             x1,
+                             facecolor=facecolor,
+                             alpha=alpha,
+                             label=label)
             self.plt.axes().legend()
 
     def multiple_plots(self, cfg_mult):
@@ -505,14 +588,18 @@ class Visualization():
         from webcolors import rgb_to_hex
         if n <= 8:
             colors = [
-                "#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce", "#ddb7b1", "#cc7878", "#933b41", "#550b1d"
+                "#75968f", "#a5bab7", "#c9d9d3", "#e2e2e2", "#dfccce",
+                "#ddb7b1", "#cc7878", "#933b41", "#550b1d"
             ]
         else:
             # Tableau 20 Colors
-            colors = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120), (44, 160, 44), (152, 223, 138),
-                      (214, 39, 40), (255, 152, 150), (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),
-                      (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199), (188, 189, 34),
-                      (219, 219, 141), (23, 190, 207), (158, 218, 229)]
+            colors = [(31, 119, 180), (174, 199, 232), (255, 127, 14),
+                      (255, 187, 120), (44, 160, 44), (152, 223, 138),
+                      (214, 39, 40), (255, 152, 150), (148, 103, 189),
+                      (197, 176, 213), (140, 86, 75), (196, 156, 148),
+                      (227, 119, 194), (247, 182, 210), (127, 127, 127),
+                      (199, 199, 199), (188, 189, 34), (219, 219, 141),
+                      (23, 190, 207), (158, 218, 229)]
             colors = [rgb_to_hex(color) for color in colors]
         return colors
 
@@ -524,7 +611,8 @@ class Visualization():
         self.plt_settings = {}
         for RangeGraphIndex in range(0, len(cfg['RangeGraph'])):
             self.plt_settings['title'] = cfg['PlotSettings']['SupTitle']
-            self.plt_settings['suptitle'] = cfg['RangeGraph'][RangeGraphIndex]['Title']
+            self.plt_settings['suptitle'] = cfg['RangeGraph'][RangeGraphIndex][
+                'Title']
 
             for fileIndex in range(0, len(cfg['Files'])):
                 x = RangeAllFiles[fileIndex][RangeGraphIndex]['X']
@@ -534,19 +622,25 @@ class Visualization():
 
                 self.plt.plot(x, y, label=label)
 
-            self.plt_settings['xlabel'] = cfg['RangeGraph'][RangeGraphIndex]['xlabel']
-            self.plt_settings['ylabel'] = cfg['RangeGraph'][RangeGraphIndex]['ylabel']
+            self.plt_settings['xlabel'] = cfg['RangeGraph'][RangeGraphIndex][
+                'xlabel']
+            self.plt_settings['ylabel'] = cfg['RangeGraph'][RangeGraphIndex][
+                'ylabel']
             FileName = cfg['Analysis']['result_folder'] + cfg['Analysis']['file_name'] + '_' + \
                        cfg['RangeGraph'][RangeGraphIndex]['FileName']
 
             if cfg['RangeGraph'][RangeGraphIndex]['axhline'] != None:
-                self.plt.axhline(y=cfg['RangeGraph'][RangeGraphIndex]['axhline'], color='r', dashes=[4, 2])
+                self.plt.axhline(
+                    y=cfg['RangeGraph'][RangeGraphIndex]['axhline'],
+                    color='r',
+                    dashes=[4, 2])
 
             self.plt_settings['grid'] = True
             self.add_title_and_axis_labels(self.plt_settings)
             self.plt.legend(fontsize=8)
             try:
-                self.plt_settings['ylim'] = cfg['RangeGraph'][RangeGraphIndex]['ylim']
+                self.plt_settings['ylim'] = cfg['RangeGraph'][RangeGraphIndex][
+                    'ylim']
                 self.plt.ylim(self.plt_settings['ylim'])
             except:
                 pass
@@ -566,7 +660,9 @@ class Visualization():
             'mid_score': [25, 94, 57, 62, 70],
             'post_score': [5, 43, 23, 23, 51]
         }
-        df = pd.DataFrame(raw_data, columns=['first_name', 'pre_score', 'mid_score', 'post_score'])
+        df = pd.DataFrame(
+            raw_data,
+            columns=['first_name', 'pre_score', 'mid_score', 'post_score'])
 
         # Setting the positions and width for the bars
         pos = list(range(len(df['pre_score'])))
@@ -576,45 +672,45 @@ class Visualization():
         fig, ax = plt.subplots(figsize=(10, 5))
         plt.bar(
             pos,
-            # using df['pre_score'] data,
+        # using df['pre_score'] data,
             df['pre_score'],
-            # of width
+        # of width
             width,
-            # with alpha 0.5
+        # with alpha 0.5
             alpha=0.5,
-            # with color
+        # with color
             color='#EE3224',
-            # with label the first value in first_name
+        # with label the first value in first_name
             label=df['first_name'][0])
 
         # Create a bar with mid_score data,
         # in position pos + some width buffer,
         plt.bar(
             [p + width for p in pos],
-            # using df['mid_score'] data,
+        # using df['mid_score'] data,
             df['mid_score'],
-            # of width
+        # of width
             width,
-            # with alpha 0.5
+        # with alpha 0.5
             alpha=0.5,
-            # with color
+        # with color
             color='#F78F1E',
-            # with label the second value in first_name
+        # with label the second value in first_name
             label=df['first_name'][1])
 
         # Create a bar with post_score data,
         # in position pos + some width buffer,
         plt.bar(
             [p + width * 2 for p in pos],
-            # using df['post_score'] data,
+        # using df['post_score'] data,
             df['post_score'],
-            # of width
+        # of width
             width,
-            # with alpha 0.5
+        # with alpha 0.5
             alpha=0.5,
-            # with color
+        # with color
             color='#FFC222',
-            # with label the third value in first_name
+        # with label the third value in first_name
             label=df['first_name'][2])
 
         # Set the y axis label
@@ -673,7 +769,8 @@ class Visualization():
         for plotIndex in range(0, len(data['XLimRanges'])):
             plt.xlim(data['XLimRanges'][plotIndex])
             plt.ylim(data['YLimRanges'][plotIndex])
-            plt.savefig(data['FileName'] + '_' + str(plotIndex) + '.png', dpi=800)
+            plt.savefig(data['FileName'] + '_' + str(plotIndex) + '.png',
+                        dpi=800)
 
         plt.close()
 
@@ -715,15 +812,17 @@ class Visualization():
         for plotIndex in range(0, len(data['XLimRanges'])):
             plt.xlim(data['XLimRanges'][plotIndex])
             plt.ylim(data['YLimRanges'][plotIndex])
-            plt.savefig(data['FileName'] + '_' + str(plotIndex) + '.png', dpi=800)
+            plt.savefig(data['FileName'] + '_' + str(plotIndex) + '.png',
+                        dpi=800)
 
         plt.close()
 
 
 if __name__ == "__main__":
     import pandas as pd
-    data = pd.read_csv(r'C:\Users\achantv\Documents\Utilities\aceengineer\data_manager\TimeLine.csv',
-                       parse_dates=True,
-                       index_col=0)
+    data = pd.read_csv(
+        r'C:\Users\achantv\Documents\Utilities\aceengineer\data_manager\TimeLine.csv',
+        parse_dates=True,
+        index_col=0)
     ax = GenerateTimeLine(data)
     plt.show()

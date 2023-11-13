@@ -32,3 +32,6 @@ dependencies:
     - pytest
     - webcolors
     - deepdiff
+    - xlsxwriter
+    - openpyxl
+    

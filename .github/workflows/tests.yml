@@ -27,15 +27,9 @@ jobs:
         run: |
           python -m pip install -e .
 
-      # - name: Lint with Ruff
-      #   run: |
-      #     pip install ruff
-      #     ruff --format=github --target-version=py37 .
-      #   continue-on-error: true      # You can test your matrix by printing the current Python version
-
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
       - name: Test with pytest
         run: |
-          pytest src/assetutilities/tests/no_license
+          pytest src/assetutilities/tests
