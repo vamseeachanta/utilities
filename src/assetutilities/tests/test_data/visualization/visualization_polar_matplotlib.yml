@@ -21,6 +21,7 @@ settings:
   title: Allowable Significant Wave Height (Hs)
   set_rmax: 10
   set_rticks: [1, 2, 3]
+  set_thetagrids: [0, 30, 60, 90] # Not coded.
   set_rlabel_position: -22.5
 
 # Need mathematical transformations or another polar plot with shift axes.
