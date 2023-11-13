@@ -1,5 +1,7 @@
-import pandas as pd
 import logging
+
+import numpy as np
+import pandas as pd
 
 import matplotlib.pyplot as plt
 
@@ -295,24 +297,55 @@ class VisualizationComponents():
     def get_polar_plot_matplotlib(self, df, plt_settings):
 
         import matplotlib.pyplot as plt
+        fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
         if plt_settings['plt_kind'] == 'polar':
-            fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
             ax.plot(df['theta'], df['r'])
-            ax.set_rmax(10)
-            # ax.set_rticks([0.5, 1, 1.5, 2])  # Less radial ticks
-            # ax.set_rlabel_position(-22.5)  # Move radial labels away from plotted line
-            ax.grid(True)
-            ax.set_title("A line plot on a polar axis", va='bottom')
+        elif plt_settings['plt_kind'] == 'polar_scatter':
+            ax.scatter(df['theta'], df['r'])
 
-            #TODO abstract annotation and move to another function.
-            ax.annotate(
-                'a polar annotation',
-                xy=(30, 5),    # theta, radius
-                xytext=(0.05, 0.05),    # fraction, fraction
-                textcoords='figure fraction',
-                arrowprops=dict(facecolor='black', shrink=0.05),
-                horizontalalignment='left',
-                verticalalignment='bottom')
+        plt = self.get_plt_with_arrows(plt, plt_settings)
+
+        set_rmax = plt_settings['set_rmax']
+        if set_rmax is not None:
+            ax.set_rmax(set_rmax)
+
+        set_rticks = plt_settings['set_rticks']
+        if set_rticks is not None:
+            ax.set_rticks(set_rticks)
+
+        set_rlabel_position = plt_settings['set_rlabel_position']
+        if set_rlabel_position is not None:
+            ax.set_rlabel_position(set_rlabel_position)
+
+        ax.grid(True)
+        ax.set_title(plt_settings['title'], va='bottom')
+
+        return plt
+
+    def get_plt_with_arrows(self, plt, plt_settings):
+
+        # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html
+        # Add arrows with direct data
+        if not 'arrows' in plt_settings:
+            return plt
+
+        arrows = plt_settings['arrows']
+        for arrow in arrows:
+            # arr1 = plt.arrow(3, 0, 5, 45, color='blue')
+            # # arrow at 45 degree
+            theta = arrow['theta']
+            r = arrow['r']
+            color = arrow['color']
+
+            arr = plt.arrow(theta[0] / 180. * np.pi,
+                            r[0],
+                            theta[1] / 180. * np.pi,
+                            r[1] - r[0],
+                            alpha=0.5,
+                            width=0.015,
+                            color=color,
+                            lw=2,
+                            zorder=5)
 
         return plt
 
@@ -338,13 +371,9 @@ class VisualizationComponents():
         plt.close()
 
     def save_polar_plot_and_close_matplotlib(self, plt, cfg):
-        #TODO Fix saving an empty image.
         plot_name_paths = self.get_plot_name_path(cfg)
         for file_name in plot_name_paths:
-            plt.show()
             plt.savefig(file_name, dpi=800)
-
-        plt.close()
 
     def get_plot_name_path(self, cfg):
         file_name = cfg['settings']['file_name']
@@ -355,3 +384,18 @@ class VisualizationComponents():
         ]
 
         return plot_name_paths
+
+    def add_annotations(self):
+        '''
+        https://matplotlib.org/stable/gallery/text_labels_and_annotations/annotation_demo.html
+        #TODO abstract annotation and move to another function.
+        or use graphics?
+        '''
+        ax.annotate(
+            'a polar annotation',
+            xy=(30, 5),    # theta, radius
+            xytext=(0.05, 0.05),    # fraction, fraction
+            textcoords='figure fraction',
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            horizontalalignment='left',
+            verticalalignment='bottom')
