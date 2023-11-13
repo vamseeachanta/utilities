@@ -326,6 +326,7 @@ class VisualizationComponents():
 
         # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html
         # Add arrows with direct data
+        # Try inset_axes: https://matplotlib.org/2.0.2/examples/pylab_examples/axes_demo.html
         if not 'arrows' in plt_settings:
             return plt
 
