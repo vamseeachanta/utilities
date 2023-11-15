@@ -19,3 +19,6 @@ Version:
 
 - assetutilities v0.0.1
 """
+from assetutilities.engine import engine
+
+engine()

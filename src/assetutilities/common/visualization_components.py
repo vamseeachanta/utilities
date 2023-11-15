@@ -16,22 +16,50 @@ class VisualizationComponents():
 
     def visualization_router(self, cfg):
         #TODO program to handle multiple plots with a single input file. Architecture exists but refinement needed with tests.
-        data_df = self.get_data(cfg)
         plt_settings = cfg['settings']
         if 'polar' in cfg['settings']['plt_kind']:
+            data_df = self.get_polar_data(cfg)
+            plt_settings['traces'] = int(len(data_df.columns) / 2)
             if cfg['settings']['plt_engine'] == 'plotly':
                 plt = self.get_polar_plot_plotly(data_df, plt_settings)
                 self.save_polar_plot_and_close_plotly(plt, cfg)
             elif cfg['settings']['plt_engine'] == 'matplotlib':
-                plt = self.get_polar_plot_matplotlib(data_df, plt_settings)
+                plt = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
                 self.save_polar_plot_and_close_matplotlib(plt, cfg)
         else:
             raise (Exception(f'Other plots coding to be completed ... FAIL'))
 
-    def get_data(self, cfg):
-        data_dict = {'r': cfg['data']['r'], 'theta': cfg['data']['theta']}
+    def get_polar_data(self, cfg):
+        data_dict = self.get_polar_mapped_data_dict(cfg)
         data_df = pd.DataFrame.from_dict(data_dict)
         return data_df
+
+    def get_polar_mapped_data_dict(self, cfg):
+        theta_data = cfg['data']['theta']
+        r_data = cfg['data']['r']
+        legend_data = cfg['data']['legend']
+
+        no_of_trends = max(len(theta_data), len(r_data))
+        if not len(legend_data) == no_of_trends:
+            legend_data = ['legend_' + str(i) for i in range(0, no_of_trends)]
+
+        if len(theta_data) < len(r_data):
+            theta_data = [theta_data[0]] * len(r_data)
+        if len(theta_data) > len(r_data):
+            r_data = [r_data[0]] * len(theta_data)
+
+        for theta_index in range(0, len(theta_data)):
+            new_data = [
+                theta * np.pi / 180 for theta in theta_data[theta_index]
+            ]
+            theta_data[theta_index] = new_data
+
+        data_dict = {}
+        for i in range(0, len(legend_data)):
+            data_dict.update({'r_' + str(i): r_data[i]})
+            data_dict.update({'theta_' + str(i): theta_data[i]})
+
+        return data_dict
 
     def get_raw_data(self):
         if self.cfg.default['input_data']['source'] == 'db':
@@ -294,14 +322,30 @@ class VisualizationComponents():
 
         return plt
 
-    def get_polar_plot_matplotlib(self, df, plt_settings):
+    def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
         import matplotlib.pyplot as plt
         fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
         if plt_settings['plt_kind'] == 'polar':
-            ax.plot(df['theta'], df['r'])
+            for index in range(0, plt_settings['traces']):
+                ax.plot(df['theta_' + str(index)],
+                        df['r_' + str(index)],
+                        label=cfg['data']['legend'][index],
+                        alpha=0.75)
         elif plt_settings['plt_kind'] == 'polar_scatter':
-            ax.scatter(df['theta'], df['r'])
+            for index in range(0, plt_settings['traces']):
+                ax.scatter(df['theta_' + str(index)],
+                           df['r_' + str(index)],
+                           label=cfg['data']['legend'][index],
+                           alpha=0.75)
+
+        if plt_settings['traces'] > 1:
+            ax.legend(loc='best')
+            # ax.legend(bbox_to_anchor=(1.04, 0.5),
+            #           loc="center left",
+            #           borderaxespad=0)
+            # ax.legend(bbox_to_anchor=(0, 1.02, 1, 0.2), loc="lower left",
+            #                 mode="expand", borderaxespad=0, ncol=3)
 
         plt = self.get_plt_with_arrows(plt, plt_settings)
 
@@ -316,6 +360,14 @@ class VisualizationComponents():
         set_rlabel_position = plt_settings['set_rlabel_position']
         if set_rlabel_position is not None:
             ax.set_rlabel_position(set_rlabel_position)
+
+        set_thetagrids = plt_settings['set_thetagrids']
+        if set_thetagrids is not None:
+            ax.set_thetagrids(set_thetagrids)
+
+        set_theta_zero_location = plt_settings['set_theta_zero_location']
+        if set_theta_zero_location is not None:
+            ax.set_theta_zero_location(set_theta_zero_location)
 
         ax.grid(True)
         ax.set_title(plt_settings['title'], va='bottom')
@@ -342,7 +394,7 @@ class VisualizationComponents():
                             r[0],
                             theta[1] / 180. * np.pi,
                             r[1] - r[0],
-                            alpha=0.5,
+                            alpha=0.75,
                             width=0.015,
                             color=color,
                             lw=2,

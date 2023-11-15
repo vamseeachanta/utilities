@@ -7,10 +7,6 @@ default:
       output: True
 
     
-data:
-  r : [0.5,1,2,2.5,3,4]
-  theta : [35,70,120,155,205,240]
-
 settings:
   plt_kind: polar_scatter
   plt_engine: matplotlib
@@ -21,16 +17,13 @@ settings:
   title: Allowable Significant Wave Height (Hs)
   set_rmax: 10
   set_rticks: [1, 2, 3]
-  set_thetagrids: [0, 30, 60, 90] # Not coded.
+  set_thetagrids: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
   set_rlabel_position: -22.5
 
-# Need mathematical transformations or another polar plot with shift axes.
-  # arrows:
-  #   - theta: [0, 0]
-  #     r: [4,6]
-  #     color: black
-  #   - theta: [0, 30]
-  #     r: [4, 8]
-  #     color: green
-  # annotations: []
-    
+data:
+  r : 
+    - [0.5,1,2,2.5,3,4]
+    - [0.5,1,2,2.5,3,4]
+  theta : 
+    - [35,70,120,155,205,240]
+  legend: [vessel inline with product route, vessel rotation wrt. product route]

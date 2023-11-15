@@ -13,11 +13,11 @@ r = np.exp(-t[:1000] / 0.05)
 x = randn(len(t))
 s = convolve(x, r)[:len(x)] * 0.001
 theta = 2 * np.pi * t
-#
-fig = plt.figure(figsize=(7, 6))
 
 #main
-plt.plot(t, s)
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+
+ax.plot(t, s)
 plt.axis([0, 1, np.amin(s), 2.5 * np.amax(s)])
 plt.xlabel('xlabel')
 plt.ylabel('ylabel')

@@ -10,23 +10,32 @@ dictitems:
     file_name_for_overwrite: app_visualization_visualization_polar_matplotlib
     log_folder: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/visualization\logs\
     result_folder: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/visualization\results\
-    start_time: 2023-11-13 09:01:45.439569
+    start_time: 2023-11-14 12:30:33.807248
   basename: visualization
   data:
+    legend:
+    - vessel inline with product route
+    - vessel rotation wrt. product route
     r:
-    - 0.5
-    - 1
-    - 2
-    - 2.5
-    - 3
-    - 4
+    - - 0.5
+      - 1
+      - 2
+      - 2.5
+      - 3
+      - 4
+    - - 0.5
+      - 1
+      - 2
+      - 2.5
+      - 3
+      - 4
     theta:
-    - 35
-    - 70
-    - 120
-    - 155
-    - 205
-    - 240
+    - - 35
+      - 70
+      - 120
+      - 155
+      - 205
+      - 240
   default:
     config:
       overwrite:
@@ -46,5 +55,19 @@ dictitems:
     - 1
     - 2
     - 3
+    set_thetagrids:
+    - 0
+    - 30
+    - 60
+    - 90
+    - 120
+    - 150
+    - 180
+    - 210
+    - 240
+    - 270
+    - 300
+    - 330
     title: Allowable Significant Wave Height (Hs)
+    traces: 2
 state: *id001
