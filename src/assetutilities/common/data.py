@@ -8,6 +8,9 @@ from assetutilities.common.utilities import is_file_valid_func
 
 class ReadFromExcel():
 
+    def __init__(self) -> None:
+        pass
+
     def from_xlsx(self, cfg, file_index=0):
         cfg_template_single_xlsx = {'io': 'data_manager/data/sample_data.xlsx'}
         import pandas as pd

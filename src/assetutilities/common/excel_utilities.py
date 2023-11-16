@@ -1,5 +1,10 @@
 from xlsxwriter.workbook import Workbook
 from xlsxwriter.utility import xl_rowcol_to_cell
+from assetutilities.common.data import ReadFromExcel
+from assetutilities.
+
+rfe = ReadFromExcel()
+cc = CustomCalculations()
 
 
 class ExcelUtilities:
@@ -10,6 +15,8 @@ class ExcelUtilities:
     def excel_utility_router(self, cfg):
         if cfg['task'] == 'cross_reference_values_from_closed_workbooks':
             self.cross_reference_values_from_closed_workbooks_xlsxwriter(cfg)
+        if cfg['task'] == 'custom_calculation':
+            data = self.get_data(cfg)
 
         return cfg
 
@@ -40,3 +47,6 @@ class ExcelUtilities:
         # workbook.add_worksheet('Sheet2')
 
         workbook.close()
+
+    def get_data(self, cfg):
+        pass
