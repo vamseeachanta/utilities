@@ -1,21 +1,32 @@
 &id001 !!python/object/new:assetutilities.common.data.AttributeDict
 dictitems:
   Analysis:
-    CustomInputFile: .\visualization_polar_midsplice_deck_handling.yml
+    CustomInputFile: .\test_data\visualization\visualization_polar_midsplice_deck_handling.yml
     DefaultInputFile: null
-    analysis_root_folder: .
+    analysis_root_folder: .\test_data\visualization
     basename: visualization
     cfg_array_file_names: null
     file_name: app_visualization_visualization_polar_midsplice_deck_handling
     file_name_for_overwrite: app_visualization_visualization_polar_midsplice_deck_handling
-    log_folder: .\logs\
-    result_folder: .\results\
-    start_time: 2023-11-14 12:40:37.660461
+    log_folder: .\test_data\visualization\logs\
+    result_folder: .\test_data\visualization\results\
+    start_time: 2023-11-17 14:33:08.066422
   basename: visualization
   data:
+    alpha:
+    - 1
+    - 0.75
+    color:
+    - blue
+    - green
     legend:
     - vessel inline with product route
     - vessel rotation wrt. product route
+    linestyle:
+    - --
+    - '-'
+    - '-'
+    - ':'
     r:
     - - 2
       - 1.5
@@ -29,6 +40,7 @@ dictitems:
       - 0.5
       - 0.5
       - 1.5
+      - 2
     - - 2
       - 1.5
       - 1.5
@@ -41,6 +53,7 @@ dictitems:
       - 1.5
       - 1.5
       - 1.5
+      - 2
     theta:
     - - 0
       - 30
@@ -54,6 +67,7 @@ dictitems:
       - 270
       - 300
       - 330
+      - 360
   default:
     config:
       overwrite:
@@ -68,11 +82,13 @@ dictitems:
     plt_save_extensions:
     - .png
     set_rlabel_position: null
-    set_rmax: 5
+    set_rmax: 3
     set_rticks:
     - 1
     - 1.5
     - 2
+    - 2.5
+    set_theta_zero_location: W
     set_thetagrids:
     - 15
     - 45

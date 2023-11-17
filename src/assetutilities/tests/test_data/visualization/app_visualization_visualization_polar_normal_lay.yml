@@ -1,16 +1,16 @@
 &id001 !!python/object/new:assetutilities.common.data.AttributeDict
 dictitems:
   Analysis:
-    CustomInputFile: .\test_data\visualization\visualization_polar_midsplice_laydown.yml
+    CustomInputFile: .\test_data\visualization\visualization_polar_normal_lay.yml
     DefaultInputFile: null
     analysis_root_folder: .\test_data\visualization
     basename: visualization
     cfg_array_file_names: null
-    file_name: app_visualization_visualization_polar_midsplice_laydown
-    file_name_for_overwrite: app_visualization_visualization_polar_midsplice_laydown
+    file_name: app_visualization_visualization_polar_normal_lay
+    file_name_for_overwrite: app_visualization_visualization_polar_normal_lay
     log_folder: .\test_data\visualization\logs\
     result_folder: .\test_data\visualization\results\
-    start_time: 2023-11-17 13:45:34.939418
+    start_time: 2023-11-17 14:33:06.022241
   basename: visualization
   data:
     alpha:
@@ -29,30 +29,30 @@ dictitems:
     - ':'
     r:
     - - 2.5
-      - 1.5
-      - 1.5
-      - 1.5
-      - 1
-      - 1.5
+      - 2.5
+      - 2.5
       - 2.5
       - 1.5
-      - 1
+      - 2.5
+      - 2.5
+      - 2.5
       - 1.5
-      - 1.5
-      - 1.5
+      - 2.5
+      - 2.5
+      - 2.5
       - 2.5
     - - 2.5
-      - 1.5
-      - 1.5
-      - 1.5
-      - 1.5
-      - 1.5
       - 2.5
-      - 1.5
-      - 1.5
-      - 1.5
-      - 1.5
-      - 1.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
+      - 2.5
       - 2.5
     theta:
     - - 0
@@ -74,7 +74,7 @@ dictitems:
         output: true
     log_level: DEBUG
   settings:
-    file_name: ms_laydown_allowable_wave_height
+    file_name: normal_lay_allowable_wave_height
     label: Allowable Wave Height
     multiple: false
     plt_engine: matplotlib
@@ -87,6 +87,7 @@ dictitems:
     - 1
     - 1.5
     - 2
+    - 2.5
     set_theta_zero_location: W
     set_thetagrids:
     - 15
@@ -102,6 +103,6 @@ dictitems:
     - 315
     - 345
     theta_data: degrees
-    title: Allowable Significant Wave Height (Hs); Midline Splice, LayDown
+    title: Allowable Significant Wave Height (Hs); Normal Lay
     traces: 2
 state: *id001

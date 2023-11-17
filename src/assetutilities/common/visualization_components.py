@@ -24,8 +24,9 @@ class VisualizationComponents():
                 plt = self.get_polar_plot_plotly(data_df, plt_settings)
                 self.save_polar_plot_and_close_plotly(plt, cfg)
             elif cfg['settings']['plt_engine'] == 'matplotlib':
-                plt = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
-                self.save_polar_plot_and_close_matplotlib(plt, cfg)
+                plt_properties = self.get_polar_plot_matplotlib(
+                    data_df, plt_settings, cfg)
+                self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
         else:
             raise (Exception(f'Other plots coding to be completed ... FAIL'))
 
@@ -37,7 +38,12 @@ class VisualizationComponents():
     def get_polar_mapped_data_dict(self, cfg):
         theta_data = cfg['data']['theta']
         r_data = cfg['data']['r']
-        legend_data = cfg['data']['legend']
+
+        # Get legend data
+        if 'legend' in cfg['data']:
+            legend_data = cfg['data']['legend']
+        else:
+            legend_data = []
 
         no_of_trends = max(len(theta_data), len(r_data))
         if not len(legend_data) == no_of_trends:
@@ -325,19 +331,36 @@ class VisualizationComponents():
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
         import matplotlib.pyplot as plt
-        fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+        if 'plt_properties' in plt_settings and plt_settings['plt_properties'][
+                'plt'] is not None:
+            plt = plt_settings['plt_properties']['plt']
+
+        # Add axis for plot
+        if (not 'add_axes' in plt_settings) or (not plt_settings['add_axes']):
+            fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+        else:
+            fig = plt_settings['fig']
+            ax = fig.add_axes([0.2, 0.47, 0.30, 0.40],
+                              polar=True,
+                              facecolor='yellow')
+
+        # Add trace or plot style
         if plt_settings['plt_kind'] == 'polar':
             for index in range(0, plt_settings['traces']):
                 ax.plot(df['theta_' + str(index)],
                         df['r_' + str(index)],
                         label=cfg['data']['legend'][index],
-                        alpha=0.75)
+                        color=cfg['data']['color'][index],
+                        linestyle=cfg['data']['linestyle'][index],
+                        alpha=cfg['data']['alpha'][index])
         elif plt_settings['plt_kind'] == 'polar_scatter':
             for index in range(0, plt_settings['traces']):
                 ax.scatter(df['theta_' + str(index)],
                            df['r_' + str(index)],
-                           label=cfg['data']['legend'][index],
-                           alpha=0.75)
+                           label=cfg['data']['legend']['label'][index],
+                           color=cfg['data']['color'][index],
+                           linestyle=cfg['data']['linestyle'][index],
+                           alpha=cfg['data']['alpha'][index])
 
         if plt_settings['traces'] > 1:
             ax.legend(loc='best')
@@ -365,14 +388,27 @@ class VisualizationComponents():
         if set_thetagrids is not None:
             ax.set_thetagrids(set_thetagrids)
 
-        set_theta_zero_location = plt_settings['set_theta_zero_location']
+        set_theta_zero_location = plt_settings.get('set_theta_zero_location',
+                                                   None)
         if set_theta_zero_location is not None:
             ax.set_theta_zero_location(set_theta_zero_location)
 
         ax.grid(True)
         ax.set_title(plt_settings['title'], va='bottom')
 
-        return plt
+        plt_properties = {'plt': plt, 'fig': fig}
+        if 'add_axes' in cfg and len(cfg.add_axes) > 0:
+            self.add_axes_to_plt(plt_properties, cfg)
+
+        return {'plt': plt, 'fig': fig}
+
+    def add_axes_to_plt(self, plt_properties, cfg):
+        for axes_idx in range(0, len(cfg.add_axes)):
+            cfg_plt = cfg.add_axes[axes_idx]
+            plt_settings = cfg_plt['settings']
+            plt_settings.update({'plt_properties': plt_properties})
+            data_df = self.get_polar_data(cfg_plt)
+            plt = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg_plt)
 
     def get_plt_with_arrows(self, plt, plt_settings):
 
@@ -423,8 +459,10 @@ class VisualizationComponents():
 
         plt.close()
 
-    def save_polar_plot_and_close_matplotlib(self, plt, cfg):
+    def save_polar_plot_and_close_matplotlib(self, plt_properties, cfg):
         plot_name_paths = self.get_plot_name_path(cfg)
+
+        plt = plt_properties['plt']
         for file_name in plot_name_paths:
             plt.savefig(file_name, dpi=800)
 

@@ -1,10 +1,10 @@
 from xlsxwriter.workbook import Workbook
 from xlsxwriter.utility import xl_rowcol_to_cell
 from assetutilities.common.data import ReadFromExcel
-from assetutilities.
+from assetutilities.calculations.polynomial import Polynomial
 
 rfe = ReadFromExcel()
-cc = CustomCalculations()
+_polynomial = Polynomial()
 
 
 class ExcelUtilities:

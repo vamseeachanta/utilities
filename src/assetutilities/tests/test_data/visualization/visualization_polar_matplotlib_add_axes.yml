@@ -10,6 +10,8 @@ default:
 settings:
   plt_kind: polar_scatter
   plt_engine: matplotlib
+  origin: NULL
+  facecolor: NULL
   label: Allowable Wave Height
   multiple: False
   file_name: allowable_wave_height_matplotlib
@@ -18,6 +20,7 @@ settings:
   set_rmax: 10
   set_rticks: [1, 2, 3]
   set_thetagrids: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
+  set_theta_zero_location: NULL
   set_rlabel_position: -22.5
 
 data:
@@ -27,7 +30,30 @@ data:
   theta : 
     - [35,70,120,155,205,240]
   color: [blue, green]
-  alpha: [1, 0.75]
-  linestyle: ["--", "-","-", ":"]
+  linestyle: ["-.", "--","-", ":"]
+  alpha: [0.5, 1]
   legend: 
     label: [vessel inline with product route, vessel rotation wrt. product route]
+    loc: best
+
+add_axes:
+  - 
+    settings:
+      plt_kind: polar
+      plt_engine: matplotlib
+      origin: [0.2, 0.47, 0.30, 0.40]
+      facecolor: yellow
+      set_theta_zero_location: NULL
+
+    data:
+      r : 
+        - [0.5,1,2,2.5,3,4]
+        - [0.5,1,2,2.5,3,4]
+      theta : 
+        - [35,70,120,155,205,240]
+      color: [blue, green]
+      linestyle: ["-.", "--","-", ":"]
+      alpha: [0.5, 1]
+      legend: 
+        label: [vessel inline with product route, vessel rotation wrt. product route]
+        loc: best
