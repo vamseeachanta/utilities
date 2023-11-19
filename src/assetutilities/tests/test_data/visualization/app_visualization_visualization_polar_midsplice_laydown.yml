@@ -10,7 +10,7 @@ dictitems:
     file_name_for_overwrite: app_visualization_visualization_polar_midsplice_laydown
     log_folder: .\test_data\visualization\logs\
     result_folder: .\test_data\visualization\results\
-    start_time: 2023-11-17 13:45:34.939418
+    start_time: 2023-11-18 06:43:54.122493
   basename: visualization
   data:
     alpha:
@@ -87,6 +87,7 @@ dictitems:
     - 1
     - 1.5
     - 2
+    - 2.5
     set_theta_zero_location: W
     set_thetagrids:
     - 15
