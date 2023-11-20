@@ -10,7 +10,7 @@ dictitems:
     file_name_for_overwrite: app_visualization_visualization_polar_ini_step6
     log_folder: .\test_data\visualization\logs\
     result_folder: .\test_data\visualization\results\
-    start_time: 2023-11-17 13:45:30.917295
+    start_time: 2023-11-20 15:40:58.005386
   basename: visualization
   data:
     alpha:
@@ -19,9 +19,6 @@ dictitems:
     color:
     - blue
     - green
-    legend:
-    - vessel inline with product route
-    - vessel rotation wrt. product route
     linestyle:
     - --
     - '-'
@@ -44,13 +41,13 @@ dictitems:
     - - 2
       - 2
       - 1.5
-      - 1
+      - 1.5
       - 2
       - 2
       - 1.5
       - 2
       - 2
-      - 1
+      - 1.5
       - 1.5
       - 2
       - 2
@@ -75,18 +72,29 @@ dictitems:
     log_level: DEBUG
   settings:
     file_name: ini_step6_allowable_wave_height
+    grid: true
     label: Allowable Wave Height
+    legend:
+      flag: true
+      label:
+      - vessel inline with product route
+      - vessel rotation wrt. product route
+      loc: best
+      prop:
+        family: Arial
+        size: 5
     multiple: false
     plt_engine: matplotlib
     plt_kind: polar
     plt_save_extensions:
     - .png
-    set_rlabel_position: null
+    set_rlabel_position: -22.5
     set_rmax: 3
     set_rticks:
     - 1
     - 1.5
     - 2
+    - 2.5
     set_theta_zero_location: W
     set_thetagrids:
     - 15
