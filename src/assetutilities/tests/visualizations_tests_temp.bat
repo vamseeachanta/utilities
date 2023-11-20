@@ -7,4 +7,6 @@ REM CALL python -m assetutilities .\test_data\visualization\visualization_polar_
 REM CALL python -m assetutilities .\test_data\visualization\visualization_polar_midsplice_deck_handling.yml
 REM CALL python -m assetutilities .\test_data\visualization\visualization_polar_midsplice_laydown.yml
 
-CALL python -m assetutilities .\test_data\visualization\visualization_polar_matplotlib_add_axes.yml
+REM CALL python -m assetutilities .\test_data\visualization\visualization_polar_matplotlib_add_axes.yml
+
+CALL python -m assetutilities .\test_data\visualization\visualization_polar_matplotlib_add_axes_ini.yml
