@@ -7,6 +7,7 @@ from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.visualization_components import VisualizationComponents
+from assetutilities.tools.pdf.read_pdf import ReadPDF
 
 from assetutilities.common.excel_utilities import ExcelUtilities
 
@@ -33,6 +34,9 @@ def engine(inputfile=None):
     elif basename in ['visualization']:
         viz_comp = VisualizationComponents()
         viz_comp.visualization_router(cfg_base)
+    elif basename in ['read_pdf']:
+        read_pdf = ReadPDF()
+        read_pdf.read_pdf(cfg_base)
     else:
         raise (
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))

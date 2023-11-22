@@ -102,9 +102,6 @@ if __name__ == "__main__":
     pdf_comments = PDFComments()
     # pdf_comments.get_pdf_annots(
     #     pdf_filename=
-    #     'C:/Users/ss7a2365/Desktop/VST-VK912-ENG-RPT-SS7-00016-00 DP & AMACD Comments.pdf'
+    #     'C:/Users/ss7a2365/Desktop/Comments.pdf'
     # )
-    pdf_comments.use_fitz(
-        pdf_filename=
-        'C:/Users/ss7a2365/Desktop/VST-VK912-ENG-RPT-SS7-00016-00 DP & AMACD Comments.pdf'
-    )
+    pdf_comments.use_fitz(pdf_filename='C:/Users/ss7a2365/Desktop/Comments.pdf')

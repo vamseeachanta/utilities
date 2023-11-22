@@ -17,3 +17,6 @@ dependencies:
     # - popplerqt5 Only available in linux systems
     - pdfannots
     - fitz
+    - camelot
+    - tabula
+    
