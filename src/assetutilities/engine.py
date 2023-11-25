@@ -10,6 +10,7 @@ from assetutilities.common.visualization_components import VisualizationComponen
 from assetutilities.tools.pdf.read_pdf import ReadPDF
 
 from assetutilities.common.excel_utilities import ExcelUtilities
+from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
 
 save_data = SaveData()
 library_name = 'assetutilities'
@@ -37,6 +38,9 @@ def engine(inputfile=None):
     elif basename in ['read_pdf']:
         read_pdf = ReadPDF()
         read_pdf.read_pdf(cfg_base)
+    elif basename in ['gitpython']:
+        gpu = GitPythonUtilities()
+        gpu.router(cfg_base)
     else:
         raise (
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))

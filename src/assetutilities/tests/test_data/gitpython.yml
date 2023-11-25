@@ -6,9 +6,13 @@ default:
     overwrite:
       output: True
 
-actions:
-  summary: True
+common_cfg:
+  status: True
   commit: True
+  push: True
+  #TODO
+  current_branch: True
+  clone: False
   
 
 repos:
