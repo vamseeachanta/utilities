@@ -32,7 +32,7 @@ class VisualizationComponents():
 
     def get_polar_data(self, cfg):
         data_dict = self.get_polar_mapped_data_dict(cfg)
-        data_df = pd.DataFrame.from_dict(data_dict)
+        data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
         return data_df
 
     def get_polar_mapped_data_dict(self, cfg):
@@ -364,16 +364,15 @@ class VisualizationComponents():
             plt.axis(axis)
 
         # Add trace or plot style
-        if plt_settings['plt_kind'] == 'polar':
-            for index in range(0, plt_settings['traces']):
+        for index in range(0, plt_settings['traces']):
+            if plt_settings['plt_kind'][index] == 'polar':
                 ax.plot(df['theta_' + str(index)],
                         df['r_' + str(index)],
                         label=plt_settings['legend']['label'][index],
                         color=cfg['data']['color'][index],
                         linestyle=cfg['data']['linestyle'][index],
                         alpha=cfg['data']['alpha'][index])
-        elif plt_settings['plt_kind'] == 'polar_scatter':
-            for index in range(0, plt_settings['traces']):
+            elif plt_settings['plt_kind'][index] == 'polar_scatter':
                 ax.scatter(df['theta_' + str(index)],
                            df['r_' + str(index)],
                            label=plt_settings['legend']['label'][index],
