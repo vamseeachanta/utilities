@@ -1,5 +1,6 @@
 # import camelot
 import tabula
+import PyPDF2
 
 
 class ReadPDF:
@@ -8,15 +9,15 @@ class ReadPDF:
         pass
 
     def read_pdf(self, cfg, file_index=0):
-        if cfg['files']['from_pdf'][file_index].__contains__('package'):
-            if cfg['files']['from_pdf'][file_index]['package'] in [
-                    None, 'tabula'
-            ]:
-                df = self.from_pdf_tabula(cfg, file_index)
-            elif cfg['files']['from_pdf'][file_index]['package'] == 'camelot':
-                df = self.from_pdf_camelot(cfg, file_index)
-        else:
+        parse_library = cfg.get('library', 'tabula')
+        if cfg['files']['from_pdf'][file_index]['package'] == 'camelot':
+            df = self.from_pdf_camelot(cfg, file_index)
+        elif parse_library == 'PyPDF2':
             df = self.from_pdf_tabula(cfg, file_index)
+        elif parse_library == 'tabula':
+            df = self.from_pdf_tabula(cfg, file_index)
+        else:
+            raise KeyError("PDF parsing library not programmed")
 
         return df
 
@@ -33,3 +34,7 @@ class ReadPDF:
             suppress_stdout=False)
         print(df)
         return df
+
+    def from_pdf_PyPDF2(self, cfg, file_index=0):
+        reader = PyPDF2.PdfReader(cfg['files']['from_pdf'][file_index]['io'])
+        page = reader.pages[3]

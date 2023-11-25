@@ -19,4 +19,5 @@ dependencies:
     - fitz
     - camelot
     - tabula
+    - GitPython
     

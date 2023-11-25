@@ -35,4 +35,5 @@ Templates configuration
 https://stackoverflow.com/questions/73649994/arrows-in-plotly-python
 https://plotly.com/python/text-and-annotations/
 
+https://www.linkedin.com/posts/maribickpostanes_python-oilandgas-datavisualization-ugcPost-7129244782719111169-Q-CC python oil and gas near-real-time visualization of multiple parameters
 

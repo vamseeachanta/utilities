@@ -1,0 +1,17 @@
+basename: gitpython
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+actions:
+  summary: True
+  commit: True
+  
+
+repos:
+    -
+      io: C:\Users\ss7a2365\Documents\github\achantas-data
+
