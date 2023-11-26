@@ -8,6 +8,7 @@ from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.tools.pdf.read_pdf import ReadPDF
+from assetutilities.tools.pdf.edit_pdf import EditPDF
 
 from assetutilities.common.excel_utilities import ExcelUtilities
 from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
@@ -38,6 +39,9 @@ def engine(inputfile=None):
     elif basename in ['read_pdf']:
         read_pdf = ReadPDF()
         read_pdf.read_pdf(cfg_base)
+    elif basename in ['edit_pdf']:
+        edit_pdf = EditPDF()
+        edit_pdf.edit_pdf(cfg_base)
     elif basename in ['gitpython']:
         gpu = GitPythonUtilities()
         gpu.router(cfg_base)
