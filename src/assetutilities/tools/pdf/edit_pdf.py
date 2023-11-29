@@ -6,14 +6,21 @@ class EditPDF:
     def __init__(self) -> None:
         pass
 
-    def edit_pdf(self, cfg, file_index=0):
+    def edit_pdf(self, cfg, file_index=None):
         parse_library = cfg.get('library', 'PyPDF2')
         if parse_library == 'PyPDF2':
-            self.from_pdf_PyPDF2(cfg, file_index)
+            self.process_cfg_files(cfg, file_index)
         else:
             raise KeyError("PDF library not programmed")
 
-    def from_pdf_PyPDF2(self, cfg, file_index=0):
+    def process_cfg_files(self, cfg, file_index=None):
+        if file_index is None:
+            for file_index in range(0, len(cfg['files'])):
+                self.from_pdf_PyPDF2(cfg, file_index)
+        else:
+            self.from_pdf_PyPDF2(cfg, file_index)
+
+    def from_pdf_PyPDF2(self, cfg, file_index=None):
 
         file_name = cfg['files'][file_index]['io']
         pages_groups = cfg['files'][file_index]['pages']
