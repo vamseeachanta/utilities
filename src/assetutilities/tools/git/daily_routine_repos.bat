@@ -1,4 +1,6 @@
 REM #TODO get current directory and then refer back to the daily_routine batch file relative to this directory.
+cd C:\Users\ss7a2365\Documents\github\structuralstrength
+cmd /c "C:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tools\git\daily_routine.bat"
 
 cd C:\Users\ss7a2365\Documents\github\aceengineer-admin
 cmd /c "C:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tools\git\daily_routine.bat"
@@ -89,3 +91,4 @@ cmd /c "C:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\too
 
 cd C:\Users\ss7a2365\Documents\github\teamresumes
 cmd /c "C:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tools\git\daily_routine.bat"
+
