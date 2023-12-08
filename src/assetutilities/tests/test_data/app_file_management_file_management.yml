@@ -1,0 +1,34 @@
+&id001 !!python/object/new:assetutilities.common.data.AttributeDict
+dictitems:
+  Analysis:
+    CustomInputFile: c:\Users\vamseea\github\assetutilities\src\assetutilities\tests\test_data/file_management.yml
+    DefaultInputFile: null
+    analysis_root_folder: c:\Users\vamseea\github\assetutilities\src\assetutilities\tests\test_data
+    basename: file_management
+    cfg_array_file_names: null
+    file_name: app_file_management_file_management
+    file_name_for_overwrite: app_file_management_file_management
+    log_folder: c:\Users\vamseea\github\assetutilities\src\assetutilities\tests\test_data\logs\
+    result_folder: c:\Users\vamseea\github\assetutilities\src\assetutilities\tests\test_data\results\
+    start_time: 2023-12-08 13:01:06.724812
+  basename: file_management
+  default:
+    config:
+      overwrite:
+        output: true
+    log_level: DEBUG
+  file_management:
+    files:
+    - C:\Users\vamseea\Desktop\test\350106-SC-EN-003-SD-000009.PDF
+    - C:\Users\vamseea\Desktop\test\350106-SC-EN-003-SD-000010-WLNG.PDF
+    - C:\Users\vamseea\Desktop\test\350106-SC-EN-003-SD-000010.PDF
+  files:
+    extension: pdf
+    files_in_current_directory:
+      directory: C:\Users\vamseea\Desktop\test
+      flag: false
+    filters:
+      contains:
+      - -WLNG
+      not_contains: []
+state: *id001
