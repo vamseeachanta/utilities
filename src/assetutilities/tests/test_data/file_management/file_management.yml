@@ -12,5 +12,5 @@ files:
     directory: C:\Users\vamseea\Desktop\Wood Deliverables
   extension: pdf
   filters:
-    filename_contains: [-WLNG]
+    filename_contains: [WLNG]
     filename_not_contains: []

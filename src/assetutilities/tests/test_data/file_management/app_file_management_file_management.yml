@@ -10,7 +10,7 @@ dictitems:
     file_name_for_overwrite: app_file_management_file_management
     log_folder: .\logs\
     result_folder: .\results\
-    start_time: 2023-12-08 13:26:57.058537
+    start_time: 2023-12-08 13:28:53.704131
   basename: file_management
   default:
     config:
@@ -127,6 +127,6 @@ dictitems:
       flag: false
     filters:
       filename_contains:
-      - -WLNG
+      - WLNG
       filename_not_contains: []
 state: *id001

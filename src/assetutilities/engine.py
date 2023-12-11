@@ -9,6 +9,7 @@ from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.excel_utilities import ExcelUtilities
+from assetutilities.common.text_analytics import TextAnalytics
 
 from assetutilities.tools.pdf.read_pdf import ReadPDF
 from assetutilities.tools.pdf.edit_pdf import EditPDF
@@ -43,13 +44,16 @@ def engine(inputfile=None):
         read_pdf.read_pdf(cfg_base)
     elif basename in ['file_management']:
         fm = FileManagement()
-        fm.fm_router(cfg_base)
+        fm.router(cfg_base)
     elif basename in ['edit_pdf']:
         edit_pdf = EditPDF()
         edit_pdf.edit_pdf(cfg_base)
     elif basename in ['gitpython']:
         gpu = GitPythonUtilities()
         gpu.router(cfg_base)
+    elif basename in ['text_analytics']:
+        ta = TextAnalytics()
+        ta.router(cfg_base)
     else:
         raise (
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))
