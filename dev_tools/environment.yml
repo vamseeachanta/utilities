@@ -12,17 +12,17 @@ dependencies:
       - twine
       - chardet
       - python-certifi-win32
-      - plotly-express==0.4.1
+      - plotly-express
       - matplotlib
       - pyyaml
       - pandoc
       - wkhtmltopdf
       # - popplerqt5 Only available in linux systems
-      - pdfannots
-      - fitz
-      - camelot
-      - tabula
-      - GitPython
+      # - pdfannots
+      # - fitz
+      # - camelot
+      # - tabula
+      # - GitPython
       - webcolors
       - xlsxwriter
-      - git
+      # - git
