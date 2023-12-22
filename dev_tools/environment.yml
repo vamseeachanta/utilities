@@ -17,6 +17,7 @@ dependencies:
       - pyyaml
       - pandoc
       - wkhtmltopdf
+      - plantuml
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
