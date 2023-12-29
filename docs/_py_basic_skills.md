@@ -41,7 +41,7 @@ Document/Questionnaire for Basic python skils. Fill in to the best of your knowl
   - Did you clone a Github repository in your personal computer?
   - Can you share your own github repository?
 
-**Others**
+**Others (For New Grads)**
 
 - Share any program you have written (in any programming language) that you are very proud of
 - Share a communication or email that you are proud of
