@@ -18,12 +18,12 @@ dependencies:
       - pandoc
       - wkhtmltopdf
       - plantuml
+      - webcolors
+      - xlsxwriter
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
       # - camelot
       # - tabula
       # - GitPython
-      - webcolors
-      - xlsxwriter
       # - git
