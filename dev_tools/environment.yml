@@ -18,6 +18,8 @@ dependencies:
       - pandoc
       - wkhtmltopdf
       - plantuml
+      - webcolors
+      - xlsxwriter
       - imp
       # - popplerqt5 Only available in linux systems
       # - pdfannots
@@ -25,6 +27,4 @@ dependencies:
       # - camelot
       # - tabula
       # - GitPython
-      - webcolors
-      - xlsxwriter
       # - git
