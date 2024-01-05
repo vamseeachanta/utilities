@@ -1,3 +1,4 @@
+import os
 import glob
 
 
@@ -17,12 +18,17 @@ class FileManagement:
             file_folder = cfg['files']['files_in_current_directory']['directory']
 
         extension = cfg['files']['extension']
-        files = glob.glob(file_folder+'\*.' + extension)
+        os.path.join(file_folder,'*.' + extension)
+        files = glob.glob(os.path.join(file_folder,'*.' + extension))
 
-        cfg_filter = cfg['files']['filters']
-        filtered_files =self.get_filtered_files(files, cfg_filter)
+        if 'filters' in cfg['files']:
+            cfg_filter = cfg['files']['filters']
+            filtered_files =self.get_filtered_files(files, cfg_filter)
+        else:
+            filtered_files = files.copy()
 
-        cfg.update({cfg['basename']: {'files': filtered_files}})
+        basenames = self.get_basenames(filtered_files)
+        cfg.update({cfg['basename']: {'files': filtered_files, 'basenames': basenames, 'file_folder': file_folder}})
 
         return cfg
 
@@ -39,3 +45,10 @@ class FileManagement:
                 filtered_files.remove(file)
 
         return filtered_files
+    
+    def get_basenames(self, files):
+        basenames = []
+        for file in files:
+            basenames.append(os.path.basename(file))
+        return basenames
+    

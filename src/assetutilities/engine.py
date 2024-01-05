@@ -20,18 +20,21 @@ save_data = SaveData()
 library_name = 'assetutilities'
 
 
-def engine(inputfile=None):
-    inputfile = validate_arguments_run_methods(inputfile)
-
-    cfg = ymlInput(inputfile, updateYml=None)
-    cfg = AttributeDict(cfg)
+def engine(inputfile=None, cfg=None):
     if cfg is None:
-        raise ValueError("cfg is None")
+        inputfile = validate_arguments_run_methods(inputfile)
+        cfg = ymlInput(inputfile, updateYml=None)
+        cfg = AttributeDict(cfg)
+        if cfg is None:
+            raise ValueError("cfg is None")
 
-    basename = cfg['basename']
-    application_manager = ConfigureApplicationInputs(basename)
-    application_manager.configure(cfg, library_name)
-    cfg_base = application_manager.cfg
+        basename = cfg['basename']
+        application_manager = ConfigureApplicationInputs(basename)
+        application_manager.configure(cfg, library_name)
+        cfg_base = application_manager.cfg
+    else:
+        cfg_base = cfg
+        basename = cfg_base['basename']
 
     if basename in ['excel_utilities']:
         eu = ExcelUtilities()
@@ -58,7 +61,8 @@ def engine(inputfile=None):
         raise (
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))
 
-    save_cfg(cfg_base=cfg_base)
+    if cfg is None:
+        save_cfg(cfg_base=cfg_base)
 
     return cfg_base
 
