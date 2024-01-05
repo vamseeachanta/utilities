@@ -1,5 +1,4 @@
 import os
-import imp
 import logging
 from pathlib import Path
 from webcolors import rgb_to_hex
@@ -10,6 +9,7 @@ def get_valid_file_name(file_name):
 
 
 def get_module_path(module=None):
+    import imp
     if module is None:
         module_path = __name__
         module = module_path.split(".")[0]
