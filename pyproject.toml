@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 keywords=['package', 'library', 'module']
-dependencies = ["pyyaml", 'tomli; python_version < "3.11"']
+dependencies = ['pyyaml', 'tabula', 'PyPDF2', 'xlsxwriter', 'webcolors']
 requires-python = ">=3.7"
 
     [project.optional-dependencies]

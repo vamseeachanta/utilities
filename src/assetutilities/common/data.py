@@ -1,6 +1,7 @@
 import datetime
 import yaml
 import operator
+import pandas as pd
 from functools import reduce
 
 from assetutilities.common.utilities import is_file_valid_func
@@ -34,6 +35,20 @@ class ReadFromExcel():
 
         return result
 
+class ReadFromCSV():
+
+    def __init__(self) -> None:
+        pass
+
+    def to_df(self, cfg, file_index=0):
+        sample_cfg = {'io': 'data_manager/data/sample_data.csv'}
+        
+        df = pd.read_csv(cfg['io'], delimiter=cfg['delimiter'], delim_whitespace=True)
+        
+        
+
+
+        return result
 
 class ReadData():
 
@@ -290,13 +305,16 @@ class ReadData():
             cfg)
         all_lines_float_objects = []
         for line_index in range(0, len(all_lines_as_strings)):
-            if cfg['delimiter'] == 'space':
+            if 'delimiter' not in cfg or cfg['delimiter'] == 'space':
                 line_string_objects = all_lines_as_strings[line_index].split()
             else:
                 print("Unknown delimiter")
-            all_lines_float_objects.append(
-                [float(item) for item in line_string_objects])
-
+            try:
+                all_lines_float_objects.append(
+                    [float(item) for item in line_string_objects])
+            except:
+                all_lines_float_objects.append(line_string_objects)
+                
         result = []
         for line_float_object_index in range(0,
                                              len(all_lines_float_objects[0])):
@@ -310,7 +328,7 @@ class ReadData():
                     [line_float_object_index])
 
         if cfg['DataFrame']:
-            df = pd.DataFrame(columns=cfg['columns'])
+            df = pd.DataFrame(columns=cfg.get('columns', None))
             for column_index in range(0, len(df.columns)):
                 df[df.columns[column_index]] = result[column_index]
             result = df
