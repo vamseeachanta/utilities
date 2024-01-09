@@ -8,3 +8,4 @@ PyPDF2
 xlsxwriter
 webcolors
 pytest
+deepdiff
