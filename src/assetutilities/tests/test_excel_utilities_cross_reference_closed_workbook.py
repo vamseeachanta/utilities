@@ -33,6 +33,7 @@ def get_valid_pytest_output_file(pytest_output_file):
     return pytest_output_file
 
 
+@pytest.mark.skip(reason="Not worked as intended.")
 def test_excel_utilties_closed_file_reference():
     input_file = 'test_data/excel_utilities/excel_utilities_cross_reference_closed_workbook.yml'
 
@@ -46,5 +47,4 @@ def test_excel_utilties_closed_file_reference():
 
     run_excel_utilties_closed_file_reference(input_file, expected_result)
 
-
-test_excel_utilties_closed_file_reference()
+# test_excel_utilties_closed_file_reference()

@@ -45,4 +45,4 @@ def test_read_pdf():
     run_read_pdf(input_file, expected_result)
 
 
-test_read_pdf()
+# test_read_pdf()

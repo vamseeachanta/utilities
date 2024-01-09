@@ -31,7 +31,7 @@ def get_valid_pytest_output_file(pytest_output_file):
 
 
 def test_visualization_polar():
-    input_file = 'test_data/visualization/visualization_polar_matplotlib_add_axes_1.yml'
+    input_file = 'test_data/visualization/visualization_polar_matplotlib_add_axes.yml'
 
     # pytest_output_file = '../test_data/6d_buoy/buoy_6d_circular_px_0_pytest.yml'
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)

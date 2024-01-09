@@ -331,7 +331,7 @@ class VisualizationComponents():
         elif plt_settings['plt_kind'] == 'polar_scatter':
             # Radial scatter
             import plotly.express as px
-            plt = px.scatter_polar(df, r=df['r'], theta=df['theta'])
+            plt = px.scatter_polar(df, r=df['r_0'], theta=df['theta_0'])
 
         return plt
 
