@@ -9,3 +9,4 @@ xlsxwriter
 webcolors
 pytest
 deepdiff
+bumpver
