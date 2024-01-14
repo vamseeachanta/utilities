@@ -17,7 +17,7 @@ More information is available at:
 Version:
 --------
 
-- assetutilities v0.0.1
+- assetutilities v0.0.3
 """
 from assetutilities.engine import engine
 
