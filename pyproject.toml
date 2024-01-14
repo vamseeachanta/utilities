@@ -29,6 +29,12 @@ requires-python = ">=3.7"
     repository    = "https://github.com/vamseeachanta/assetutilities"
     documentation = "https://github.com/vamseeachanta/assetutilities/blob/main/README.md"
 
+[tool.setuptools]
+include-package-data = true
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+"*" = ["*.yml", "*.csv", "*.xlsx", "*.html", "*.txt"]
 
 [tool.bumpver]
 current_version = "0.0.2"
