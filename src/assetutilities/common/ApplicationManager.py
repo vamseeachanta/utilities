@@ -310,8 +310,9 @@ class ConfigureApplicationInputs():
             if self.cfg['Analysis']['fe_folder'] == None:
                 self.cfg['Analysis']['fe_folder'] = self.cfg['Analysis'][
                     'result_folder']
-        except:
-            pass
+        except KeyError as e:
+            logging.info("No fe_folder key in Analysis section of yml file")
+            logging.info("Error is : {}".format(e))
 
     def convert_cfg_to_attribute_dictionary(self):
         self.cfg = AttributeDict(self.cfg)
