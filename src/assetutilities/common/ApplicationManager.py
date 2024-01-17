@@ -267,11 +267,11 @@ class ConfigureApplicationInputs():
         file_name = 'app_' + self.basename + '_' + custom_file_name + '_' + application_start_time.strftime(
             '%Y%m%d_%Hh%Mm')
         file_name_for_overwrite = 'app_' + self.basename + '_' + custom_file_name
-        result_folder = AnalysisRootFolder + '\\results\\'
-        result_data_folder = result_folder + '\\Data'
-        result_plot_folder = result_folder + '\\Plot'
-        result_folder = AnalysisRootFolder + '\\results\\'
-        log_folder = AnalysisRootFolder + '\\logs\\'
+        result_folder = os.path.join(AnalysisRootFolder, 'results')
+        result_data_folder = os.path.join(result_folder, 'Data')
+        result_plot_folder = os.path.join(result_folder, 'Plot')
+        result_folder = os.path.join(AnalysisRootFolder, 'results')
+        log_folder = os.path.join(AnalysisRootFolder, 'logs')
 
         if not os.path.exists(result_folder):
             os.mkdir(result_folder)
