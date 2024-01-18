@@ -1,0 +1,32 @@
+&id001 !!python/object/new:assetutilities.common.data.AttributeDict
+dictitems:
+  Analysis:
+    CustomInputFile: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/excel_utilities/excel_utilities.yml
+    DefaultInputFile: null
+    analysis_root_folder: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/excel_utilities
+    basename: excel_utilities
+    cfg_array_file_names: null
+    file_name: app_excel_utilities_excel_utilities
+    file_name_for_overwrite: app_excel_utilities_excel_utilities
+    log_folder: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/excel_utilities\logs\
+    result_folder: c:\Users\ss7a2365\Documents\github\assetutilities\src\assetutilities\tests\test_data/excel_utilities\results\
+    start_time: 2023-11-08 12:57:32.081286
+  basename: excel_utilities
+  default:
+    config:
+      overwrite:
+        output: true
+    log_level: DEBUG
+  files:
+    source:
+      cell_range: null
+      path: C:\Users\ss7a2365\Desktop\
+      workbook: S01-Dyn-FC180-2.5mHs.xlsx
+      worksheet: EditingTable
+    target:
+      cell_range: null
+      path: C:\Users\ss7a2365\Desktop\
+      workbook: Summary_1.xlsx
+      worksheet: Sheet1
+  task: cross_reference_values_from_closed_workbooks
+state: *id001

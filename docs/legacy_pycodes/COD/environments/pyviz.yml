@@ -1,0 +1,11 @@
+name: pyviz
+channels:
+  - defaults
+  - pyviz/label/dev
+dependencies:
+  - python=3.6
+  - pyviz
+  - pyyaml
+  - yaml
+  - pip:
+    -oyaml

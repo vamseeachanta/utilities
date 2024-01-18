@@ -1,0 +1,12 @@
+assetutilities
+pandas
+plotly
+matplotlib
+pyyaml
+tabula
+PyPDF2
+xlsxwriter
+webcolors
+pytest
+deepdiff
+bumpver

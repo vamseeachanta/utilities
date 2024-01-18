@@ -1,0 +1,16 @@
+basename: edit_pdf
+library: PyPDF2
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+files:
+  -
+    io: C:\Users\ss7a2365\Documents\ss7_general\crosby\Metric Catalog 2022.pdf
+    pages: [[1, 100], [101, 200], [201, 300], [301, 452]]
+  -
+    io: C:\Users\ss7a2365\Documents\ss7_general\crosby\Imperial Catalog 2022.pdf
+    pages: [[1, 100], [101, 200], [201, 300], [301, 452]]

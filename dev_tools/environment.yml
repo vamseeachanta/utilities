@@ -1,0 +1,30 @@
+name: assetutilities
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pip:
+      - numpy
+      - pandas
+      - build
+      - twine
+      - chardet
+      - python-certifi-win32
+      - plotly-express
+      - matplotlib
+      - pyyaml
+      - pandoc
+      - wkhtmltopdf
+      - plantuml
+      - webcolors
+      - xlsxwriter
+      - imp
+      # - popplerqt5 Only available in linux systems
+      # - pdfannots
+      # - fitz
+      # - camelot
+      # - tabula
+      # - GitPython
+      # - git

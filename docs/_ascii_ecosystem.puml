@@ -1,0 +1,39 @@
+@startwbs _ascii_ecosystem
+
+scale 2
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Tomato
+
+title ASCII EcoSystem
+
+* ASCII EcoSystem
+
+** Project Management
+*** Jira
+
+** Version control
+*** Git
+*** GitHub
+
+** Documentation
+*** Markdown in **Github**
+*** Flowcharts in **PlantUML**
+
+** Programming - Core
+*** Miniconda Python
+*** VS Code
+*** Github  Copilot
+
+** Programming - accessories
+*** Github Actions \nfor CI/CD and testing
+*** VS Code Settings \nto execute scripts
+*** VS Code Settings Sync  \nwork env in multiple computers
+
+footer
+%date("yyyy.MM.dd' at 'HH:mm")
+%filename()
+end footer
+
+@endwbs

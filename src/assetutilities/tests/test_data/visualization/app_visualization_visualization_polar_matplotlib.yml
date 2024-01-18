@@ -1,0 +1,85 @@
+&id001 !!python/object/new:assetutilities.common.data.AttributeDict
+dictitems:
+  Analysis:
+    CustomInputFile: .\test_data\visualization\visualization_polar_matplotlib.yml
+    DefaultInputFile: null
+    analysis_root_folder: .\test_data\visualization
+    basename: visualization
+    cfg_array_file_names: null
+    file_name: app_visualization_visualization_polar_matplotlib
+    file_name_for_overwrite: app_visualization_visualization_polar_matplotlib
+    log_folder: .\test_data\visualization\logs\
+    result_folder: .\test_data\visualization\results\
+    start_time: 2023-11-18 06:43:47.376196
+  basename: visualization
+  data:
+    alpha:
+    - 1
+    - 0.75
+    color:
+    - blue
+    - green
+    legend:
+      label:
+      - vessel inline with product route
+      - vessel rotation wrt. product route
+    linestyle:
+    - --
+    - '-'
+    - '-'
+    - ':'
+    r:
+    - - 0.5
+      - 1
+      - 2
+      - 2.5
+      - 3
+      - 4
+    - - 0.5
+      - 1
+      - 2
+      - 2.5
+      - 3
+      - 4
+    theta:
+    - - 35
+      - 70
+      - 120
+      - 155
+      - 205
+      - 240
+  default:
+    config:
+      overwrite:
+        output: true
+    log_level: DEBUG
+  settings:
+    file_name: allowable_wave_height_matplotlib
+    label: Allowable Wave Height
+    multiple: false
+    plt_engine: matplotlib
+    plt_kind: polar_scatter
+    plt_save_extensions:
+    - .png
+    set_rlabel_position: -22.5
+    set_rmax: 10
+    set_rticks:
+    - 1
+    - 2
+    - 3
+    set_thetagrids:
+    - 0
+    - 30
+    - 60
+    - 90
+    - 120
+    - 150
+    - 180
+    - 210
+    - 240
+    - 270
+    - 300
+    - 330
+    title: Allowable Significant Wave Height (Hs)
+    traces: 2
+state: *id001
