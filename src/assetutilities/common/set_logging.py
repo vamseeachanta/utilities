@@ -29,10 +29,11 @@ def set_logging(cfg):
         os.makedirs(cfg['Analysis']['log_folder'])
 
     # Basic configuration for logging
+    logfilename = os.path.join(cfg['Analysis']['log_folder'], cfg['Analysis']['file_name'] + '.log')
     logging.basicConfig(level=logNumericLevel,
                         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p',
-                        filename=cfg['Analysis']['log_folder'] + cfg['Analysis']['file_name'] + '.log',
+                        filename=logfilename,
                         filemode='w')
 
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
