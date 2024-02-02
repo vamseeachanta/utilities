@@ -21,10 +21,10 @@ dependencies:
       - webcolors
       - xlsxwriter
       - imp
+      - git
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
       # - camelot
       # - tabula
       # - GitPython
-      # - git

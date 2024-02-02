@@ -10,3 +10,4 @@ webcolors
 pytest
 deepdiff
 bumpver
+git
