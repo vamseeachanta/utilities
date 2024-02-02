@@ -30,6 +30,7 @@ settings:
     prop: {family: Arial, size: 8}
 
 data:
+  type: input
   r : 
     - [0.5,1,2,2.5,3,4]
     - [0.5,1,2,2.5,3,4]

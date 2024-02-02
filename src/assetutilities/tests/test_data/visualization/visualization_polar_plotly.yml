@@ -15,6 +15,7 @@ settings:
   plt_save_extensions: ['.html']
 
 data:
+  type: input
   r : 
     - [0.5,1,2,2.5,3,4]
   theta : 

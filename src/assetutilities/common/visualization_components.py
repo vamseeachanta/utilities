@@ -1,4 +1,5 @@
 import logging
+import os
 
 import numpy as np
 import pandas as pd
@@ -15,24 +16,43 @@ class VisualizationComponents():
         self.cfg = cfg
 
     def visualization_router(self, cfg):
-        #TODO program to handle multiple plots with a single input file. Architecture exists but refinement needed with tests.
         plt_settings = cfg['settings']
         if 'polar' in cfg['settings']['plt_kind']:
-            data_df = self.get_polar_data(cfg)
-            plt_settings['traces'] = int(len(data_df.columns) / 2)
-            if cfg['settings']['plt_engine'] == 'plotly':
-                plt = self.get_polar_plot_plotly(data_df, plt_settings)
-                self.save_polar_plot_and_close_plotly(plt, cfg)
-            elif cfg['settings']['plt_engine'] == 'matplotlib':
-                plt_properties = self.get_polar_plot_matplotlib(
-                    data_df, plt_settings, cfg)
-                self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
+            self.polar_plot_set_up(cfg, plt_settings)
+        elif 'xy' in cfg['settings']['plt_kind']:
+            self.xy_plot_set_up(cfg, plt_settings)
         else:
             raise (Exception(f'Other plots coding to be completed ... FAIL'))
+
+    def xy_plot_set_up(self, cfg, plt_settings):
+        data_df = self.get_xy_data(cfg)
+        if cfg['settings']['plt_engine'] == 'plotly':
+            plt = self.get_xy_plot_plotly(data_df, plt_settings)
+            self.save_xy_plot_and_close_plotly(plt, cfg)
+        elif cfg['settings']['plt_engine'] == 'matplotlib':
+            plt_properties = self.get_xy_plot_matplotlib(data_df, plt_settings, cfg)
+            self.save_xy_plot_and_close_matplotlib(plt_properties, cfg)
+
+    def polar_plot_set_up(self, cfg, plt_settings):
+        data_df = self.get_polar_data(cfg)
+        plt_settings['traces'] = int(len(data_df.columns) / 2)
+        if cfg['settings']['plt_engine'] == 'plotly':
+            plt = self.get_polar_plot_plotly(data_df, plt_settings)
+            self.save_polar_plot_and_close_plotly(plt, cfg)
+        elif cfg['settings']['plt_engine'] == 'matplotlib':
+            plt_properties = self.get_polar_plot_matplotlib(
+                    data_df, plt_settings, cfg)
+            self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
         data_dict = self.get_polar_mapped_data_dict(cfg)
         data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
+        return data_df
+
+    def get_xy_data(self, cfg):
+        data_dict = self.get_xy_mapped_data_dict(cfg)
+        data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
+        
         return data_df
 
     def get_polar_mapped_data_dict(self, cfg):
@@ -67,6 +87,33 @@ class VisualizationComponents():
 
         return data_dict
 
+    def get_xy_mapped_data_dict(self, cfg):
+        x_data = cfg['data']['x']
+        y_data = cfg['data']['y']
+        
+        # Get legend data
+        if 'legend' in cfg['data']:
+            legend_data = cfg['data']['legend']
+        else:
+            legend_data = []
+            
+        no_of_trends = max(len(x_data), len(y_data))
+        
+        if not len(legend_data) == no_of_trends:
+            legend_data = ['legend_' + str(i) for i in range(0, no_of_trends)]
+            
+        if len(x_data) < len(y_data):
+            x_data = [x_data[0]] * len(y_data)
+        if len(x_data) > len(y_data):
+            y_data = [y_data[0]] * len(x_data)
+
+        data_dict = {}
+        for i in range(0, len(legend_data)):
+            data_dict.update({'x_' + str(i): x_data[i]})
+            data_dict.update({'y_' + str(i): y_data[i]})
+
+        return data_dict
+
     def get_axis_for_polar(self, rect):
         rect_polar = rect.copy()
         rect_polar[0] = rect[0] * np.pi / 180
@@ -74,254 +121,29 @@ class VisualizationComponents():
 
         return rect_polar
 
-    def get_raw_data(self):
-        if self.cfg.default['input_data']['source'] == 'db':
-            self.get_environments()
-            for env_index in range(0, len(self.environments)):
-                # for env_index in range(0, 1):
-                self.env = self.environments[env_index]
-                db_properties = self.cfg.default['db'][self.env]
-                self.set_up_db_connection(db_properties)
-                try:
-                    self.get_input_data()
-                except Exception as e:
-                    print("Error encountered: {}".format(e))
-                    logging.info(str(e))
-                    print("No connection to environment {}".format(self.env))
-        else:
-            import sys
-            print("No data source specified")
-            sys.exit()
 
-    def get_input_data(self):
-        cfg_input = self.cfg.default['input_data'].copy()
-        if cfg_input['source'] == 'db':
-            self.dbe.get_input_data_from_db(cfg_input)
-        else:
-            print("No input data source defined")
-
-    def get_environments(self):
-        self.environments = list(self.cfg.default['db'].keys())
-
-    def set_up_db_connection(self, db_properties):
-        from common.database import Database
-        self.dbe = Database(db_properties)
-        try:
-            self.dbe.enable_connection_and_cursor()
-            return True
-        except Exception as e:
-            print("Error as {}".format(e))
-            print("No connection for environment: {}".format(db_properties))
-            return False
-
-    def save_raw_data(self):
-        if self.cfg.default['input_data'].__contains__(
-                'save') and self.cfg.default['input_data']['save']['flag']:
-            from common.data import SaveData
-            save_data = SaveData()
-            cfg_input = self.cfg.default['input_data'].copy()
-            sheet_array = []
-            df_array = []
-            for set_index in range(0, len(cfg_input['sets'])):
-                set_info = cfg_input['sets'][set_index]
-                sheet_array.append(set_info['label'])
-                df = getattr(self.dbe, 'input_data_' + set_info['label'])
-                if cfg_input['save']['to_csv']:
-                    file_name = self.cfg['Analysis'][
-                        'result_folder'] + self.cfg['Analysis'][
-                            'file_name'] + '_' + sheet_array[set_index] + '.csv'
-                    df.to_csv(file_name, index=False)
-                df_array.append(df)
-
-            if cfg_input['save']['to_xlsx']:
-                cfg_temp = {
-                    'SheetNames':
-                        sheet_array,
-                    'FileName':
-                        self.cfg['Analysis']['result_folder'] +
-                        self.cfg['Analysis']['file_name'] + '.xlsx'
-                }
-                save_data.DataFrameArray_To_xlsx_openpyxl(df_array, cfg_temp)
-
-    def prepare_visualizations(self, app_object=None):
-        if self.cfg.__contains__('plot_settings'):
-            self.prepare_single()
-        if self.cfg.__contains__('plot_multiple'):
-            self.prepare_multiple(app_object)
-
-    def prepare_single(self):
-        from assetutilities.common.visualizations import Visualization
-        viz_data = Visualization()
-
-        for plt_index in range(0, len(self.cfg['plot_settings'])):
-            plt_settings = self.cfg['plot_settings'][plt_index]
-            df = self.prepare_plot_input_data(plt_index, plt_settings)
-
-            plt_settings.update({
-                'file_name':
-                    self.cfg['Analysis']['result_folder'] +
-                    self.cfg['Analysis']['file_name'] + '_' +
-                    plt_settings['file_name_extension'] + '.png'
-            })
-
-            for data_index in range(0, len(plt_settings['data'])):
-                plt_settings_temp = plt_settings['data'][data_index].copy()
-                viz_data.from_df_columns(df, plt_settings_temp)
-
-            viz_data.add_title_and_axis_labels()
-            viz_data.add_legend()
-            viz_data.add_x_y_lim_formats()
-            viz_data.add_reference_lines_and_spans()
-            viz_data.save_and_close()
-
-    def prepare_plot_input_data(self, data_set_cfg, app_object=None):
-        if data_set_cfg['df'] == 'input_data_table_statistics':
-            df = self.dbe.prepare_input_statistics(data_set_cfg)
-        elif app_object is None:
-            df = getattr(self.dbe, data_set_cfg['df'])
-        else:
-            if 'output' in data_set_cfg['df']:
-                df = getattr(app_object, data_set_cfg['df'])
-            elif 'input_data_' in data_set_cfg['df']:
-                if hasattr(app_object, 'dbe'):
-                    df = getattr(app_object.dbe, data_set_cfg['df'])
-                elif hasattr(app_object, data_set_cfg['df']):
-                    df = getattr(app_object, data_set_cfg['df'])
+    def add_legend(self, plt, plt_settings):
+        if plt_settings.__contains__(
+                'legend') and plt_settings['legend']:
+            if plt_settings.__contains__('legend_location'):
+                legend_location = plt_settings['legend_location']
             else:
-                import pandas as pd
-                print(
-                    "Data frame with label: {} can not be found in class object"
-                    .format(data_set_cfg['df']))
-                df = pd.DataFrame()
+                legend_location = None
 
-        df = self.get_filtered_df(data_set_cfg, df)
-        df = self.get_scaled_df(data_set_cfg, df)
+            if legend_location == "lower center":
+                plt.legend(loc='best', fontsize=8)
+            elif (legend_location is None) or (legend_location == "best"):
+                plt.legend(loc='best', fontsize=8)
+                
+        return plt
 
-        return df
-
-    def get_filtered_df(self, data_set_cfg, df):
-        from common.data import ReadData
-        read_data = ReadData()
-        df = df.copy()
-        if data_set_cfg.__contains__('filter'):
-            df = read_data.df_filter_by_column_values(data_set_cfg.copy(), df)
-        return df.copy()
-
-    def get_scaled_df(self, data_set_cfg, df):
-        df = df.copy()
-        if data_set_cfg.__contains__('scale'):
-            for column_index in range(0, len(data_set_cfg['scale']['columns'])):
-                column_name = data_set_cfg['scale']['columns'][column_index]
-                df[column_name] = df[column_name] * data_set_cfg['scale'][
-                    'factors'][column_index]
-        return df
-
-    def prepare_multiple(self, app_object):
-        from common.visualizations import Visualization
-        self.viz_data = Visualization()
-
-        for mult_plt_index in range(0, len(self.cfg['plot_multiple'])):
-            self.prepare_a_multiple_plot(mult_plt_index, app_object)
-
-    def prepare_a_multiple_plot(self, mult_plt_index, app_object=None):
-        cfg_mult = self.cfg['plot_multiple'][mult_plt_index].copy()
-        if cfg_mult.__contains__('nrows'):
-            nrows = cfg_mult['nrows']
-        else:
-            nrows = len(cfg_mult['sets'])
-        if cfg_mult.__contains__('ncols'):
-            ncols = cfg_mult['ncols']
-        else:
-            ncols = 1
-
-        if cfg_mult['file_name_extension'] is not None:
-            cfg_mult.update({
-                'file_name':
-                    self.cfg['Analysis']['result_folder'] +
-                    self.cfg['Analysis']['file_name'] + '_' +
-                    cfg_mult['file_name_extension'] + '.png'
-            })
-        else:
-            cfg_mult.update({
-                'file_name':
-                    self.cfg['Analysis']['result_folder'] +
-                    self.cfg['Analysis']['file_name'] + '.png'
-            })
-        self.viz_data.multiple_plots(cfg_mult)
-        for plt_index in range(0, nrows * ncols):
-            plt_settings = cfg_mult['sets'][plt_index]
-            self.viz_data.autoselect_current_subplot(plt_index)
-            if not plt_settings.__contains__('data'):
-                self.plotting_for_no_data_object(plt_settings, app_object)
-            else:
-                for data_set_index in range(0, len(plt_settings['data'])):
-                    data_set_cfg = plt_settings['data'][data_set_index]
-                    self.plot_a_data_set(app_object, data_set_cfg)
-
-            self.viz_data.add_title_and_axis_labels(plt_settings)
-            self.viz_data.add_x_y_lim_formats()
-            self.viz_data.resolution_adjust()
-            self.viz_data.add_reference_lines_and_spans()
-        self.viz_data.save_and_close()
-
-    def plot_a_data_set(self, app_object, data_set_cfg):
-        try:
-            df = self.prepare_plot_input_data(data_set_cfg, app_object)
-            if len(df) > 0:
-                if data_set_cfg['x'].__contains__('fft_freq'):
-                    if data_set_cfg.__contains__('color'):
-                        color = data_set_cfg['color']
-                    else:
-                        color = None
-                    cfg_text = self.add_fft_peaks_notes(df, color)
-                    data_set_cfg.update(cfg_text)
-                self.viz_data.plot_subplot(df, data_set_cfg)
-                self.viz_data.add_legend()
-                self.viz_data.add_text_fields()
-        except Exception as e:
-            print("See Error below. Can not process {}. ".format(
-                str(data_set_cfg)))
-            print("Error: {}".format(e))
-
-    def plotting_for_no_data_object(self, plt_settings, app_object):
-        if plt_settings['df_array']['flag']:
-            df_array_label = plt_settings['df_array']['variable']
-            df_array_dict = getattr(app_object, df_array_label)
-            df_labels = list(df_array_dict.keys())
-            for data_set_index in range(0, len(df_labels)):
-                data_set_cfg = plt_settings['df_array'].copy()
-                label = df_labels[data_set_index]
-                data_set_cfg.update({'label': [label]})
-                app_object.output_df_temp_from_df_array = df_array_dict[label]
-                self.plot_a_data_set(app_object, data_set_cfg)
-        else:
-            import sys
-            print(
-                "Could not find data object. So exiting application without plotting"
-            )
-            sys.exit()
-
-    def add_fft_peaks_notes(self, df, color=None):
-        notes_array = []
-        notes_df = df[df['peak_flag'] == True].copy()
-        notes_df.reset_index(inplace=True, drop=True)
-        for notes_index in range(0, len(notes_df)):
-            x = notes_df['fft_freq'].iloc[notes_index]
-            y = notes_df['power'].iloc[notes_index]
-            notes_element = {
-                'x': x,
-                'y': y,
-                'text': ' {0} s, {1} Hz'.format(round(1 / x, 2), round(x, 2))
-            }
-            notes_element.update({'color': color})
-            notes_array.append(notes_element)
-
-        cfg_text = {'text_fields': notes_array}
-        return cfg_text
-
-    def run_example(self):
-        pass
-        # TBA
+    def future_functions(self):
+        # TODO
+        self.add_title_and_axis_labels()
+        self.add_legend()
+        self.add_x_y_lim_formats()
+        self.add_reference_lines_and_spans()
+        self.save_and_close()
 
     def get_polar_plot_plotly(self, df, plt_settings):
         if plt_settings['plt_kind'] == 'polar':
@@ -334,6 +156,49 @@ class VisualizationComponents():
             plt = px.scatter_polar(df, r=df['r_0'], theta=df['theta_0'])
 
         return plt
+
+    def get_xy_plot_matplotlib(self, df, plt_settings, cfg):
+        import matplotlib.pyplot as plt
+        if 'plt_properties' in plt_settings and plt_settings['plt_properties'][
+                'plt'] is not None:
+            plt = plt_settings['plt_properties']['plt']
+            
+        fig, ax = plt.subplots()
+        
+        # Add trace or plot style
+        plt_settings['traces'] = int(len(df.columns) / 2)
+        for index in range(0, plt_settings['traces']):
+            ax.plot(df['x_' + str(index)],
+                    df['y_' + str(index)],
+                    label=plt_settings['legend']['label'][index],
+                    color=cfg['data']['color'][index],
+                    linestyle=cfg['data']['linestyle'][index],
+                    alpha=cfg['data']['alpha'][index])
+        
+        grid = plt_settings.get('grid', True)
+        ax.grid(grid)
+
+        title = plt_settings.get('title', None)
+        if title is not None:
+            ax.set_title(plt_settings['title'], va='bottom')
+
+        legend_flag = plt_settings['legend'].get('flag', True)
+        if legend_flag:
+            ax.legend(loc='best')
+            prop = plt_settings['legend'].get('prop', None)
+            if prop is not None:
+                plt.legend(prop=prop)
+
+        plt_properties = {'plt': plt, 'fig': fig}
+        if 'add_axes' in cfg and len(cfg.add_axes) > 0:
+            self.add_axes_to_plt(plt_properties, cfg)
+
+        ax.set(xlabel=plt_settings.get('xlabel', None),
+                ylabel=plt_settings.get('ylabel', None))
+        ax.label_outer()
+
+        return {'plt': plt, 'fig': fig}
+
 
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
@@ -386,11 +251,6 @@ class VisualizationComponents():
             prop = plt_settings['legend'].get('prop', None)
             if prop is not None:
                 plt.legend(prop=prop)
-            # ax.legend(bbox_to_anchor=(1.04, 0.5),
-            #           loc="center left",
-            #           borderaxespad=0)
-            # ax.legend(bbox_to_anchor=(0, 1.02, 1, 0.2), loc="lower left",
-            #                 mode="expand", borderaxespad=0, ncol=3)
 
         plt = self.get_plt_with_arrows(plt, plt_settings)
 
@@ -468,17 +328,6 @@ class VisualizationComponents():
 
         return plt
 
-    def save_plot(self, plt, plt_settings):
-        file_name = plt_settings['file_name']
-        if plt_settings['multiple']:
-            self.fig.savefig(file_name, dpi=500)
-        else:
-            try:
-                self.plt.savefig(file_name, dpi=800)
-            except:
-                self.plt.savefig(file_name, dpi=100)
-            self.plt.close()
-
     def save_polar_plot_and_close_plotly(self, plt, cfg):
         plot_name_paths = self.get_plot_name_path(cfg)
         for file_name in plot_name_paths:
@@ -496,11 +345,19 @@ class VisualizationComponents():
         for file_name in plot_name_paths:
             plt.savefig(file_name, dpi=800)
 
+    def save_xy_plot_and_close_matplotlib(self, plt_properties, cfg):
+        plot_name_paths = self.get_plot_name_path(cfg)
+        plt = plt_properties['plt']
+        for file_name in plot_name_paths:
+            plt.savefig(file_name, dpi=800)
+
     def get_plot_name_path(self, cfg):
         file_name = cfg['settings']['file_name']
         extensions = cfg['settings']['plt_save_extensions']
+        plot_folder = os.path.join(cfg['Analysis']['result_folder'], 'Plot')
+
         plot_name_paths = [
-            cfg['Analysis']['result_folder'] + 'Plot\\' + file_name + extension
+            os.path.join(plot_folder, file_name + extension)
             for extension in extensions
         ]
 
