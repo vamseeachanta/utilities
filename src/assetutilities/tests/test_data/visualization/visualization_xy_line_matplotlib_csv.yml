@@ -30,13 +30,17 @@ settings:
 data:
   type: csv
   csv:
-    - label: "xx"
-      file_name:
-  x:
-    - [0.5, 1, 2, 2.5, 3, 4]
-    - [1, 2, 2.5, 2.5, 3, 5]
-  y:
-    - [35, 70, 120, 155, 205, 240]
+    - label: test_1
+      file_name: src/assetutilities/tests/test_data/visualization/csv/test_1.csv
+      columns:
+        x: [Heading]
+        y: [Cx]
+    - label: test_2
+      file_name: src/assetutilities/tests/test_data/visualization/csv/test_2.csv
+      columns:
+        x: [Heading]
+        y: [Cx]
+
   color: [blue, green]
   alpha: [1, 0.75]
   linestyle: ["--", "-", "-", ":"]

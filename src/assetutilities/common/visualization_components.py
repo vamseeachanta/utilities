@@ -50,8 +50,11 @@ class VisualizationComponents():
         return data_df
 
     def get_xy_data(self, cfg):
-        data_dict = self.get_xy_mapped_data_dict(cfg)
-        data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
+        if cfg['data']['type'] == 'input':
+            data_dict = self.get_xy_mapped_data_dict(cfg)
+            data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
+        elif cfg['data']['type'] == 'csv':
+            data_dict = self.get_xy_from_csv(cfg)
         
         return data_df
 
@@ -114,6 +117,12 @@ class VisualizationComponents():
 
         return data_dict
 
+    def get_xy_from_csv(self, cfg):
+        pass
+    
+    def get_data_from_csv(self, cfg):
+        pass
+    
     def get_axis_for_polar(self, rect):
         rect_polar = rect.copy()
         rect_polar[0] = rect[0] * np.pi / 180
