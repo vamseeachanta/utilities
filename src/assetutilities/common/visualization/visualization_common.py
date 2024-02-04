@@ -76,6 +76,8 @@ class VisualizationCommon:
 
     def get_plot_name_path(self, cfg):
         file_name = cfg['settings']['file_name']
+        if file_name is None:
+            file_name = cfg['Analysis']['file_name']
         extensions = cfg['settings']['plt_save_extensions']
         plot_folder = os.path.join(cfg['Analysis']['result_folder'], 'Plot')
 

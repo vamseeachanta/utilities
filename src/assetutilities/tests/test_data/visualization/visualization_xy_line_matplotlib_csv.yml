@@ -11,7 +11,7 @@ settings:
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
-  file_name: x_y_line_csv
+  file_name: NULL
   plt_save_extensions: [".png"]
   title: Wind Coefficients for FSTs, Cx
   xlabel: Direction (deg)

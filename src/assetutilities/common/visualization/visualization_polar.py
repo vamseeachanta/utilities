@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 
 import matplotlib.pyplot as plt
+from assetutilities.common.visualization.visualization_common import VisualizationCommon
+
+visualization_common = VisualizationCommon()
 
 
 class VisualizationPolar:
@@ -20,14 +23,13 @@ class VisualizationPolar:
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg['settings']['plt_engine'] == 'matplotlib':
             plt_properties = self.get_polar_plot_matplotlib(
-                    data_df, plt_settings, cfg)
+                data_df, plt_settings, cfg)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
         data_dict = self.get_polar_mapped_data_dict(cfg)
         data_df = pd.DataFrame.from_dict(data_dict, orient='index').transpose()
         return data_df
-
 
     def get_polar_mapped_data_dict(self, cfg):
         theta_data = cfg['data']['theta']
@@ -79,7 +81,6 @@ class VisualizationPolar:
             plt = px.scatter_polar(df, r=df['r_0'], theta=df['theta_0'])
 
         return plt
-
 
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
