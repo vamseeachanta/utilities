@@ -1,6 +1,6 @@
 import os
 import glob
-
+import pathlib
 
 class FileManagement:
 
@@ -52,3 +52,12 @@ class FileManagement:
             basenames.append(os.path.basename(file))
         return basenames
     
+    def get_filename_without_extension(self, filename):
+
+        basename = os.path.splitext(os.path.basename(filename))[0]
+        filename_path = pathlib.Path(filename).parent
+        filename_with_path = os.path.join(filename_path, basename)
+        
+        filename_without_extension = {'without_path': basename, 'with_path': filename_with_path}
+
+        return filename_without_extension
