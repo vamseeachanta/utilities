@@ -1,3 +1,13 @@
+# Requirements
+
+- Have a engineering degreee preferably in Mechanical, Civil, Structural and Aerospace engineering.
+- Keen understanding and interest to solve real-world engineering problems
+- Have a good understanding of engineering principles.
+- Have a good understanding of engineering calculations.
+- Have a good understanding of engineering drawings.
+- Have a good understanding of engineering software and able to learn ANSYS, ABAQUS etc.
+- Able to perform engineering calculations in Python.
+
 # Introduction
 
 Document/Questionnaire for Basic skils. Fill in to the best of your knowledge and share the responses.
