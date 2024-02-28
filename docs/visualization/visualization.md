@@ -1,12 +1,26 @@
+###
 
+### Data Input
 
+- The data input can be  multiple .CSV file
 
-CSV file rules:
+#### Data in Input file
 
-- The first row is the header row
-- For equal X and Y columns defined, the program chooses legend labels based on Y columns by default.
-  - If X columsn are to be given, provide the legend labels in settings['legend']['label'] (Add test case for this)
-  - Usecase should arise to change this
+- The input file should contain the following columns:
+  - X-axis data
+  - Y-axis data
+  - Legend data (optional)
 
-TODO:
-- 
+#### CSV Files
+
+- Define csv files and appropriate data definitions in input file
+- CSV file rules:
+  - The first row is the header row
+  - For equal X and Y columns defined, the program chooses legend labels based on Y columns by default.
+    - If X columsn are to be given, provide the legend labels in settings['legend']['label'] (Add test case for this)
+    - Usecase should arise to change this
+
+#### YML files (To be coded?)
+
+- Should be by keys
+- Define x, y and legend data in an input file
