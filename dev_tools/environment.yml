@@ -22,6 +22,7 @@ dependencies:
       - xlsxwriter
       - imp
       - git
+      - assetutilities
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
