@@ -6,11 +6,14 @@
 
 Learn the following:
 
-- Work in VS Code IDE (Environment)
-- Version control in Git
+- Work in VS Code IDE (Environment).
+  - See, <https://github.com/vamseeachanta/assetutilities/blob/2024/docs/_python_in_vs_code.md>
+- Version control in Git.
+  - See, <https://github.com/vamseeachanta/energy/tree/apr_may/tools/git>
 - Code with Miniconda python
 - documentation with .md
 - simple flowcharts in plantuml
+  - see, <https://github.com/vamseeachanta/energy/tree/apr_may/tools/puml>
 - Other tools
 
 ### VS Code (VSC) IDE
@@ -48,7 +51,7 @@ For flowcharts, sequence diagrams, etc.
 - Test driven development, TDD
 - Github actions
 
-## References
+## Resources/References
 
 Good podcasts to hear in general for python. They may seem boring first but cater to develop in a general and more business (less programming) oriented way. More useful in real life.
 <https://realpython.com/podcasts/rpp/>
