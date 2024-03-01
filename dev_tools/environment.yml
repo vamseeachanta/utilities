@@ -23,6 +23,8 @@ dependencies:
       - imp
       - git
       - assetutilities
+      - pytest
+      - python-docx
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz

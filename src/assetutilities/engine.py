@@ -9,6 +9,7 @@ from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.excel_utilities import ExcelUtilities
+from assetutilities.common.word_utilities import WorkUtilities
 from assetutilities.common.text_analytics import TextAnalytics
 
 from assetutilities.tools.pdf.read_pdf import ReadPDF
@@ -57,6 +58,9 @@ def engine(inputfile=None, cfg=None):
     elif basename in ['text_analytics']:
         ta = TextAnalytics()
         ta.router(cfg_base)
+    elif basename in ['word_utilities']:
+        wu = WorkUtilities()
+        wu.router(cfg_base)
     else:
         raise (
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))

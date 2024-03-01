@@ -12,6 +12,14 @@ class ExcelUtilities:
     def __init__(self) -> None:
         pass
 
+    def router(self, cfg):
+        if cfg['task'] == 'cross_reference_values_from_closed_workbooks':
+            self.cross_reference_values_from_closed_workbooks_xlsxwriter(cfg)
+        if cfg['task'] == 'custom_calculation':
+            data = self.get_data(cfg)
+
+        return cfg
+    
     def excel_utility_router(self, cfg):
         if cfg['task'] == 'cross_reference_values_from_closed_workbooks':
             self.cross_reference_values_from_closed_workbooks_xlsxwriter(cfg)

@@ -56,3 +56,12 @@ For flowcharts, sequence diagrams, etc.
 Good podcasts to hear in general for python. They may seem boring first but cater to develop in a general and more business (less programming) oriented way. More useful in real life.
 <https://realpython.com/podcasts/rpp/>
 <https://podcasts.apple.com/us/podcast/develop-yourself/id1583498998>
+
+<https://realpython.com/what-can-i-do-with-python/>
+
+### Naming Conventions
+
+<https://realpython.com/python-modules-packages/>
+Naming conventions:
+<https://realpython.com/python-pep8/>
+<https://realpython.com/lessons/python-naming-conventions/#transcript>

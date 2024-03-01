@@ -11,3 +11,4 @@ pytest
 deepdiff
 bumpver
 git
+python-docx
