@@ -7,3 +7,7 @@ Communication is a key aspect of project management. It is essential to ensure t
 - Inputs highlight in blue
 - Output highlight in black
 - Use other colors to highlight important information
+
+See example below:
+![alt text](image.png)
+
