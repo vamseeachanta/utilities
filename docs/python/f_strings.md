@@ -80,5 +80,5 @@ print(f"{person['name']} is {person['age']} years old.")
 ```
 
 ### References
-
-Add links for further studying
+https://www.datacamp.com/tutorial/f-string-formatting-in-python
+https://www.freecodecamp.org/news/python-f-strings-tutorial-how-to-use-f-strings-for-string-formatting/
