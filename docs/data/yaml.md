@@ -19,7 +19,7 @@ Represented by "#" character to provide description. these are ignored by yaml
 
 # Comment
 
-key: value # values ore listed
+key: value # values are listed
 
 Scalars:
 Scalars represent simple values Like strings, numbers, etc..
@@ -39,7 +39,7 @@ Multi-line : |
 If Scalar value spans multiple lines  we use | and > Characters ,  otherwise it will give error.
 It is also called as key for accessing inside the scalar.
 
-Example.yaml :
+```Example.yaml :
 
   name: Samdan
   location: Vijayawada
@@ -54,6 +54,12 @@ Example.yaml :
   whatisthisabout:
      this is a basic outline of yaml
      File format
+```
 
-Finally,
+Note : 
 If your yaml file is Syntactically correct (or) not. you can check it in "Yamlint" website.
+
+## References
+https://www.educative.io/blog/yaml-tutorial
+https://spacelift.io/blog/yaml
+https://dev.to/techworld_with_nana/yaml-tutorial-for-beginners-a06
