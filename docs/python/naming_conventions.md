@@ -124,3 +124,8 @@ FavePhrase = "Hello World"
 ```
 
 **You will see the pascal case used for naming classes in most programming languages.**
+
+### References :
+
+https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/
+
