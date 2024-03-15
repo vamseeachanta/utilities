@@ -58,7 +58,7 @@ Snake case is also a good choice for naming files, as it keeps names readable.
 
 **You will also come across it when working with databases, as it is used for creating table and column names.**
 
-### screaming snake case :
+### Screaming snake case :
 
 **There is also an all-caps version of the snake case where all letters are in the upper case - also known as the screaming snake case.**
 
