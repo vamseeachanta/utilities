@@ -10,5 +10,5 @@ webcolors
 pytest
 deepdiff
 bumpver
-git
+# git
 python-docx

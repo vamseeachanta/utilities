@@ -20,8 +20,8 @@ dependencies:
       - plantuml
       - webcolors
       - xlsxwriter
-      - imp
-      - git
+      # - imp
+      # - git
       - assetutilities
       - pytest
       - python-docx
