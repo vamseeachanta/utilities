@@ -16,6 +16,10 @@ Learn the following:
   - see, <https://github.com/vamseeachanta/energy/tree/apr_may/tools/puml>
 - Other tools
 
+An ecosystem of tools is given below:
+
+<img src="_ascii_ecosystem.svg" width=auto, height=auto/>
+
 ### VS Code (VSC) IDE
 
 **References:**
