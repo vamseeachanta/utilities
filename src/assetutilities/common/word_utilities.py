@@ -1,7 +1,7 @@
 from docx import Document
 # from docx import opendocx
 
-class WorkUtilities:
+class WordUtilities:
 
     def __init__(self):
         pass
