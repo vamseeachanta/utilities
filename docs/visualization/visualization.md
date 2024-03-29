@@ -24,3 +24,9 @@
 
 - Should be by keys
 - Define x, y and legend data in an input file
+
+## Test
+
+| Test ID | Test Description | Test File | Status (Pass/Fail) |
+|---------|------------------|-----------|--------------------|
+| 1       | Test for CSV file | x-y_.py | Pass               |
