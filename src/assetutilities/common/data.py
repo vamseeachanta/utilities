@@ -515,7 +515,7 @@ class SaveData():
         with open(fileName + '.json', 'w') as f:
             json.dump(data, f)
 
-    def saveDataYaml(self, data, fileName, default_flow_style=False):
+    def saveDataYaml(self, data, fileName, default_flow_style=False, sort_keys=False):
         import yaml
         if default_flow_style == None:
             with open(fileName + '.yml', 'w') as f:
@@ -531,7 +531,7 @@ class SaveData():
                 ruamel.yaml.round_trip_dump(data, f)
         else:
             with open(fileName + '.yml', 'w') as f:
-                yaml.dump(data, f, default_flow_style=default_flow_style)
+                yaml.dump(data, f, default_flow_style=default_flow_style, sort_keys=sort_keys)
 
     def saveDataFrame(self, df, fileName):
         df.to_csv(fileName + '.csv')

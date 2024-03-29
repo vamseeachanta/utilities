@@ -1,14 +1,33 @@
 assetutilities
+
+build
+twine
+bumpver
+
+pyyaml
+numpy
 pandas
 plotly
 matplotlib
-pyyaml
-tabula
-PyPDF2
-xlsxwriter
+chardet
+python-certifi-win32
+
 webcolors
+xlsxwriter
+plantuml
 pytest
 deepdiff
-bumpver
-git
+
+pandoc
+wkhtmltopdf
 python-docx
+
+# imp
+# git
+# popplerqt5 Only available in linux systems
+# pdfannots
+# fitz
+# camelot
+# tabula
+# GitPython
+# PyPDF2

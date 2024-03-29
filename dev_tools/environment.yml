@@ -6,28 +6,36 @@ dependencies:
   - python
   - pip
   - pip:
-      - numpy
-      - pandas
+      - assetutilities
+
       - build
       - twine
+      - bumpver
+
+      - pyyaml
+      - numpy
+      - pandas
+      - plotly
+      - matplotlib
       - chardet
       - python-certifi-win32
-      - plotly-express
-      - matplotlib
-      - pyyaml
-      - pandoc
-      - wkhtmltopdf
-      - plantuml
+
       - webcolors
       - xlsxwriter
-      - imp
-      - git
-      - assetutilities
+      - plantuml
       - pytest
+      - deepdiff
+
+      - pandoc
+      - wkhtmltopdf
       - python-docx
+
+      # - imp
+      # - git
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
       # - camelot
       # - tabula
       # - GitPython
+      # - PyPDF2

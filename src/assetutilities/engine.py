@@ -9,7 +9,6 @@ from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.excel_utilities import ExcelUtilities
-from assetutilities.common.word_utilities import WorkUtilities
 from assetutilities.common.text_analytics import TextAnalytics
 
 from assetutilities.tools.pdf.read_pdf import ReadPDF
@@ -59,7 +58,8 @@ def engine(inputfile=None, cfg=None):
         ta = TextAnalytics()
         ta.router(cfg_base)
     elif basename in ['word_utilities']:
-        wu = WorkUtilities()
+        from assetutilities.common.word_utilities import WordUtilities
+        wu = WordUtilities()
         wu.router(cfg_base)
     else:
         raise (
