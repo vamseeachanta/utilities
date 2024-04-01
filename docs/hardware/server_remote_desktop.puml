@@ -1,0 +1,56 @@
+@startuml server_remote_desktop
+
+scale 2
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Tomato
+
+
+title Server \n Understanding Remote Desktop
+
+package "Server Resources" {
+    component "**CPU \nNc Cores \nNp Processors**" as CPU
+    component "Memory\nDisk" as Memory
+    component "Software License i.e. OrcaFlex" as Software
+    component "**Data**" as Data
+}
+
+package "User 1" as user1 {
+    agent "Run OrcaFlex Dynamics \nUsing Np Processors" as CPU_user1
+    agent "Memory\nDisk" as Memory_user1
+    agent "Software License i.e. OrcaFlex" as Software_user1
+    agent "**Data**" as Data_user1
+}
+
+CPU --> CPU_user1
+Memory --> Memory_user1
+Software --> Software_user1
+Data --> Data_user1
+
+package "User 2" as user2 {
+    agent "Run OrcaFlex Dynamics \nUsing Np Processors" as CPU_user2
+    agent "Memory\nDisk" as Memory_user2
+    agent "Software License i.e. OrcaFlex" as Software_user2
+    agent "**Data**" as Data_user2
+}
+
+CPU --> CPU_user2
+Memory --> Memory_user2
+Software --> Software_user2
+Data --> Data_user2
+
+note bottom
+
+    Notes:
+        1a/ Able to run Np processors again. Will it slow down the machine?
+        1b/ Able to run OrcaFlex. is it using the same license again?
+        1c/ Able to access the same data over the network?
+end note
+
+footer
+%date("yyyy.MM.dd' at 'HH:mm")
+%filename()
+end footer
+
+@enduml
