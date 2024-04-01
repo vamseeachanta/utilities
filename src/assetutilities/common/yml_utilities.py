@@ -15,6 +15,10 @@ from assetutilities.common.data import ReadData
 
 read_data = ReadData()
 
+def represent_none(self,_):
+    return self.represent_scalar('tag:yaml.org,2002:null', '~')
+
+yaml.add_representer(type(None), represent_none)
 
 def ymlInput(defaultYml, updateYml=None):
 

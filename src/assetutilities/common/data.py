@@ -620,7 +620,7 @@ class SaveData():
             #     columns = len(dfArray[dfIndex].columns)+1
             #     ws.cell(row=rows, column=columns).border = thin_border
 
-        writer.save()
+        writer._save()
 
     def df_to_sheet_in_existing_workbook(self, data):
         # Adds a dataframe to an existing Excel
