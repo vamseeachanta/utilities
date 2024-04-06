@@ -602,7 +602,8 @@ class SaveData():
         writer = pd.ExcelWriter(data['FileName'], engine='openpyxl')
 
         for dfIndex in range(0, len(dfArray)):
-            dfArray[dfIndex].to_excel(writer, data['SheetNames'][dfIndex])
+            dfArray[dfIndex].to_excel(writer,  sheet_name=data['SheetNames'][dfIndex])
+
             """
             References:
             https://stackoverflow.com/questions/24917201/applying-borders-to-a-cell-in-openpyxl
@@ -622,31 +623,25 @@ class SaveData():
 
         writer._save()
 
-    def df_to_sheet_in_existing_workbook(self, data):
-        # Adds a dataframe to an existing Excel
-        # Uses Excel program instance Works only on windows machine as it needs Excel program.
-        # As of 2020-Feb, the pacakge is very slow and is NOT recommended for use on even simple excel jobs
-        import xlwings as xw
-        wb = xw.Book(data['template_file_name'])
-        ws = wb.sheets[data['sheetname']]
-        ws.range('A1').options(index=True).value = data['df']
-        wb.save(data['saved_file_name'])
-        # app = xw.apps.active
-        # app.quit()
-        xw.apps.active.quit()
+    def df_to_sheet_in_existing_workbook(self, cfg):
+        cfg_example = {'template_file_name': file_name, 'sheetname': sheetname, 'saved_file_name': file_name, 'if_sheet_exists': 'replace', 'df': df, 'index': False}
 
-        # Not working loop using Pandas below for reference code
-        # import pandas as pd
-        # from openpyxl import load_workbook
-        # book = load_workbook(summary_file_name)
-        # writer = pd.ExcelWriter(summary_file_name, engine='openpyxl')
-        # writer.book = book
-        # writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
-        # self.well_summary_by_api_df.to_excel(writer, sheet_name=sheetname, cols=['Diff1', 'Diff2'])
-        # writer.save()
-        # writer = pd.ExcelWriter(summary_file_name, engine='xlsxwriter')
-        # self.well_summary_by_api_df.to_excel(writer, sheet_name=sheetname, startrow=0, startcol=0, index=True, engine='openpyx1')
-        # writer.save()
+        template_file_name = cfg['template_file_name']
+        saved_file_name = cfg['saved_file_name']
+        sheetname = cfg['sheetname']
+        df = cfg['df']
+        if_sheet_exists = cfg.get('if_sheet_exists', 'replace')
+        index = cfg.get('index', True)
+
+        with pd.ExcelWriter(template_file_name, engine='openpyxl', if_sheet_exists=if_sheet_exists, mode='a') as writer:
+            df.to_excel(writer, sheet_name=sheetname, index=index)
+
+
+        # # Overwriting entire existing workbook
+        # writer = pd.ExcelWriter(template_file_name, engine='openpyxl')
+        # df.to_excel(writer, sheet_name, index=False)
+        # writer._save()
+
 
     def df_to_table_as_image(self, df, cfg):
         (ax, fig) = self.render_df_table(df,
