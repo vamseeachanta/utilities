@@ -624,7 +624,7 @@ class SaveData():
         writer._save()
 
     def df_to_sheet_in_existing_workbook(self, cfg):
-        cfg_example = {'template_file_name': file_name, 'sheetname': sheetname, 'saved_file_name': file_name, 'if_sheet_exists': 'replace', 'df': df, 'index': False}
+        # cfg_example = {'template_file_name': file_name, 'sheetname': sheetname, 'saved_file_name': file_name, 'if_sheet_exists': 'replace', 'df': df, 'index': False}
 
         template_file_name = cfg['template_file_name']
         saved_file_name = cfg['saved_file_name']
