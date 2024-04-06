@@ -3,8 +3,12 @@ import yaml
 import operator
 import pandas as pd
 from functools import reduce
+from colorama import init as colorama_init
+from colorama import Fore
+from colorama import Style
+import logging
 
-from assetutilities.common.utilities import is_file_valid_func
+colorama_init()
 
 
 class ReadFromExcel():
@@ -44,9 +48,6 @@ class ReadFromCSV():
         sample_cfg = {'io': 'data_manager/data/sample_data.csv'}
         
         df = pd.read_csv(cfg['io'], delimiter=cfg['delimiter'], delim_whitespace=True)
-        
-        
-
 
         return result
 
@@ -633,9 +634,12 @@ class SaveData():
         if_sheet_exists = cfg.get('if_sheet_exists', 'replace')
         index = cfg.get('index', True)
 
-        with pd.ExcelWriter(template_file_name, engine='openpyxl', if_sheet_exists=if_sheet_exists, mode='a') as writer:
-            df.to_excel(writer, sheet_name=sheetname, index=index)
-
+        if len(df) > 0:
+            with pd.ExcelWriter(template_file_name, engine='openpyxl', if_sheet_exists=if_sheet_exists, mode='a') as writer:
+                df.to_excel(writer, sheet_name=sheetname, index=index)
+            logging.info('Data write to sheet {sheetname} {Fore.GREEN}    SUCCESS... {Style.RESET_ALL}')
+        else:
+            logging.info('{Fore.RED}No data to write to sheet{Style.RESET_ALL}')
 
         # # Overwriting entire existing workbook
         # writer = pd.ExcelWriter(template_file_name, engine='openpyxl')
