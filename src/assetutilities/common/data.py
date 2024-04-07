@@ -260,14 +260,14 @@ class ReadData():
                 break
 
     def from_ascii_file_get_value(self, cfg):
-        sample_cfg_format_1 = {'io': 'data_manager\data\orcaflex\common.mds'}
+        sample_cfg_format_1 = {'io': 'data_manager/data/orcaflex/common.mds'}
         sample_cfg_format_2 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': None
         }
         sample_cfg_format_3 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': 10
         }
@@ -283,20 +283,20 @@ class ReadData():
 
     def from_ascii_file_get_structured_data_delimited_white_space(self, cfg):
         import pandas as pd
-        sample_cfg_format_1 = {'io': 'data_manager\data\orcaflex\common.mds'}
+        sample_cfg_format_1 = {'io': 'data_manager/data/orcaflex/common.mds'}
         sample_cfg_format_2 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'DataFrame': True
         }
         sample_cfg_format_2 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': None,
             'DataFrame': True
         }    # Get only 1 line
         sample_cfg_format_3 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': 10,
             'DataFrame': True
@@ -337,23 +337,23 @@ class ReadData():
         return result
 
     def from_ascii_file_get_lines_as_string_arrays(self, cfg):
-        sample_cfg_format_1 = {'io': 'data_manager\data\orcaflex\common.mds'}
+        sample_cfg_format_1 = {'io': 'data_manager/data/orcaflex/common.mds'}
         sample_cfg_format_2 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': None
         }
         sample_cfg_format_2 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5
         }    # Get till end of lines
         sample_cfg_format_3 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'start_line': 5,
             'end_line': 10
         }
         sample_cfg_format_3 = {
-            'io': 'data_manager\data\orcaflex\common.mds',
+            'io': 'data_manager/data/orcaflex/common.mds',
             'lines_from_end': 2
         }
 
