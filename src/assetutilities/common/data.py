@@ -392,7 +392,7 @@ class ReadData():
                                   folder_with_file_type,
                                   with_path=True,
                                   with_extension=True):
-        folder_with_file_type_example = 'Q:\projects\Mole\log_files\*.log'
+        folder_with_file_type_example = 'Q:/projects/Mole/log_files/*.log'
 
         import glob
         import os
