@@ -30,6 +30,11 @@ dependencies:
       - wkhtmltopdf
       - python-docx
 
+      - excel2img
+
+      # - openpyxl
+      # - openpyxl-image-loader
+
       # - imp
       # - git
       # - popplerqt5 Only available in linux systems
