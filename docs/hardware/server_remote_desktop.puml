@@ -51,10 +51,20 @@ note right
 end note
 
 user1 --> 2user
-' CPU --> CPU_user2
-' Memory --> Memory_user2
-' Software --> Software_user2
-' Data --> Data_user2
+CPU_user1 --> CPU_user2
+Memory_user1 --> Memory_user2
+Software_user1 --> Software_user2
+Data_user1 --> Data_user2
+
+note Bottom
+
+    Notes:
+        For 2 users, It is important to close all licensed software 
+        and log-out in the following example scenarios: 
+        1/ When user licensed software runs are done (even after a day or Monday)
+        2/ When user licensed software is going to be unused for more than 1 hour duration
+        3/ Should not keep open to just block/hoard license unless there is an urgency.
+end note
 
 
 footer
