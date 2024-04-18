@@ -45,6 +45,7 @@ class FileEdit:
 
     def concatenate_files_2d_array(self, cfg):
         for input_set in cfg['input']:
+            output_files = {'ext': [], 'no_ext': []}
             output_dir = input_set.get('output_dir', None)
             if output_dir is None:
                 output_dir = cfg['Analysis']['analysis_root_folder']
@@ -68,7 +69,17 @@ class FileEdit:
                     else:
                         label_separator = '_'
                     output_filename = output_filename + label_separator + label
+
                 output_filename_path = os.path.join(output_dir, output_filename + '.' + file_extension)
-                cfg = self.concatenate_one_set(cfg, file_array, output_filename_path)
+                output_filename_path_no_ext = os.path.join(output_dir, output_filename)
+                output_files['ext'].append([output_filename_path])
+                output_files['no_ext'].append([output_filename_path_no_ext])
+
+                cfg = self.concatenate_one_set(input_set, output_files, cfg)
+
+            self.prepare_custom_batch(cfg, input_set, output_files)
 
         return cfg
+
+    def prepare_custom_batch(self, input_set, output_files, cfg):
+        pass
