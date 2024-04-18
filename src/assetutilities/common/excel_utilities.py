@@ -75,7 +75,7 @@ class ExcelUtilities:
                 for array_range in file['range']:
                     cell_range = array_range[0] + ":" + array_range[1]
                     sheet_range = sheetname + "!" + cell_range
-                    output_basename = sheetname
+                    output_basename = sheetname + "_" + array_range[0] + array_range[1]
                     for ext in file['output_extension']:
                         output_filename = output_basename + "." + ext
                         if file['output_dir'] is not None and os.path.isdir(file['output_dir']):
