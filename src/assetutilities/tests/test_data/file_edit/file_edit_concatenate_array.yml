@@ -1,0 +1,23 @@
+basename: file_edit
+edit_type: concatenate
+concatenate_type: array # 2d_array
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+input:
+  - output_filename: no_load_09moors.dat
+    output_dir: NULL
+    filename:
+    input_files:
+      [
+        concatenate/_0to9_static.deck,
+        concatenate/_10_no_tug.deck,
+        concatenate/_11_12.deck,
+        concatenate/_13_000MPH000WD.deck,
+        concatenate/_14_10moors.deck,
+        concatenate/_15_.deck,
+      ]

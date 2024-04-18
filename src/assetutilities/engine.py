@@ -7,6 +7,7 @@ from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import CopyAndPasteFiles
 from assetutilities.common.file_management import FileManagement
+from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.excel_utilities import ExcelUtilities
 from assetutilities.common.text_analytics import TextAnalytics
@@ -48,6 +49,9 @@ def engine(inputfile=None, cfg=None):
     elif basename in ['file_management']:
         fm = FileManagement()
         fm.router(cfg_base)
+    elif basename in ['file_edit']:
+        fe = FileEdit()
+        fe.router(cfg_base)
     elif basename in ['edit_pdf']:
         edit_pdf = EditPDF()
         edit_pdf.edit_pdf(cfg_base)
