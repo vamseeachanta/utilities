@@ -72,14 +72,25 @@ class FileEdit:
 
                 output_filename_path = os.path.join(output_dir, output_filename + '.' + file_extension)
                 output_filename_path_no_ext = os.path.join(output_dir, output_filename)
-                output_files['ext'].append([output_filename_path])
-                output_files['no_ext'].append([output_filename_path_no_ext])
+                output_files['ext'].append(output_filename_path)
+                output_files['no_ext'].append(output_filename_path_no_ext)
 
-                cfg = self.concatenate_one_set(input_set, output_files, cfg)
+                cfg = self.concatenate_one_set(cfg, file_array, output_filename_path)
 
-            self.prepare_custom_batch(cfg, input_set, output_files)
+            self.prepare_custom_batch(input_set, output_files, cfg)
 
         return cfg
 
     def prepare_custom_batch(self, input_set, output_files, cfg):
-        pass
+        batch_cfg = input_set.get('batch', None)
+        batch_filename = os.path.join(cfg['Analysis']['analysis_root_folder'], cfg['Analysis']['file_name'] + '.bat')
+        if batch_cfg is not None and batch_cfg['flag']:
+            with open(batch_filename, 'w') as the_file:
+                if batch_cfg['extension']:
+                    for output_file_name in output_files['ext']:
+                        the_file.write(batch_cfg['content']  + ' ' + output_file_name + '\n')
+                else:
+                    for output_file_name in output_files['no_ext']:
+                        the_file.write(batch_cfg['content']  + ' ' + output_file_name + '\n')
+
+
