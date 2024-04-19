@@ -257,7 +257,6 @@ class ReadData():
         for rownum in range(0, len(array)):
             if any(keyword in array[rownum] for keyword in key_words):
                 return rownum + 1
-                break
 
     def from_ascii_file_get_value(self, cfg):
         sample_cfg_format_1 = {'io': 'data_manager/data/orcaflex/common.mds'}
