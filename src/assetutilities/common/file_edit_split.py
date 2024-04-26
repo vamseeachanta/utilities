@@ -51,7 +51,11 @@ class FileSplit:
 
     def save_data(self, data, input_file, file_suffix, cfg):
         basename = Path(input_file).stem
-        file_name = os.path.join(cfg['Analysis']['file_management_directory'], basename + '_' + file_suffix)
+        if 'output_directory' in cfg['Analysis']:
+            output_directory = cfg['Analysis']['output_directory']
+        output_directory = cfg['Analysis']['file_management_output_directory']
+        
+        file_name = os.path.join(output_directory, basename + '_' + file_suffix)
         save_data.save_ascii_file_from_array(data,  file_name)
 
 

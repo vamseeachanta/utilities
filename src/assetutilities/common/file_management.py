@@ -19,8 +19,11 @@ class FileManagement:
         return cfg
 
     def get_files_in_directory(self, cfg):
-        file_management_directory = self.get_file_management_directory(cfg)
-        cfg['Analysis'].update({'file_management_directory': file_management_directory})
+        file_management_input_directory = self.get_file_management_input_directory(cfg)
+        file_management_output_directory = self.get_file_management_output_directory(cfg)
+        
+        cfg['Analysis'].update({'file_management_input_directory': file_management_input_directory})
+        cfg['Analysis'].update({'file_management_output_directory': file_management_output_directory})
 
         if cfg.file_management['files']['files_in_current_directory'][
                 'flag'] or cfg.file_management['files']['files_in_current_directory']['auto_read']:
@@ -35,7 +38,7 @@ class FileManagement:
                 else:
                     glob_search = f'*{filename_pattern}*.{file_ext}'
 
-                raw_input_files_for_ext = list(file_management_directory.glob(glob_search))
+                raw_input_files_for_ext = list(file_management_input_directory.glob(glob_search))
                 input_files.update({file_ext: raw_input_files_for_ext})
 
             cfg.file_management.update({'input_files': input_files})
@@ -116,23 +119,42 @@ class FileManagement:
 
         return filename_without_extension
     
-    def get_file_management_directory(self, cfg):
+    def get_file_management_input_directory(self, cfg):
 
         if cfg.file_management['files']['files_in_current_directory']['flag']:
-            file_management_directory = cfg.Analysis['analysis_root_folder']
+            file_management_input_directory = cfg.Analysis['analysis_root_folder']
         else:
-            file_management_directory = cfg.file_management['files'][
+            file_management_input_directory = cfg.file_management['files'][
                 'files_in_current_directory']['directory']
 
-        if file_management_directory is not None:
+        if file_management_input_directory is not None:
             analysis_root_folder = cfg['Analysis']['analysis_root_folder']
-            dir_is_valid, file_management_directory = is_dir_valid_func(file_management_directory,
+            dir_is_valid, file_management_input_directory = is_dir_valid_func(file_management_input_directory,
                                                      analysis_root_folder)
 
         if not dir_is_valid:
-            raise ValueError(f"Directory {file_management_directory} is not valid")
+            raise ValueError(f"Directory {file_management_input_directory} is not valid")
         else:
-            file_management_directory = pathlib.Path(file_management_directory)
+            file_management_input_directory = pathlib.Path(file_management_input_directory)
 
-        return file_management_directory
+        return file_management_input_directory
 
+    def get_file_management_output_directory(self, cfg):
+
+        file_management_output_directory = cfg.file_management['files']['output_directory']
+
+        if file_management_output_directory is None:
+            file_management_output_directory = cfg['Analysis']['analysis_root_folder']
+
+        if file_management_output_directory is not None:
+            analysis_root_folder = cfg['Analysis']['analysis_root_folder']
+            dir_is_valid, file_management_output_directory = is_dir_valid_func(file_management_output_directory,
+                                                     analysis_root_folder)
+
+        if not dir_is_valid:
+            raise ValueError(f"Directory {file_management_output_directory} is not valid")
+        else:
+            file_management_output_directory = pathlib.Path(file_management_output_directory)
+
+
+        return file_management_output_directory
