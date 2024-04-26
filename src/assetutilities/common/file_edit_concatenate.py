@@ -21,10 +21,11 @@ class FileConcatenate:
     def concatenate_files_array(self, cfg):
 
         for input_set in cfg['input']:
+            output_files = {'ext': [], 'no_ext': []}
             input_file_groups = input_set['input_files']
             for input_file_group_indx in range(0, len(input_file_groups)):
                 input_file_group = input_file_groups[input_file_group_indx]
-                output_filename = input_set['output_basename'] +  '_' + input_set['input_file_labels'][input_file_group_indx] + '.' + input_set['file_extension']
+                output_filename = input_set['output_basename'] +  '_' + input_set['input_file_labels'][input_file_group_indx]
                 output_dir = input_set.get('output_dir', None)
                 if output_dir is None:
                     output_dir = cfg['Analysis']['analysis_root_folder']
@@ -32,7 +33,15 @@ class FileConcatenate:
                     output_dir = os.path.join(cfg['Analysis']['analysis_root_folder'], output_dir)
                 output_filename_path = os.path.join(output_dir, output_filename)
 
+                file_extension = input_set.get('file_extension', 'dat') 
+                output_filename_path = os.path.join(output_dir, output_filename + '.' + file_extension)
+                output_filename_path_no_ext = os.path.join(output_dir, output_filename)
+                output_files['ext'].append(output_filename_path)
+                output_files['no_ext'].append(output_filename_path_no_ext)
+
                 cfg = self.concatenate_one_set(cfg, input_file_group, output_filename_path)
+
+            self.prepare_custom_batch(input_set, output_files, cfg)
 
         return cfg
 

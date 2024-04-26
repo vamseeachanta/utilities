@@ -34,3 +34,7 @@ input:
           concatenate/_15_.deck,
         ],
       ]
+    batch:
+      flag: True
+      extension: no
+      content: C:\Program Files\ANSYS Inc\v182\aqwa\bin\winx64\aqwa.exe /nowind
