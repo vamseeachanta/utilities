@@ -19,16 +19,22 @@ class FileConcatenate:
             self.concatenate_files_2d_array(cfg)
 
     def concatenate_files_array(self, cfg):
+
         for input_set in cfg['input']:
-            input_files = input_set['input_files']
-            output_filename = input_set['output_filename']
+            input_file_groups = input_set['input_files']
+            for input_file_group_indx in range(0, len(input_file_groups)):
+                input_file_group = input_file_groups[input_file_group_indx]
+                output_filename = input_set['output_basename'] + input_set['input_file_labels'][input_file_group_indx] + '.' + input_set['file_extension']
 
-            output_dir = input_set.get('output_dir', None)
-            if output_dir is None:
-                output_dir = cfg['Analysis']['analysis_root_folder']
-            output_filename_path = os.path.join(output_dir, output_filename)
+                output_dir = input_set.get('output_dir', None)
+                if output_dir is None:
+                    output_dir = cfg['Analysis']['analysis_root_folder']
+                else:
+                    output_dir = os.path.join(cfg['Analysis']['analysis_root_folder'], output_dir)
+                output_filename_path = os.path.join(output_dir, output_filename)
 
-        cfg = self.concatenate_one_set(cfg, input_files, output_filename_path)
+            cfg = self.concatenate_one_set(cfg, input_file_group, output_filename_path)
+
         return cfg
 
     def concatenate_one_set(self, cfg, input_files, output_filename_path):

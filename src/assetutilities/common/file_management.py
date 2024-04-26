@@ -13,6 +13,9 @@ class FileManagement:
     def router(self, cfg):
         if 'file_management' in cfg and cfg.file_management['flag']:
             process_flag = True
+        else:
+            process_flag = False
+            
         if process_flag:
             cfg = self.get_files_in_directory(cfg)
 

@@ -16,12 +16,12 @@ input:
     filename:
     input_files:
       [
-        [concatenate/_0to9_static.deck],
-        [concatenate/_10_no_tug.deck],
-        [concatenate/_11_12.deck],
-        [concatenate/_13_000MPH000WD.deck, concatenate/_13_100MPH000WD.deck],
-        [concatenate/_14_10moors.deck],
-        [concatenate/_15_.deck],
+        [src/_0to9_static.deck],
+        [src/_10_no_tug.deck],
+        [src/_11_12.deck],
+        [src/_13_000MPH000WD.deck, concatenate/_13_100MPH000WD.deck],
+        [src/_14_10moors.deck],
+        [src/_15_.deck],
       ]
     input_file_labels:
       [[""], [no_tug], [""], [000MPH000WD, 100MPH000WD], [10moors], [""]]

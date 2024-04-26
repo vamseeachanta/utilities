@@ -32,7 +32,7 @@ def get_valid_pytest_output_file(pytest_output_file):
 
 
 def test_file_run():
-    input_file = 'file_edit_concatenate_2d_array.yml'
+    input_file = 'file_edit_concatenate_array.yml'
 
     # pytest_output_file = '../test_data/6d_buoy/buoy_6d_circular_px_0_pytest.yml'
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)
