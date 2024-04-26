@@ -2,16 +2,70 @@ import os
 import glob
 import pathlib
 
+from assetutilities.common.utilities import is_file_valid_func
+from assetutilities.common.utilities import is_dir_valid_func
+
 class FileManagement:
 
     def __init__(self) -> None:
         pass
 
     def router(self, cfg):
-        self.get_files_in_directory(cfg)
+        if 'file_management' in cfg and cfg.file_management['flag']:
+            process_flag = True
+        if process_flag:
+            cfg = self.get_files_in_directory(cfg)
 
+        return cfg
 
     def get_files_in_directory(self, cfg):
+        file_management_directory = self.get_file_management_directory(cfg)
+        cfg['Analysis'].update({'file_management_directory': file_management_directory})
+
+        if cfg.file_management['files']['files_in_current_directory'][
+                'flag'] or cfg.file_management['files']['files_in_current_directory']['auto_read']:
+            file_extensions = cfg.file_management['files']['files_in_current_directory']['file_extensions']
+            input_files = {}
+
+            for file_ext in file_extensions:
+
+                filename_pattern = cfg['file_management']['files']['files_in_current_directory'].get('filename_pattern', None)
+                if filename_pattern is None:
+                    glob_search = f'*.{file_ext}'
+                else:
+                    glob_search = f'*{filename_pattern}*.{file_ext}'
+
+                raw_input_files_for_ext = list(file_management_directory.glob(glob_search))
+                input_files.update({file_ext: raw_input_files_for_ext})
+
+            cfg.file_management.update({'input_files': input_files})
+
+        else:
+            file_extensions = cfg.file_management['input_files'].keys()
+            for file_ext in file_extensions:
+                raw_input_files_for_ext = cfg.file_management['input_files'][
+                    file_ext]
+
+                valid_file_count = 0
+                for input_file_index in range(0, len(raw_input_files_for_ext)):
+                    input_file = raw_input_files_for_ext[input_file_index]
+                    if not os.path.isfile(input_file):
+                        raw_input_files_for_ext[
+                            input_file_index] = os.path.join(
+                                cfg.Analysis['analysis_root_folder'],
+                                input_file)
+                    if os.path.isfile(
+                            raw_input_files_for_ext[input_file_index]):
+                        valid_file_count = valid_file_count + 1
+
+                logging.info(
+                    f"Number of '{file_ext}' input files : {len(raw_input_files_for_ext)} . Valid files are: {valid_file_count}."
+                )
+
+        return cfg
+
+
+    def get_files_in_directory_superseded(self, cfg):
         if cfg['files']['files_in_current_directory']['flag']:
             file_folder = cfg['Analysis']['analysis_root_folder']
         else:
@@ -61,3 +115,24 @@ class FileManagement:
         filename_without_extension = {'without_path': basename, 'with_path': filename_with_path}
 
         return filename_without_extension
+    
+    def get_file_management_directory(self, cfg):
+
+        if cfg.file_management['files']['files_in_current_directory']['flag']:
+            file_management_directory = cfg.Analysis['analysis_root_folder']
+        else:
+            file_management_directory = cfg.file_management['files'][
+                'files_in_current_directory']['directory']
+
+        if file_management_directory is not None:
+            analysis_root_folder = cfg['Analysis']['analysis_root_folder']
+            dir_is_valid, file_management_directory = is_dir_valid_func(file_management_directory,
+                                                     analysis_root_folder)
+
+        if not dir_is_valid:
+            raise ValueError(f"Directory {file_management_directory} is not valid")
+        else:
+            file_management_directory = pathlib.Path(file_management_directory)
+
+        return file_management_directory
+

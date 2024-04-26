@@ -32,6 +32,7 @@ class VisualizationCommon:
         self.add_legend()
         self.add_x_y_lim_formats()
         self.add_reference_lines_and_spans()
+        self.add_markers
         self.save_and_close()
 
     def add_axes_to_plt(self, plt_properties, cfg):

@@ -536,7 +536,7 @@ class SaveData():
     def saveDataFrame(self, df, fileName):
         df.to_csv(fileName + '.csv')
 
-    def save_ascii_file_from_array(self, array, file_name, extension=None):
+    def save_ascii_file_from_array(self, array, file_name, extension=''):
         with open(file_name + extension, "w") as f:
             for line_index in range(0, len(array)):
                 if type(array[line_index]) is list:
