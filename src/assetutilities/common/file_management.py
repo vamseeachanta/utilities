@@ -30,7 +30,7 @@ class FileManagement:
 
         if cfg.file_management['files']['files_in_current_directory'][
                 'flag'] or cfg.file_management['files']['files_in_current_directory']['auto_read']:
-            file_extensions = cfg.file_management['files']['files_in_current_directory']['file_extensions']
+            file_extensions = cfg.file_management['files']['files_in_current_directory'].get('file_extensions', [])
             input_files = {}
 
             for file_ext in file_extensions:

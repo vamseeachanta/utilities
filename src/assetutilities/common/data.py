@@ -1168,3 +1168,16 @@ class CopyAndPasteFiles:
             for destination_dir in cfg['destination_dirs']:
                 shutil.copy(cfg['source_dir'] + file_name,
                             destination_dir + file_name)
+
+class NumberFormat:
+    
+    def __init__(self):
+        pass
+    
+    def format_number(self, number, format_string):
+        return format_string.format(number)
+    
+    def eformat(f, prec, exp_digits):
+        s = "%.*e"%(prec, f)
+        mantissa, exp = s.split('e')
+        return "%se%0*d"%(mantissa, exp_digits, int(exp))
