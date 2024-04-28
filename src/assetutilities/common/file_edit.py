@@ -23,7 +23,6 @@ class FileEdit:
         elif cfg['edit_type'] == 'split':
             fe_s.router(cfg)
 
-# TODO code on 2024-04-26. Refactor to file_management.py
     def file_management(self, cfg):
         cfg = fm.router(cfg)
 
