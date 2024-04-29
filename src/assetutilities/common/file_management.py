@@ -144,8 +144,8 @@ class FileManagement:
 
     def get_file_management_output_directory(self, cfg):
 
-        file_management_output_directory = cfg.file_management['files']['output_directory']
-
+        output_directory = cfg.file_management['files'].get('output_directory', None)
+        file_management_output_directory = output_directory
         if file_management_output_directory is None:
             file_management_output_directory = cfg['Analysis']['analysis_root_folder']
 

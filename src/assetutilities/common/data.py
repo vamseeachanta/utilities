@@ -244,19 +244,23 @@ class ReadData():
 
         all_lines_as_strings = self.from_ascii_file_get_lines_as_string_arrays(
             cfg)
-        keyword_line_number = self.get_array_rows_containing_keywords(
-            all_lines_as_strings, cfg['line']['key_words'])
+        keyword_line_numbers = self.get_array_rows_containing_keywords(
+            all_lines_as_strings, cfg['line']['key_words'], cfg)
 
-        if cfg['line'].__contains__('transform'):
-            keyword_line_number = keyword_line_number * cfg['line'][
-                'transform']['scale'] + cfg['line']['transform']['shift']
 
-        return keyword_line_number
+        return keyword_line_numbers
 
-    def get_array_rows_containing_keywords(self, array, key_words):
+    def get_array_rows_containing_keywords(self, array, key_words, cfg={}):
+        keyword_line_numbers = []
         for rownum in range(0, len(array)):
             if any(keyword in array[rownum] for keyword in key_words):
-                return rownum + 1
+                keyword_line_numbers.append(rownum + 1)
+
+        if cfg.__contains__('transform'):
+            keyword_line_numbers = [keyword_line_number * cfg['line'][
+                'transform']['scale'] + cfg['line']['transform']['shift'] for keyword_line_number in keyword_line_numbers]
+
+        return keyword_line_numbers
 
     def from_ascii_file_get_value(self, cfg):
         sample_cfg_format_1 = {'io': 'data_manager/data/orcaflex/common.mds'}
@@ -314,7 +318,7 @@ class ReadData():
                     [float(item) for item in line_string_objects])
             except:
                 all_lines_float_objects.append(line_string_objects)
-                
+
         result = []
         for line_float_object_index in range(0,
                                              len(all_lines_float_objects[0])):
