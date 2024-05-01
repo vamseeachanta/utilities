@@ -256,9 +256,14 @@ class ReadData():
             if any(keyword in array[rownum] for keyword in key_words):
                 keyword_line_numbers.append(rownum + 1)
 
+        cfg_transform = None
+        if cfg.__contains__('line') and cfg['line'].__contains__('transform'):
+            cfg_transform = cfg['line']['transform']
         if cfg.__contains__('transform'):
-            keyword_line_numbers = [keyword_line_number * cfg['line'][
-                'transform']['scale'] + cfg['line']['transform']['shift'] for keyword_line_number in keyword_line_numbers]
+            cfg_transform = cfg['transform']
+
+        if cfg_transform is not None:
+            keyword_line_numbers = [keyword_line_number * cfg_transform['scale'] + cfg_transform['shift'] for keyword_line_number in keyword_line_numbers]
 
         return keyword_line_numbers
 
