@@ -130,10 +130,11 @@ class FileManagement:
             file_management_input_directory = cfg.file_management['files'][
                 'files_in_current_directory']['directory']
 
-        if file_management_input_directory is not None:
-            analysis_root_folder = cfg['Analysis']['analysis_root_folder']
-            dir_is_valid, file_management_input_directory = is_dir_valid_func(file_management_input_directory,
-                                                     analysis_root_folder)
+        if file_management_input_directory is None:
+            file_management_input_directory = './'
+        analysis_root_folder = cfg['Analysis']['analysis_root_folder']
+        dir_is_valid, file_management_input_directory = is_dir_valid_func(file_management_input_directory,
+                                                    analysis_root_folder)
 
         if not dir_is_valid:
             raise ValueError(f"Directory {file_management_input_directory} is not valid")
