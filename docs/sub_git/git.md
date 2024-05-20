@@ -4,6 +4,14 @@ Git is a Verson control tool
 
 ## Summary
 
+### Important Considerations
+
+- Do not upload any file greater than 50 MB.
+- If big output files (>1 MB) can be reproduced with little computational and manual effort, do not upload them.
+- Working in a team:
+  - Learn to pull.
+  - Push will be done as team with the project lead.
+
 ## General Workflows
 
 [https://guides.github.com/introduction/flow/](https://guides.github.com/introduction/flow/)
