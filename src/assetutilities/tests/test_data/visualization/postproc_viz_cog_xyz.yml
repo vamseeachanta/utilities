@@ -1,0 +1,71 @@
+basename: visualization
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+settings:
+  type: xy_line
+  mode: scatter
+  plt_engine: matplotlib
+  label: Allowable Wave Height
+  multiple: False
+  file_name: NULL
+  plt_save_extensions: [".png"]
+  title: COG Position, Without and with Tug
+  xlabel: True Direction (deg)
+  ylabel: Change in CoG Position (m)
+  set_rmax: 10
+  set_rticks: [1, 2, 3]
+  set_thetagrids: [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]
+  set_rlabel_position: -22.5
+  legend:
+    flag: True
+    label: []
+    loc: best
+    prop: { family: Arial, size: 8 }
+
+master_settings:
+  groups:
+    columns: { x: [True Heading], y: [Surge (X), Sway (Y), Heave (Z)] }
+    color: []
+    alpha: []
+    linestyle: []
+    marker:
+      type: "s"
+      size: 5
+      edgecolors: True
+
+data:
+  type: csv
+  groups:
+    - label: No Tug
+      file_name: output/b1516_cog.csv
+      filter:
+        - column: Moorings
+          value: All intact
+          contains: NULL
+        - column: Wind Speed
+          value: 44.704
+          contains: NULL
+        - column: Tug
+          value: False
+          contains: NULL
+    - label: Tug
+      file_name: output/b1516_cog.csv
+      filter:
+        - column: Moorings
+          value: All intact
+          contains: NULL
+        - column: Wind Speed
+          value: 44.704
+          contains: NULL
+        - column: Tug
+          value: True
+          contains: NULL
+
+  color: [blue, green]
+  alpha: [0.75, 0.75, 0.75]
+  linestyle: ["--", "-", "-", ":"]

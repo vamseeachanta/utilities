@@ -6,6 +6,9 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
+from assetutilities.common.utilities import is_file_valid_func
+from assetutilities.common.data import ReadData
+read_data = ReadData()
 
 visualization_common = VisualizationCommon()
 
@@ -63,8 +66,15 @@ class VisualizationXY:
         y_data_array = []
 
         legend_data = []
-        for csv_cfg in cfg['data']['csv']:
-            df = pd.read_csv(csv_cfg['file_name'])
+        for csv_cfg in cfg['data']['groups']:
+            analysis_root_folder = cfg['Analysis']['analysis_root_folder']
+            file_is_valid, valid_file = is_file_valid_func(csv_cfg['file_name'],
+                                                        analysis_root_folder)
+            if not file_is_valid:
+                raise ValueError('Invalid file name/path')
+ 
+            df = pd.read_csv(valid_file)
+            df = self.get_filtered_df(csv_cfg, df)
             x_data_dict = df[csv_cfg['columns']['x']].to_dict('list')
             y_data_dict = df[csv_cfg['columns']['y']].to_dict('list')
 
@@ -114,15 +124,40 @@ class VisualizationXY:
 
         fig, ax = plt.subplots()
 
+        color_list = visualization_common.get_colors(set='single', n=10)
         # Add trace or plot style
         plt_settings['traces'] = int(len(df.columns) / 2)
+
+        plot_mode = cfg['settings'].get('mode', 'line')
+        if plot_mode == 'scatter':
+            marker=cfg['master_settings']['groups']['marker']['type']
+            markersize=cfg['master_settings']['groups']['marker']['size']
+
         for index in range(0, plt_settings['traces']):
-            ax.plot(df['x_' + str(index)],
-                    df['y_' + str(index)],
-                    label=plt_settings['legend']['label'][index],
-                    color=cfg['data']['color'][index],
-                    linestyle=cfg['data']['linestyle'][index],
-                    alpha=cfg['data']['alpha'][index])
+            if plot_mode == 'line':
+                ax.plot(df['x_' + str(index)],
+                        df['y_' + str(index)],
+                        label=plt_settings['legend']['label'][index],
+                        color=color_list[index],
+                        linestyle=cfg['data']['linestyle'][index],
+                        alpha=cfg['data']['alpha'][index])
+            elif plot_mode == 'scatter':
+                ax.scatter(df['x_' + str(index)],
+                        df['y_' + str(index)],
+                        label=plt_settings['legend']['label'][index],
+                        color=color_list[index],
+                        edgecolors=color_list[index],
+                        marker=marker,
+                        # markerfacecolor = cfg['data']['color'][index],
+                        s=markersize,
+                        alpha=cfg['data']['alpha'][index])
+            else:
+                ax.plot(df['x_' + str(index)],
+                        df['y_' + str(index)],
+                        label=plt_settings['legend']['label'][index],
+                        color=color_list[index],
+                        linestyle=cfg['data']['linestyle'][index],
+                        alpha=cfg['data']['alpha'][index])
 
         grid = plt_settings.get('grid', True)
         ax.grid(grid)
@@ -168,3 +203,9 @@ class VisualizationXY:
 
         if not len(legend_data) == no_of_trends:
             legend_data = ['legend_' + str(i) for i in range(0, no_of_trends)]
+
+    def get_filtered_df(self, data_set_cfg, df):
+        df = df.copy()
+        if data_set_cfg.__contains__('filter'):
+            df = read_data.df_filter_by_column_values(data_set_cfg.copy(), df)
+        return df.copy()

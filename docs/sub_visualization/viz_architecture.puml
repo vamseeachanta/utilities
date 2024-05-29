@@ -1,0 +1,73 @@
+@startuml viz_architecture
+scale 3
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Tomato
+
+title Visualization \nArchitecture
+
+start
+
+    note right
+        Objective: Visualization Architecture:
+         - 
+    end note
+
+    partition "Data: " {
+
+        :.yml;
+            note right
+            Pros:
+            - easy difinition
+            Cons:
+            - difficult for complex data 
+            end note
+
+        :.csv;
+            note right
+             directly from multiple data sources
+            end note
+
+        :.xlsx (Not **Supported**);
+            note right
+             onerous requirements for:
+             - data clean
+             - data transformation 
+            end note
+    }
+
+    partition "Transform: " {
+        :filter - df column value;
+            note right
+            able to filter data by column value
+            end note
+        :filter - df column value contains;
+            note right
+            able to filter data by column value contains
+            end note
+    }
+
+    partition "plot: labels" {
+        :labels;
+    }
+
+    partition "plot: legend" {
+        :legend;
+    }
+
+    partition "plot: line-color" {
+        :line-color;
+    }
+    partition "plot: line-style" {
+        :line-style;
+    }
+
+stop
+
+footer
+%date("yyyy.MM.dd' at 'HH:mm")
+%filename()
+end footer
+
+@enduml
