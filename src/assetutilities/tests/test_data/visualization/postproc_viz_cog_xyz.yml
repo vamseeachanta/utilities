@@ -42,7 +42,7 @@ data:
   type: csv
   groups:
     - label: No Tug
-      file_name: output/b1516_cog.csv
+      file_name: csv/b1516_cog.csv
       filter:
         - column: Moorings
           value: All intact
@@ -53,8 +53,11 @@ data:
         - column: Tug
           value: False
           contains: NULL
+      color: [blue, green]
+      alpha: [0.75, 0.75, 0.75]
+      linestyle: ["--", "-", "-", ":"]
     - label: Tug
-      file_name: output/b1516_cog.csv
+      file_name: csv/b1516_cog.csv
       filter:
         - column: Moorings
           value: All intact
@@ -65,7 +68,6 @@ data:
         - column: Tug
           value: True
           contains: NULL
-
-  color: [blue, green]
-  alpha: [0.75, 0.75, 0.75]
-  linestyle: ["--", "-", "-", ":"]
+      color: [blue, green]
+      alpha: [0.75, 0.75, 0.75]
+      linestyle: ["--", "-", "-", ":"]
