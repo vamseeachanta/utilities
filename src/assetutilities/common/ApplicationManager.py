@@ -264,9 +264,9 @@ class ConfigureApplicationInputs():
                 self.ApplicationInputFile)[1].split('.')[0]
             AnalysisRootFolder = os.getcwd()
 
-        file_name = 'app_' + self.basename + '_' + custom_file_name + '_' + application_start_time.strftime(
+        file_name = custom_file_name + '_' + application_start_time.strftime(
             '%Y%m%d_%Hh%Mm')
-        file_name_for_overwrite = 'app_' + self.basename + '_' + custom_file_name
+        file_name_for_overwrite = custom_file_name
         result_folder = os.path.join(AnalysisRootFolder, 'results')
         result_data_folder = os.path.join(result_folder, 'Data')
         result_plot_folder = os.path.join(result_folder, 'Plot')

@@ -8,14 +8,15 @@ default:
 
 settings:
   type: xy_line
-  mode: scatter
+  mode: [line, scatter]
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
   file_name: NULL
   plt_save_extensions: [".png"]
+  suptitle: All Coast, LLC vs. Shore Offshore Services, et al.
   title: COG Position, Without and with Tug
-  xlabel: True Direction (deg)
+  xlabel: Wind Direction w.r.t. Vessel Surge (deg)
   ylabel: Change in CoG Position (m)
   set_rmax: 10
   set_rticks: [1, 2, 3]
@@ -25,18 +26,16 @@ settings:
     flag: True
     label: []
     loc: best
+    framealpha: 0.3
     prop: { family: Arial, size: 8 }
 
 master_settings:
   groups:
-    columns: { x: [True Heading], y: [Surge (X), Sway (Y), Heave (Z)] }
+    columns: { x: [AQWA Direction], y: [Surge (X), Sway (Y), Heave (Z)] }
     color: []
     alpha: []
     linestyle: []
-    marker:
-      type: "s"
-      size: 5
-      edgecolors: True
+    marker: []
 
 data:
   type: csv
@@ -53,9 +52,6 @@ data:
         - column: Tug
           value: False
           contains: NULL
-      color: [blue, green]
-      alpha: [0.75, 0.75, 0.75]
-      linestyle: ["--", "-", "-", ":"]
     - label: Tug
       file_name: csv/b1516_cog.csv
       filter:
@@ -68,6 +64,3 @@ data:
         - column: Tug
           value: True
           contains: NULL
-      color: [blue, green]
-      alpha: [0.75, 0.75, 0.75]
-      linestyle: ["--", "-", "-", ":"]

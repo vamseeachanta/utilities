@@ -125,6 +125,7 @@ class VisualizationCommon:
                           (199, 199, 199), (188, 189, 34), (219, 219, 141),
                           (23, 190, 207), (158, 218, 229)]
                 colors = [rgb_to_hex(color) for color in colors]
+            colors = colors[0:n]
         elif set == 'multi':
             if n <= 8:
                 color_1 = ["#0F6BE9", "#043F8F", "#001E45"]
@@ -151,13 +152,13 @@ class VisualizationCommon:
                 set1 = [rgb_to_hex(color) for color in set1]
                 set2 = [rgb_to_hex(color) for color in set2]
                 set3 = [rgb_to_hex(color) for color in set3]
-                colors = {'set1': set1, 'set2': set2, 'set3': set3}
+                colors = {'set1': set1[0:n], 'set2': set2[0:n], 'set3': set3[0:n]}
             else:
                 raise ValueError('Number of colors must be less than 9')
         return colors
 
     def marker_settings(self, plt_settings):
-        
+
         markerfacecolor = None
         markersize = None
         if plt_settings.__contains__('marker'):
@@ -173,3 +174,125 @@ class VisualizationCommon:
         marker_settings = {'markerfacecolor': markerfacecolor, 'markersize': markersize}
 
         return marker_settings
+
+    def get_plot_properties_for_df(self, cfg, df):
+
+        plot_count_dict = self.get_plot_count_array_for_df(cfg)
+        cfg['settings']['color'] = self.get_plot_colors_for_df(plot_count_dict)
+        cfg['settings']['linestyle'] = self.get_plot_linestyle_for_df(plot_count_dict)
+        cfg['settings']['markerprops'] = self.get_plot_markerprops_for_df(plot_count_dict)
+        cfg['settings']['alpha'] = self.get_plot_alpha_for_df(plot_count_dict)
+
+        return cfg
+
+    def get_plot_count_array_for_df(self, cfg):
+
+        x_count_array = []
+        y_count_array = []
+        plot_count_array= []
+        for group_cfg in cfg['data']['groups']:
+            x_count = len(group_cfg['columns']['x'])
+            x_count_array.append(x_count)
+            y_count = len(group_cfg['columns']['y'])
+            y_count_array.append(y_count)
+
+            plot_count_array.append(x_count * y_count)
+
+        plot_count_dict = {'x_count_array': x_count_array, 'y_count_array': y_count_array, 'plot_count_array': plot_count_array}
+        return plot_count_dict
+
+    def get_plot_colors_for_df(self, plot_count_dict, key = 'color'):
+
+        x_count_array = plot_count_dict['x_count_array']
+        y_count_array = plot_count_dict['y_count_array']
+        plot_count_array = plot_count_dict['plot_count_array']
+
+        repeat_flag = True
+        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
+        #     repeat_flag = False
+
+        if repeat_flag:
+            count = plot_count_array[0]
+            color_list = self.get_colors(set='single', n=count)
+            color_list = color_list*len(plot_count_array)
+        else:
+            count = sum(plot_count_array)
+            color_list = self.get_colors(set='single', n=count)
+
+        return color_list
+
+    def get_plot_linestyle_for_df(self, plot_count_dict, key = 'linestyle'):
+
+        default_linestyle_list = ['-', '--', '-.', ':']
+        x_count_array = plot_count_dict['x_count_array']
+        y_count_array = plot_count_dict['y_count_array']
+        plot_count_array = plot_count_dict['plot_count_array']
+
+        repeat_flag = True
+        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
+        #     repeat_flag = False
+
+        linestyle_list = []
+        if repeat_flag:
+            for plot_count, linestyle_item in zip(plot_count_array, default_linestyle_list):
+                linestyle_list = linestyle_list + [linestyle_item]*plot_count
+        else:
+            raise ValueError('Not implemented')
+
+        return linestyle_list
+
+    def get_plot_markerprops_for_df(self, plot_count_dict, key = 'marker'):
+
+        default_marker_list =  ['o', 'v', '^', '<', '>', '8', 's', 'p', '*', 'h', 'H', 'D', 'd', 'P', 'X']
+        default_markersize_list = [4, 5, 6, 7]
+        plot_count_array = plot_count_dict['plot_count_array']
+
+        repeat_flag = True
+        # x_count_array = plot_count_dict['x_count_array']
+        # y_count_array = plot_count_dict['y_count_array']
+        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
+        #     repeat_flag = False
+
+        marker_list = []
+        if repeat_flag:
+            for plot_count, marker_item in zip(plot_count_array, default_marker_list):
+                marker_list = marker_list + [marker_item]*plot_count
+        else:
+            raise ValueError('Not implemented')
+
+        markersize_list = []
+        if repeat_flag:
+            for plot_count, markersize_item in zip(plot_count_array, default_markersize_list):
+                markersize_list = markersize_list + [markersize_item]*plot_count
+        else:
+            raise ValueError('Not implemented')
+
+        markerprops_list = []
+        for marker, markersize in zip(marker_list, markersize_list):
+            markerprops_list.append({'marker': marker, 'markersize': markersize})
+
+        return markerprops_list
+
+
+
+
+    def get_plot_alpha_for_df(self, plot_count_dict, key = 'alpha'):
+
+        default_alpha_list = [round(1-n*0.05,2) for n in range(0, 10)]
+        x_count_array = plot_count_dict['x_count_array']
+        y_count_array = plot_count_dict['y_count_array']
+        plot_count_array = plot_count_dict['plot_count_array']
+
+        repeat_flag = True
+        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
+        #     repeat_flag = False
+
+        alpha_list = []
+        if repeat_flag:
+            for plot_count, alpha_item in zip(plot_count_array, default_alpha_list):
+                alpha_list = alpha_list + [alpha_item]*plot_count
+        else:
+            raise ValueError('Not implemented')
+
+        return alpha_list
+

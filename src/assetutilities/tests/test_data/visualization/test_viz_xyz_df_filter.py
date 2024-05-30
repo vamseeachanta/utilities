@@ -43,5 +43,4 @@ def test_visualization_polar():
 
     run_visualization_polar(input_file, expected_result)
 
-
 test_visualization_polar()
