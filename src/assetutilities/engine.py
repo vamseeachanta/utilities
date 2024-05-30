@@ -1,7 +1,6 @@
 import os
 import sys
 
-from assetutilities.common.data import SaveData
 from assetutilities.common.yml_utilities import ymlInput
 from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
@@ -11,13 +10,13 @@ from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.excel_utilities import ExcelUtilities
 from assetutilities.common.text_analytics import TextAnalytics
+from assetutilities.common.utilities import save_application_cfg
 
 from assetutilities.tools.pdf.read_pdf import ReadPDF
 from assetutilities.tools.pdf.edit_pdf import EditPDF
 
 from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
 
-save_data = SaveData()
 library_name = 'assetutilities'
 
 
@@ -70,7 +69,7 @@ def engine(inputfile=None, cfg=None):
             Exception(f'Analysis for basename: {basename} not found. ... FAIL'))
 
     if cfg is None:
-        save_cfg(cfg_base=cfg_base)
+        save_application_cfg(cfg_base=cfg_base)
 
     return cfg_base
 
@@ -103,10 +102,3 @@ def validate_arguments_run_methods(inputfile):
     return inputfile
 
 
-def save_cfg(cfg_base):
-    output_dir = cfg_base.Analysis['analysis_root_folder']
-
-    filename = cfg_base.Analysis['file_name']
-    filename_path = os.path.join(output_dir, 'results', filename)
-
-    save_data.saveDataYaml(cfg_base, filename_path, default_flow_style=False)

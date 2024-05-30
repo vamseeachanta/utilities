@@ -2,6 +2,9 @@ import os
 import logging
 from pathlib import Path
 from webcolors import rgb_to_hex
+from assetutilities.common.data import SaveData
+
+save_data = SaveData()
 
 
 def get_valid_file_name(file_name):
@@ -132,3 +135,11 @@ def get_colors(set='single', n=15):
             raise ValueError('Number of colors must be less than 9')
 
     return colors
+
+def save_application_cfg(cfg_base):
+    output_dir = cfg_base.Analysis["result_folder"]
+
+    filename = cfg_base.Analysis['file_name']
+    filename_path = os.path.join(output_dir, filename)
+
+    save_data.saveDataYaml(cfg_base, filename_path, default_flow_style=False)
