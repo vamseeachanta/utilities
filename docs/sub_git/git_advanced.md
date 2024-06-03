@@ -11,6 +11,58 @@ Other history using flog
 
 ## Rebase
 
+- Manipulate commmits message
+- deelete commits
+- reorder commits
+- Use to clean up local history
+
+### Usage 1 - Change message
+
+Find the existing commits and associated messages
+<code>
+git log --oneline
+</code>
+
+<code>
+git rebase -i HEAD~3
+</code>
+
+- Editor window pops up. All range of commits (except HEAD) is shown
+- Only action keyword is given in this editor window
+  - eg: change "pick" to "reword"
+- Save and close
+- Editor window opens again
+- Check the changes
+
+<code>
+
+git log --oneline
+</code>
+
+### Usage 1 - Combine commits
+
+Find the existing commits and associated messages
+<code>
+git log --oneline
+</code>
+
+<code>
+git rebase -i HEAD~4
+</code>
+
+- Editor window pops up. All range of commits (except HEAD) is shown
+- Only action keyword is given in this editor window
+  - eg: change "squash" to "reword"
+- give commit message
+- Save and close
+- Editor window opens again
+- Check the changes
+
+<code>
+
+git log --oneline
+</code>
+
 ### CLI: Git
 
 <https://stackoverflow.com/questions/14893399/rebase-feature-branch-onto-another-feature-branch>

@@ -63,6 +63,11 @@ class FileConcatenate:
             output_dir = input_set.get('output_dir', None)
             if output_dir is None:
                 output_dir = cfg['Analysis']['analysis_root_folder']
+            else:
+                output_dir = os.path.join(cfg['Analysis']['analysis_root_folder'], output_dir)
+                if not os.path.exists(output_dir):
+                    os.makedirs(output_dir)
+
             file_extension = input_set.get('file_extension', 'dat') 
 
             input_file_labels = input_set.get('input_file_labels')
