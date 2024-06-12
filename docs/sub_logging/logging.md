@@ -6,7 +6,7 @@
 
 ### Troubleshooting
 
-## Logging basicConfig not creating log file when I run in PyCharm or VSCode?
+#### Logging basicConfig not creating log file when I run in PyCharm or VSCode?
 
-Fixed the no logs problem  [#16](https://github.com/vamseeachanta/assetutilities/issues/16) using the resettting of the hanlder as given in below
+Fixed the no logs problem  [#16](https://github.com/vamseeachanta/assetutilities/issues/16) using the resetting of the handler as given in below
 <https://stackoverflow.com/questions/30861524/logging-basicconfig-not-creating-log-file-when-i-run-in-pycharm>
