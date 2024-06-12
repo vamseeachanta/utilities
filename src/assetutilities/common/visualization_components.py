@@ -17,6 +17,7 @@ class VisualizationComponents():
         self.cfg = cfg
 
     def visualization_router(self, cfg):
+        logging.info("Starting visualization application ...")
 
         cfg = self.get_cfg_with_master_data(cfg)
 
@@ -29,6 +30,7 @@ class VisualizationComponents():
         else:
             raise (Exception(f'Other plots coding to be completed ... FAIL'))
 
+        logging.info("Starting visualization application ...")
 
     def get_cfg_with_master_data(self, cfg):
         if 'master_settings' in cfg:

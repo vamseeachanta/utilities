@@ -28,6 +28,10 @@ def set_logging(cfg):
     if not os.path.exists(cfg['Analysis']['log_folder']):
         os.makedirs(cfg['Analysis']['log_folder'])
 
+    # Remove all handlers associated with the root logger object.
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+
     # Basic configuration for logging
     logfilename = os.path.join(cfg['Analysis']['log_folder'], cfg['Analysis']['file_name'] + '.log')
     logging.basicConfig(level=logNumericLevel,
@@ -37,3 +41,4 @@ def set_logging(cfg):
                         filemode='w')
 
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
+    logging.info('Logging started successfully ...')
