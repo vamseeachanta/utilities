@@ -19,6 +19,64 @@ Utilize a fast linting solution such as Ruff
 
 <https://github.com/charliermarsh/ruff>
 
+### .toml settings
+
+<code>
+[tool.isort]
+profile = "black"
+import_heading_stdlib = "Standard library imports"
+import_heading_thirdparty = "Third party imports"
+import_heading_firstparty = "Reader imports"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+line_length = 88
+
+[tool.black]
+exclude = '''
+/(
+.git
+| .mypy_cache
+| .tox
+| venv
+| .venv
+|_build
+| buck-out
+| build
+| dist
+)/
+'''
+</code>
+
+### VScode settings
+
+<code>
+
+"python.defaultInterpreterPath": "c:\\Users\\vamseea\\AppData\\Local\\miniconda3\\envs\\digitalmodel\\python.exe",
+"python.formatting.provider": "black",
+"python.terminal.activateEnvironment": true,
+"[python]": {
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "always"
+    },
+},
+"ruff.organizeImports": "false",
+"black-formatter.path": {
+    "path": [
+        "black"
+    ]
+},
+"isort.args": [
+    "--profile",
+    "black"
+],
+
+</code>
+
 ### References
 
 <https://github.com/charliermarsh/ruff>
