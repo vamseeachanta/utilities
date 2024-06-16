@@ -32,6 +32,10 @@ dependencies:
 
       - excel2img
 
+      - black
+      - isort
+      - poetry
+
       # - openpyxl
       # - openpyxl-image-loader
 
