@@ -38,9 +38,9 @@ class DataExploration:
         return df_column_data_types
 
     def get_df_statistics(self, df):
-        df_statistics_columns = ['column', 'data_type', 'min', 'max', 'row_count', 'no_of_unique_values', 'row_count_per_unique_values', 'unique_values']
+        df_statistics_columns = ['column', 'data_type', 'min', 'max', 'mean', 'stdev', 'start_value', 'end_value', 'row_count', 'no_of_unique_values', 'row_count_per_unique_values', 'unique_values']
         df_statistics = pd.DataFrame(columns=df_statistics_columns)
-        df_column_data_types = data_expl.get_inferred_df_data_types(df)
+        df_column_data_types = self.get_inferred_df_data_types(df)
         df_columns = list(df.columns)
         column_index = 0
         for column in df_columns:
@@ -66,7 +66,12 @@ class DataExploration:
             else:
                 unique_values = str(unique_values)
 
-            output_row = [df_column, data_type, df_col_min, df_col_max, row_count, no_of_unique_values, row_count_per_unique_values, unique_values]
+            df_col_mean = df[column].mean()
+            df_col_stdev = df[column].std()
+            df_col_start_value = df[column].iloc[0]
+            df_col_end_value = df[column].iloc[-1]
+
+            output_row = [df_column, data_type, df_col_min, df_col_max, df_col_mean, df_col_stdev, df_col_start_value, df_col_end_value ,row_count, no_of_unique_values, row_count_per_unique_values, unique_values]
             df_statistics.loc[len(df_statistics)] = output_row
 
             column_index = column_index + 1
