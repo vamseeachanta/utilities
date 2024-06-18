@@ -1,6 +1,9 @@
+# Standard library imports
 import datetime
+
+# Third party imports
 import pandas as pd
-from pandas.api.types import is_string_dtype, is_numeric_dtype
+from pandas.api.types import is_numeric_dtype, is_string_dtype
 
 
 class DataExploration:
@@ -50,12 +53,16 @@ class DataExploration:
             if data_type == 'datetime':
                 df[column] = pd.to_datetime(df[column])
 
-            if data_type == 'numeric' or 'datetime':
+            if data_type in ['numeric', 'datetime']:
                 df_col_min = df[column].min()
                 df_col_max = df[column].max()
+                df_col_mean = df[column].mean()
+                df_col_stdev = df[column].std()
             else:
                 df_col_min = None
                 df_col_max = None
+                df_col_mean = None
+                df_col_stdev = None
 
             unique_values = df[column].unique()
             no_of_unique_values = len(unique_values)
@@ -66,8 +73,6 @@ class DataExploration:
             else:
                 unique_values = str(unique_values)
 
-            df_col_mean = df[column].mean()
-            df_col_stdev = df[column].std()
             df_col_start_value = df[column].iloc[0]
             df_col_end_value = df[column].iloc[-1]
 
