@@ -9,7 +9,7 @@ class AttributeDict(dict):
 
 
 def update_deep_dictionary(d, u):
-    ''' for updating values in deep dictionary'''
+    """for updating values in deep dictionary"""
     for k, v in u.items():
         # this condition handles the problem
         if not isinstance(d, Mapping):

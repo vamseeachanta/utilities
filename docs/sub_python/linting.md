@@ -19,6 +19,52 @@ Utilize a fast linting solution such as Ruff
 
 <https://github.com/charliermarsh/ruff>
 
+### Black
+
+<https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+
+# TODO not working
+
+- Need to make "runItOn" commnad to run using python interpreter selected for a project/repo
+- (or) point the VS code extention to always run Black using the selected python interpreter
+
+<code>
+
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "always"
+        },
+    },
+
+    "black-formatter.args": [],
+    "black-formatter.cwd": [],
+    "black-formatter.path": [
+        "python",
+        "-m",
+        "black"
+    ],
+    "black-formatter.interpreter": [],
+
+    # Could not find python.exe
+
+    "runItOn": {
+        "commands": [
+            {
+                // Python Files Black formatter
+                "match": "\\.py$",
+                "isShellCommand": true,
+                "cmd": "python -m black ${file}",
+            },
+        ],
+
+    }
+
+</code>
+
 ### .toml settings
 
 <code>
