@@ -4,11 +4,11 @@
 
 pylint
 
-Along with pylint, the othe advised liners are:
-framwork: ruff (or flake8)
+Along with pylint, the other advised linters are:
+framework: ruff (or flake8)
 typing checks: mypy (or pyright or pylance or pyre)
 security checks: bandit
-autoformatting: black (or yapf) and isort
+autoformatting: black (or yapf) and isort (for packages)
 automated removal of unused imports and variables: autoflake
 automatic upgrade of python syntax: pyupgrade
 string formating: pydocstringfomatter
