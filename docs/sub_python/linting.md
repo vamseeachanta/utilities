@@ -25,6 +25,13 @@ Utilize a fast linting solution such as Ruff
 
 # TODO not working
 
+Run using below command:
+<code>
+python -m black src
+</code>
+
+VS Code settings not working using the code below.
+
 - Need to make "runItOn" commnad to run using python interpreter selected for a project/repo
 - (or) point the VS code extention to always run Black using the selected python interpreter
 
