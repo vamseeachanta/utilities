@@ -4,11 +4,11 @@
 
 pylint
 
-Along with pylint, the othe advised liners are:
-framwork: ruff (or flake8)
+Along with pylint, the other advised linters are:
+framework: ruff (or flake8)
 typing checks: mypy (or pyright or pylance or pyre)
 security checks: bandit
-autoformatting: black (or yapf) and isort
+autoformatting: black (or yapf) and isort (for packages)
 automated removal of unused imports and variables: autoflake
 automatic upgrade of python syntax: pyupgrade
 string formating: pydocstringfomatter
@@ -18,6 +18,59 @@ string formating: pydocstringfomatter
 Utilize a fast linting solution such as Ruff
 
 <https://github.com/charliermarsh/ruff>
+
+### Black
+
+<https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+
+# TODO not working
+
+Run using below command:
+<code>
+python -m black src
+</code>
+
+VS Code settings not working using the code below.
+
+- Need to make "runItOn" commnad to run using python interpreter selected for a project/repo
+- (or) point the VS code extention to always run Black using the selected python interpreter
+
+<code>
+
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "always"
+        },
+    },
+
+    "black-formatter.args": [],
+    "black-formatter.cwd": [],
+    "black-formatter.path": [
+        "python",
+        "-m",
+        "black"
+    ],
+    "black-formatter.interpreter": [],
+
+    # Could not find python.exe
+
+    "runItOn": {
+        "commands": [
+            {
+                // Python Files Black formatter
+                "match": "\\.py$",
+                "isShellCommand": true,
+                "cmd": "python -m black ${file}",
+            },
+        ],
+
+    }
+
+</code>
 
 ### .toml settings
 

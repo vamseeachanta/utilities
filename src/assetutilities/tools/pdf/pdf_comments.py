@@ -4,6 +4,7 @@ import urllib
 import os
 
 import fitz
+
 # from pprint import pprint
 # import poppler
 from pdfannots import process_file
@@ -28,15 +29,19 @@ class PDFComments:
             num_annots = len(annot_mappings)
             if num_annots > 0:
                 for annot_mapping in annot_mappings:
-                    if annot_mapping.annot.get_annot_type(
-                    ).value_name != 'POPPLER_ANNOT_LINK':
+                    if (
+                        annot_mapping.annot.get_annot_type().value_name
+                        != "POPPLER_ANNOT_LINK"
+                    ):
                         all_annots += 1
                         print(
-                            'page: {0:3}, {1:10}, type: {2:10}, content: {3}'.
-                            format(
-                                i + 1, annot_mapping.annot.get_modified(),
+                            "page: {0:3}, {1:10}, type: {2:10}, content: {3}".format(
+                                i + 1,
+                                annot_mapping.annot.get_modified(),
                                 annot_mapping.annot.get_annot_type().value_nick,
-                                annot_mapping.annot.get_contents()))
+                                annot_mapping.annot.get_contents(),
+                            )
+                        )
 
         if all_annots > 0:
             print(str(all_annots) + " annotation(s) found")
@@ -69,20 +74,20 @@ class PDFComments:
     def _parse_highlight(self, annot: fitz.Annot, wordlist: list) -> str:
         points = annot.vertices
         quad_count = int(len(points) / 4)
-        sentences = ['' for i in range(quad_count)]
+        sentences = ["" for i in range(quad_count)]
         for i in range(quad_count):
-            r = fitz.Quad(points[i * 4:i * 4 + 4]).rect
+            r = fitz.Quad(points[i * 4 : i * 4 + 4]).rect
             words = [w for w in wordlist if fitz.Rect(w[:4]).intersects(r)]
-            sentences[i] = ' '.join(w[4] for w in words)
-        sentence = ' '.join(sentences)
+            sentences[i] = " ".join(w[4] for w in words)
+        sentence = " ".join(sentences)
         return sentence
 
     def use_fitz(self, pdf_filename) -> dict:
         doc = fitz.open(pdf_filename)
         page = doc[0]
 
-        wordlist = page.getText("words")    # list of words on page
-        wordlist.sort(key=lambda w: (w[3], w[0]))    # ascending y, then x
+        wordlist = page.getText("words")  # list of words on page
+        wordlist.sort(key=lambda w: (w[3], w[0]))  # ascending y, then x
 
         highlights = {}
         annot = page.firstAnnot
@@ -91,7 +96,7 @@ class PDFComments:
             if annot.type[0] == 8:
                 highlights[i] = self._parse_highlight(annot, wordlist)
                 i += 1
-                print('> ' + highlights[i] + '\n')
+                print("> " + highlights[i] + "\n")
             annot = annot.next
 
         # pprint(highlights)
@@ -104,4 +109,4 @@ if __name__ == "__main__":
     #     pdf_filename=
     #     'C:/Users/ss7a2365/Desktop/Comments.pdf'
     # )
-    pdf_comments.use_fitz(pdf_filename='C:/Users/ss7a2365/Desktop/Comments.pdf')
+    pdf_comments.use_fitz(pdf_filename="C:/Users/ss7a2365/Desktop/Comments.pdf")

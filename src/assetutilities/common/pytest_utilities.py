@@ -6,14 +6,14 @@ from collections.abc import Mapping
 from _pytest.python_api import ApproxMapping
 
 
-def pytest_deepdiff_nested_dict(obtained_result,
-                                expected_result,
-                                ignore_order=True,
-                                significant_digits=6):
+def pytest_deepdiff_nested_dict(
+    obtained_result, expected_result, ignore_order=True, significant_digits=6
+):
     # https://github.com/pytest-dev/pytest/issues/3164
     # Working only if used directly in a test function but not outside
-    assert not deepdiff.DeepDiff(obtained_result, expected_result, ignore_order,
-                                 significant_digits)
+    assert not deepdiff.DeepDiff(
+        obtained_result, expected_result, ignore_order, significant_digits
+    )
 
 
 def pytest_approx_float_dict(expected, rel=None, abs=None, nan_ok=False):
@@ -29,10 +29,8 @@ class ApproxNestedMapping(ApproxMapping):
         for k in self.expected.keys():
             if isinstance(actual[k], type(self.expected)):
                 gen = ApproxNestedMapping(
-                    self.expected[k],
-                    rel=self.rel,
-                    abs=self.abs,
-                    nan_ok=self.nan_ok)._yield_comparisons(actual[k])
+                    self.expected[k], rel=self.rel, abs=self.abs, nan_ok=self.nan_ok
+                )._yield_comparisons(actual[k])
                 for el in gen:
                     yield el
             else:

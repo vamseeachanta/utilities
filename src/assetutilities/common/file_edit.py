@@ -11,6 +11,8 @@ from assetutilities.common.file_edit_split import FileSplit
 fm = FileManagement()
 fe_c = FileConcatenate()
 fe_s = FileSplit()
+
+
 class FileEdit:
 
     def __init__(self) -> None:
@@ -18,13 +20,12 @@ class FileEdit:
 
     def router(self, cfg):
         cfg = self.file_management(cfg)
-        if cfg['edit_type'] == 'concatenate':
+        if cfg["edit_type"] == "concatenate":
             fe_c.concatenate_files(cfg)
-        elif cfg['edit_type'] == 'split':
+        elif cfg["edit_type"] == "split":
             fe_s.router(cfg)
 
     def file_management(self, cfg):
         cfg = fm.router(cfg)
 
         return cfg
-
