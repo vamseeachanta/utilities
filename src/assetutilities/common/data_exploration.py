@@ -28,9 +28,6 @@ class DataExploration:
         df_statistics_summary = []
         for df in df_array:
             df_statistics = self.get_df_statistics(df)
-            
-
-        
 
     def get_df_data(self, cfg):
 
