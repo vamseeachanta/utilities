@@ -13,6 +13,21 @@ from assetutilities.common.utilities import is_file_valid_func
 
 read_data = ReadData()
 
+df_statistics_columns = [
+    "column",
+    "data_type",
+    "min",
+    "max",
+    "mean",
+    "stdev",
+    "start_value",
+    "end_value",
+    "row_count",
+    "no_of_unique_values",
+    "row_count_per_unique_values",
+    "unique_values",
+]
+
 
 class DataExploration:
     def __init__(self) -> None:
@@ -28,10 +43,12 @@ class DataExploration:
         df_statistics_summary = []
         for df in df_array:
             df_statistics = self.get_df_statistics(df)
+            for column in df_statistics_columns:
+                df_statistics_summary.append(df_statistics[column].tolist())
 
     def get_df_data(self, cfg):
 
-        df_array = []        
+        df_array = []
         for group_cfg in cfg["data"]["groups"]:
             analysis_root_folder = cfg["Analysis"]["analysis_root_folder"]
             file_is_valid, valid_file = is_file_valid_func(
@@ -45,7 +62,7 @@ class DataExploration:
             df_array.append(df)
 
         return df_array
-    
+
     def get_inferred_df_data_types(self, df):
         df_columns = list(df.columns)
         df_column_data_types = []
@@ -78,20 +95,6 @@ class DataExploration:
         return df_column_data_types
 
     def get_df_statistics(self, df):
-        df_statistics_columns = [
-            "column",
-            "data_type",
-            "min",
-            "max",
-            "mean",
-            "stdev",
-            "start_value",
-            "end_value",
-            "row_count",
-            "no_of_unique_values",
-            "row_count_per_unique_values",
-            "unique_values",
-        ]
         df_statistics = pd.DataFrame(columns=df_statistics_columns)
         df_column_data_types = self.get_inferred_df_data_types(df)
         df_columns = list(df.columns)
