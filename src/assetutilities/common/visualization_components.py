@@ -1,12 +1,9 @@
+# Standard library imports
 import logging
-import os
 
-import numpy as np
-import pandas as pd
-
-import matplotlib.pyplot as plt
-from assetutilities.common.visualization.visualization_xy import VisualizationXY
+# Reader imports
 from assetutilities.common.update_deep import update_deep_dictionary
+from assetutilities.common.visualization.visualization_xy import VisualizationXY
 
 
 class VisualizationComponents:
@@ -29,7 +26,7 @@ class VisualizationComponents:
             visualization_xy = VisualizationXY()
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
         else:
-            raise (Exception(f"Other plots coding to be completed ... FAIL"))
+            raise (Exception("Other plots coding to be completed ... FAIL"))
 
         logging.info("Starting visualization application ...")
 

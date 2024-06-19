@@ -1,15 +1,54 @@
 # Standard library imports
 import datetime
+import logging
 
 # Third party imports
 import pandas as pd
 from pandas.api.types import is_numeric_dtype, is_string_dtype
 
+# Reader imports
+from assetutilities.common.data import ReadData
+from assetutilities.common.update_deep import update_deep_dictionary
+from assetutilities.common.utilities import is_file_valid_func
+
+read_data = ReadData()
+
 
 class DataExploration:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
+    def router(self, cfg):
+        logging.info(f"Starting {cfg['basename']} application ...")
+
+        cfg = self.get_cfg_with_master_data(cfg)
+
+        df_array = self.get_df_data(cfg)
+        
+        df_statistics_summary = []
+        for df in df_array:
+            df_statistics = self.get_df_statistics(df)
+            
+
+        
+
+    def get_df_data(self, cfg):
+
+        df_array = []        
+        for group_cfg in cfg["data"]["groups"]:
+            analysis_root_folder = cfg["Analysis"]["analysis_root_folder"]
+            file_is_valid, valid_file = is_file_valid_func(
+                group_cfg["file_name"], analysis_root_folder
+            )
+            if not file_is_valid:
+                raise ValueError(f'Invalid file name/path: {group_cfg["file_name"]}')
+
+            df = pd.read_csv(valid_file)
+            df = self.get_filtered_df(group_cfg, df)
+            df_array.append(df)
+
+        return df_array
+    
     def get_inferred_df_data_types(self, df):
         df_columns = list(df.columns)
         df_column_data_types = []
@@ -111,22 +150,22 @@ class DataExploration:
         return df_statistics
 
 
-if __name__ == "__main__":
 
-    # Define a dictionary containing employee data
-    data = {
-        "Name": ["Jai", "Princi", "Gaurav", "Anuj"],
-        "Age": [27, 24, 22, 32],
-        "Address": ["Delhi", "Kanpur", "Allahabad", "Kannauj"],
-        "service_date": ["2020-01-20", "2020-02-23", "2021-03-24", "2022-01-05"],
-    }
+    def get_cfg_with_master_data(self, cfg):
+        if "master_settings" in cfg:
+            master_settings = cfg["master_settings"].copy()
+            data_settings = cfg["data"]
 
-    # Convert the dictionary into DataFrame
-    df = pd.DataFrame(data)
-    print(df)
+            for group_index in range(0, len(data_settings["groups"])):
+                group = data_settings["groups"][group_index].copy()
+                group = update_deep_dictionary(master_settings["groups"], group)
+                data_settings["groups"][group_index] = group.copy()
 
-    data_dictionary = {"query": "", "csv_filename": "df_statistics.csv"}
+        return cfg
 
-    data_expl = DataExploration()
-    df_statistics = data_expl.get_df_statistics(df)
-    df_statistics.to_csv(data_dictionary["csv_filename"])
+
+    def get_filtered_df(self, data_set_cfg, df):
+        df = df.copy()
+        if data_set_cfg.__contains__("filter"):
+            df = read_data.df_filter_by_column_values(data_set_cfg.copy(), df)
+        return df.copy()
