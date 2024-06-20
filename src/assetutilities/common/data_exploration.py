@@ -1,6 +1,7 @@
 # Standard library imports
 import datetime
 import logging
+import os
 
 # Third party imports
 import pandas as pd
@@ -39,12 +40,23 @@ class DataExploration:
         cfg = self.get_cfg_with_master_data(cfg)
 
         df_array = self.get_df_data(cfg)
-        
-        df_statistics_summary = []
-        for df in df_array:
+
+        df_statistics_summary={}
+
+        for column in df_statistics_columns:
+            df_statistics_summary.update({column: pd.DataFrame()})
+
+        for df_item in df_array:
+            label = next(iter(df_item.keys()))
+            df = df_item.get(label, pd.DataFrame())
             df_statistics = self.get_df_statistics(df)
+
             for column in df_statistics_columns:
-                df_statistics_summary.append(df_statistics[column].tolist())
+                df_statistics_summary[column][label] = df_statistics[column].tolist()
+
+        for column in df_statistics_columns:
+            filename = os.path.join(cfg["Analysis"]["result_folder"], cfg["Analysis"]['file_name']+'_'+column+".csv")
+            df_statistics_summary[column].to_csv(filename, index=False)
 
     def get_df_data(self, cfg):
 
@@ -59,7 +71,10 @@ class DataExploration:
 
             df = pd.read_csv(valid_file)
             df = self.get_filtered_df(group_cfg, df)
-            df_array.append(df)
+            label = group_cfg.get('label', None)
+            if label is None:
+                label = os.path.basename(group_cfg["file_name"])
+            df_array.append({label:df})
 
         return df_array
 
