@@ -6,16 +6,23 @@ type:
     df: True
 
 data:
-  type: csv
-  groups:
-    - label: FST1
-      file_name: src/assetutilities/tests/test_data/data_exploration/csv/test_1.csv
-    - label: FST2
-      file_name: src/assetutilities/tests/test_data/data_exploration/csv/test_2.csv
+  type: file_management
+  groups: []
 
 master_settings:
   groups:
     columns: { x: [Heading], y: [Cx] }
+
+file_management:
+  flag: True
+
+  files:
+    files_in_current_directory:
+      flag: False
+      auto_read: True
+      directory: csv
+      file_extensions: [csv]
+      filename_pattern: NULL
 
 default:
   log_level: DEBUG

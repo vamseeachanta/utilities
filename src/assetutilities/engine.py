@@ -1,4 +1,5 @@
 # Standard library imports
+import logging
 import os
 import sys
 
@@ -22,10 +23,12 @@ from assetutilities.tools.pdf.read_pdf import ReadPDF
 library_name = "assetutilities"
 
 de = DataExploration()
+fm = FileManagement()
 save_data = SaveData()
 
 
-def engine(inputfile=None, cfg=None) -> dict:
+def engine(inputfile: str = None, cfg: dict = None) -> dict:
+    fm = FileManagement()
     if cfg is None:
         inputfile = validate_arguments_run_methods(inputfile)
         cfg = ymlInput(inputfile, updateYml=None)
@@ -33,13 +36,13 @@ def engine(inputfile=None, cfg=None) -> dict:
         if cfg is None:
             raise ValueError("cfg is None")
 
-        basename = cfg["basename"]
-        application_manager = ConfigureApplicationInputs(basename)
-        application_manager.configure(cfg, library_name)
-        cfg_base = application_manager.cfg
-    else:
-        cfg_base = cfg
-        basename = cfg_base["basename"]
+    basename = cfg["basename"]
+    application_manager = ConfigureApplicationInputs(basename)
+    application_manager.configure(cfg, library_name)
+    cfg_base = application_manager.cfg
+    cfg_base = fm.router(cfg_base)
+
+    logging.info(f"{basename}, application ... START")
 
     if basename in ["excel_utilities"]:
         eu = ExcelUtilities()
@@ -76,6 +79,9 @@ def engine(inputfile=None, cfg=None) -> dict:
 
     if cfg is None:
         save_application_cfg(cfg_base=cfg_base)
+
+    logging.info(f"{basename}, application ... END")
+
 
     return cfg_base
 

@@ -9,10 +9,11 @@ from pandas.api.types import is_numeric_dtype, is_string_dtype
 
 # Reader imports
 from assetutilities.common.data import ReadData
+from assetutilities.common.data_management import DataManagement
 from assetutilities.common.update_deep import update_deep_dictionary
-from assetutilities.common.utilities import is_file_valid_func
 
 read_data = ReadData()
+dm = DataManagement()
 
 df_statistics_columns = [
     "column",
@@ -44,9 +45,9 @@ class DataExploration:
                 self.get_df_statistics_summary(cfg)
 
 
-
-    def get_df_satistics_summary(self, cfg):
-        df_array = self.get_df_data(cfg)
+    def get_df_statistics_summary(self, cfg, df_array = None):
+        if df_array is None:
+            df_array = dm.get_df_data(cfg)
 
         df_statistics_summary={}
 
@@ -61,29 +62,34 @@ class DataExploration:
             for column in df_statistics_columns:
                 df_statistics_summary[column][label] = df_statistics[column].tolist()
 
+        df_statistics_summary_columns = self.get_df_statistics_summary_columns(df_statistics_summary)
+
         for column in df_statistics_columns:
             filename = os.path.join(cfg["Analysis"]["result_folder"], cfg["Analysis"]['file_name']+'_'+column+".csv")
+            df = df_statistics_summary[column]
             df_statistics_summary[column].to_csv(filename, index=False)
 
-    def get_df_data(self, cfg):
+            df_T = df.copy()
+            df_T = df_T.T.copy()
+            df_T.columns = df_statistics_summary_columns
+            df_T['input_file'] = list(df.columns)
+            filename = os.path.join(cfg["Analysis"]["result_folder"], cfg["Analysis"]['file_name']+'_'+column+"_T.csv")
+            df_T.to_csv(filename, index=False)
 
-        df_array = []
-        for group_cfg in cfg["data"]["groups"]:
-            analysis_root_folder = cfg["Analysis"]["analysis_root_folder"]
-            file_is_valid, valid_file = is_file_valid_func(
-                group_cfg["file_name"], analysis_root_folder
-            )
-            if not file_is_valid:
-                raise ValueError(f'Invalid file name/path: {group_cfg["file_name"]}')
+    def get_df_statistics_summary_columns(self, df_statistics_summary):
+        column_df = df_statistics_summary['column']
+        df_statistics_summary_columns = []
+        for i in range(0, len(column_df)):
+            unique_columns = list(set(list(column_df.iloc[i])))
+            if len(unique_columns) > 1:
+                logging.info(f"Column mismatch: {unique_columns}")
+                column = ','.join(unique_columns)
+            else:
+                column = unique_columns[0]
+            df_statistics_summary_columns.append(column)
 
-            df = pd.read_csv(valid_file)
-            df = self.get_filtered_df(group_cfg, df)
-            label = group_cfg.get('label', None)
-            if label is None:
-                label = os.path.basename(group_cfg["file_name"])
-            df_array.append({label:df})
+        return df_statistics_summary_columns
 
-        return df_array
 
     def get_inferred_df_data_types(self, df):
         df_columns = list(df.columns)

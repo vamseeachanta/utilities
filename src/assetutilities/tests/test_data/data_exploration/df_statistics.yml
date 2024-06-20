@@ -1,19 +1,24 @@
 basename: data_exploration
+type:
+  df_statistics:
+    flag: True
+    df_array: True
+    df: True
+
+data:
+  type: csv
+  groups:
+    - label: FST1
+      file_name: src/assetutilities/tests/test_data/data_exploration/csv/test_1.csv
+    - label: FST2
+      file_name: src/assetutilities/tests/test_data/data_exploration/csv/test_2.csv
+
+master_settings:
+  groups:
+    columns: { x: [Heading], y: [Cx] }
 
 default:
   log_level: DEBUG
   config:
     overwrite:
       output: True
-
-master_settings:
-  groups:
-    columns: { x: [Heading], y: [Cx] }
-
-data:
-  type: csv
-  groups:
-    - label: FST1
-      file_name: src/assetutilities/tests/test_data/visualization/csv/test_1.csv
-    - label: FST2
-      file_name: src/assetutilities/tests/test_data/visualization/csv/test_2.csv

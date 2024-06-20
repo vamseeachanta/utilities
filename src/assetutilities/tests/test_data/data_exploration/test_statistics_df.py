@@ -15,7 +15,8 @@ def run_process(input_file, expected_result={}):
     return cfg
 
 def test_run_process():
-    input_file = 'df_statistics.yml'
+    # input_file = 'df_statistics.yml'
+    input_file = 'df_statistics_file_management.yml'
 
     pytest_output_file = None
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)
