@@ -39,6 +39,13 @@ class DataExploration:
 
         cfg = self.get_cfg_with_master_data(cfg)
 
+        if cfg['type']['df_statistics']['flag']:
+            if cfg['type']['df_statistics']['df_array']:
+                self.get_df_statistics_summary(cfg)
+
+
+
+    def get_df_satistics_summary(self, cfg):
         df_array = self.get_df_data(cfg)
 
         df_statistics_summary={}
