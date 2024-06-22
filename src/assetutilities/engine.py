@@ -7,14 +7,12 @@ import sys
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import SaveData
 from assetutilities.common.data_exploration import DataExploration
-from assetutilities.common.excel_utilities import ExcelUtilities
 from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.text_analytics import TextAnalytics
 from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
-from assetutilities.common.word_utilities import WordUtilities
 from assetutilities.common.yml_utilities import ymlInput
 from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
 from assetutilities.tools.pdf.edit_pdf import EditPDF
@@ -45,6 +43,8 @@ def engine(inputfile: str = None, cfg: dict = None) -> dict:
     logging.info(f"{basename}, application ... START")
 
     if basename in ["excel_utilities"]:
+        # Reader imports
+        from assetutilities.common.excel_utilities import ExcelUtilities
         eu = ExcelUtilities()
         cfg_base = eu.excel_utility_router(cfg_base)
     elif basename in ["visualization"]:
@@ -69,11 +69,14 @@ def engine(inputfile: str = None, cfg: dict = None) -> dict:
         ta = TextAnalytics()
         ta.router(cfg_base)
     elif basename in ["word_utilities"]:
+        # Reader imports
+        from assetutilities.common.word_utilities import WordUtilities
+        
         wu = WordUtilities()
         wu.router(cfg_base)
     elif cfg["basename"] == "data_exploration":
         cfg_base = de.router(cfg_base)
-    
+
     else:
         raise (Exception(f"Analysis for basename: {basename} not found. ... FAIL"))
 
@@ -81,7 +84,6 @@ def engine(inputfile: str = None, cfg: dict = None) -> dict:
         save_application_cfg(cfg_base=cfg_base)
 
     logging.info(f"{basename}, application ... END")
-
 
     return cfg_base
 

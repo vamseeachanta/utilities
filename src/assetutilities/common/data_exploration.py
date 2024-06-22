@@ -40,16 +40,15 @@ class DataExploration:
 
         cfg = self.get_cfg_with_master_data(cfg)
 
-        if cfg['type']['df_statistics']['flag']:
-            if cfg['type']['df_statistics']['df_array']:
+        if cfg["type"]["df_statistics"]["flag"]:
+            if cfg["type"]["df_statistics"]["df_array"]:
                 self.get_df_statistics_summary(cfg)
 
-
-    def get_df_statistics_summary(self, cfg, df_array = None):
+    def get_df_statistics_summary(self, cfg, df_array=None):
         if df_array is None:
             df_array = dm.get_df_data(cfg)
 
-        df_statistics_summary={}
+        df_statistics_summary = {}
 
         for column in df_statistics_columns:
             df_statistics_summary.update({column: pd.DataFrame()})
@@ -62,34 +61,41 @@ class DataExploration:
             for column in df_statistics_columns:
                 df_statistics_summary[column][label] = df_statistics[column].tolist()
 
-        df_statistics_summary_columns = self.get_df_statistics_summary_columns(df_statistics_summary)
+        df_statistics_summary_columns = self.get_df_statistics_summary_columns(
+            df_statistics_summary
+        )
 
         for column in df_statistics_columns:
-            filename = os.path.join(cfg["Analysis"]["result_folder"], cfg["Analysis"]['file_name']+'_'+column+".csv")
+            filename = os.path.join(
+                cfg["Analysis"]["result_folder"],
+                cfg["Analysis"]["file_name"] + "_" + column + ".csv",
+            )
             df = df_statistics_summary[column]
-            df_statistics_summary[column].to_csv(filename, index=False)
+            df.to_csv(filename, index=False)
 
             df_T = df.copy()
             df_T = df_T.T.copy()
             df_T.columns = df_statistics_summary_columns
-            df_T['input_file'] = list(df.columns)
-            filename = os.path.join(cfg["Analysis"]["result_folder"], cfg["Analysis"]['file_name']+'_'+column+"_T.csv")
+            df_T["input_file"] = list(df.columns)
+            filename = os.path.join(
+                cfg["Analysis"]["result_folder"],
+                cfg["Analysis"]["file_name"] + "_" + column + "_T.csv",
+            )
             df_T.to_csv(filename, index=False)
 
     def get_df_statistics_summary_columns(self, df_statistics_summary):
-        column_df = df_statistics_summary['column']
+        column_df = df_statistics_summary["column"]
         df_statistics_summary_columns = []
         for i in range(0, len(column_df)):
             unique_columns = list(set(list(column_df.iloc[i])))
             if len(unique_columns) > 1:
                 logging.info(f"Column mismatch: {unique_columns}")
-                column = ','.join(unique_columns)
+                column = ",".join(unique_columns)
             else:
                 column = unique_columns[0]
             df_statistics_summary_columns.append(column)
 
         return df_statistics_summary_columns
-
 
     def get_inferred_df_data_types(self, df):
         df_columns = list(df.columns)
@@ -134,7 +140,7 @@ class DataExploration:
             if data_type == "datetime":
                 df[column] = pd.to_datetime(df[column])
 
-            if data_type in ['numeric', 'datetime']:
+            if data_type in ["numeric", "datetime"]:
                 df_col_min = df[column].min()
                 df_col_max = df[column].max()
                 df_col_mean = df[column].mean()
@@ -177,8 +183,6 @@ class DataExploration:
 
         return df_statistics
 
-
-
     def get_cfg_with_master_data(self, cfg):
         if "master_settings" in cfg:
             master_settings = cfg["master_settings"].copy()
@@ -190,7 +194,6 @@ class DataExploration:
                 data_settings["groups"][group_index] = group.copy()
 
         return cfg
-
 
     def get_filtered_df(self, data_set_cfg, df):
         df = df.copy()

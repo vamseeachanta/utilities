@@ -10,13 +10,14 @@ def run_process(input_file, expected_result={}):
     if input_file is not None and not os.path.isfile(input_file):
         input_file = os.path.join(os.path.dirname(__file__), input_file)
     cfg = engine(input_file)
-    assert (True)
+    assert True
 
     return cfg
 
+
 def test_run_process():
     # input_file = 'df_statistics.yml'
-    input_file = 'df_statistics_file_management.yml'
+    input_file = "df_statistics_file_management.yml"
 
     pytest_output_file = None
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)
@@ -29,5 +30,3 @@ def test_run_process():
 
 
 test_run_process()
-
-

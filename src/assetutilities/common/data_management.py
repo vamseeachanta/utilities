@@ -20,9 +20,9 @@ class DataManagement:
 
     def get_df_data(self, cfg):
 
-        if cfg['data']['type'] == 'file_management':
-            file_list = cfg['file_management']['input_files']['csv'].copy()
-            cfg['data']['groups'] = [{'file_name': file} for file in file_list]
+        if cfg["data"]["type"] == "file_management":
+            file_list = cfg["file_management"]["input_files"]["csv"].copy()
+            cfg["data"]["groups"] = [{"file_name": file} for file in file_list]
 
         df_array = self.get_df_array_from_cfg(cfg)
 
@@ -40,10 +40,10 @@ class DataManagement:
 
             df = pd.read_csv(valid_file)
             df = self.get_filtered_df(group_cfg, df)
-            label = group_cfg.get('label', None)
+            label = group_cfg.get("label", None)
             if label is None:
                 label = os.path.basename(group_cfg["file_name"])
-            df_array.append({label:df})
+            df_array.append({label: df})
 
         return df_array
 

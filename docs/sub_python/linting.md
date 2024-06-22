@@ -18,6 +18,7 @@ string formating: pydocstringfomatter
 Utilize a fast linting solution such as Ruff
 
 <https://github.com/charliermarsh/ruff>
+<https://realpython.com/ruff-python/>
 
 ### Black
 
