@@ -1,12 +1,12 @@
-import datetime
-import yaml
-import operator
-import pandas as pd
-from functools import reduce
-from colorama import init as colorama_init
-from colorama import Fore
-from colorama import Style
+# Standard library imports
 import logging
+import operator
+from functools import reduce
+
+# Third party imports
+import pandas as pd
+import yaml
+from colorama import init as colorama_init
 
 colorama_init()
 
@@ -18,6 +18,7 @@ class ReadFromExcel:
 
     def from_xlsx(self, cfg, file_index=0):
         cfg_template_single_xlsx = {"io": "data_manager/data/sample_data.xlsx"}
+        # Third party imports
         import pandas as pd
 
         if cfg.__contains__("files"):
@@ -85,6 +86,7 @@ class ReadData:
         https://www.tutorialspoint.com/How-to-check-if-multiple-strings-exist-in-another-string-in-Python
         """
         # import xlrd
+        # Third party imports
         from openpyxl import load_workbook
 
         wb = load_workbook(cfg["io"])
@@ -96,6 +98,7 @@ class ReadData:
         return keyword_row_number
 
     def xlsx_to_df_by_keyword_search(self, cfg):
+        # Third party imports
         import pandas as pd
 
         cfg.update(cfg["start_row"])
@@ -134,6 +137,7 @@ class ReadData:
         https://stackoverflow.com/questions/38056233/python-search-excel-sheet-for-specific-strings-in-a-column-and-extract-those-ro/38056526
         https://www.tutorialspoint.com/How-to-check-if-multiple-strings-exist-in-another-string-in-Python
         """
+        # Third party imports
         import pandas as pd
         import xlrd
 
@@ -182,6 +186,7 @@ class ReadData:
                 break
 
     def read_yml_file(self, data):
+        # Third party imports
         import yaml
 
         with open(data["io"], "r") as ymlfile:
@@ -217,6 +222,7 @@ class ReadData:
         return df
 
     def from_pdf_tabula(self, cfg, file_index=0):
+        # Third party imports
         import tabula
 
         df = tabula.read_pdf(
@@ -227,6 +233,7 @@ class ReadData:
         return df
 
     def from_pdf_camelot(self, cfg, file_index=0):
+        # Third party imports
         import camelot
 
         df = camelot.read_pdf(
@@ -302,6 +309,7 @@ class ReadData:
         return result
 
     def from_ascii_file_get_structured_data_delimited_white_space(self, cfg):
+        # Third party imports
         import pandas as pd
 
         sample_cfg_format_1 = {"io": "data_manager/data/orcaflex/common.mds"}
@@ -378,6 +386,7 @@ class ReadData:
 
         all_lines = []
         if type(cfg["io"]) is list:
+            # Third party imports
             from common.ETL_components import ETL_components
 
             etl_components = ETL_components(cfg=None)
@@ -412,6 +421,7 @@ class ReadData:
     ):
         folder_with_file_type_example = "Q:/projects/Mole/log_files/*.log"
 
+        # Standard library imports
         import glob
         import os
 
@@ -438,10 +448,12 @@ class ReadData:
 class GetData:
 
     def download_file_from_url(self, cfg):
+        # Standard library imports
         import os
         import time
         from pathlib import Path
 
+        # Third party imports
         import wget
 
         cfg_temp = {
@@ -471,6 +483,7 @@ class GetData:
 class FromString:
 
     def using_regex(self, ref_text, string):
+        # Standard library imports
         import re
 
         result = re.findall(ref_text, string, re.IGNORECASE)
@@ -534,12 +547,14 @@ class FromString:
 class SaveData:
 
     def saveDataJson(self, data, fileName):
+        # Standard library imports
         import json
 
         with open(fileName + ".json", "w") as f:
             json.dump(data, f)
 
     def saveDataYaml(self, data, fileName, default_flow_style=False, sort_keys=False):
+        # Third party imports
         import yaml
 
         if default_flow_style == None:
@@ -567,6 +582,7 @@ class SaveData:
         with open(file_name + extension, "w") as f:
             for line_index in range(0, len(array)):
                 if type(array[line_index]) is list:
+                    # Third party imports
                     from common.ETL_components import ETL_components
 
                     etl_components = ETL_components(cfg=None)
@@ -603,6 +619,7 @@ class SaveData:
     """
 
     def DataFrame_To_xlsx_openpyxl(self, df, data):
+        # Third party imports
         import pandas as pd
         from openpyxl import load_workbook
 
@@ -627,6 +644,7 @@ class SaveData:
         writer.save()
 
     def DataFrameArray_To_xlsx_openpyxl(self, dfArray, data):
+        # Third party imports
         import pandas as pd
 
         print("Opening new workbook")
@@ -691,6 +709,7 @@ class SaveData:
         self.plt.close()
 
     def df_to_table_as_docx(self, df, cfg):
+        # Third party imports
         from docx import Document
 
         document = Document()
@@ -727,6 +746,7 @@ class SaveData:
         **kwargs,
     ):
 
+        # Third party imports
         import matplotlib.pyplot as plt
         import numpy as np
         import six
@@ -776,6 +796,7 @@ class SaveData:
 class DefineData:
 
     def empty_data_frame(self, columns=None):
+        # Third party imports
         import pandas as pd
 
         data_frame = pd.DataFrame(columns=columns)
@@ -819,6 +840,7 @@ class objdict(dict):
 class DateTimeUtility:
 
     def last_day_of_month(self, any_day):
+        # Standard library imports
         import datetime
 
         next_month = any_day.replace(day=28) + datetime.timedelta(
@@ -837,6 +859,7 @@ class Transform:
 
     def gis_deg_to_distance(self, df, cfg):
         cfg_sample = {"Longitude": "BOT_LONG", "Latitude": "BOT_LAT", "label": "BOT"}
+        # Third party imports
         import utm
 
         longitude_column = cfg["Longitude"]
@@ -869,6 +892,7 @@ class Transform:
 
     def get_gis_converted_df_superseded(self, data_set_cfg, df):
         if data_set_cfg.__contains__("gis"):
+            # Third party imports
             import pyproj
 
             p = pyproj.Proj(proj="utm", zone=data_set_cfg["gis"]["zone"], ellps="WGS84")
@@ -884,6 +908,7 @@ class Transform:
                     df[latitude_column].astype(float).tolist(),
                 )
             elif data_set_cfg["gis"]["long_lat_to_x_y"]["flag"]:
+                # Third party imports
                 import utm
 
                 longitude_column = data_set_cfg["gis"]["long_lat_to_x_y"]["Longitude"]
@@ -916,6 +941,7 @@ class Transform:
     def dataframe_to_dict(self, df, cfg={}):
         json_dict = {}
         if df is not None:
+            # Standard library imports
             import json
 
             orient = cfg.get("orient", "records")
@@ -928,6 +954,7 @@ class Transform:
     def df_JSON_strings_values_to_dict(self, df, cfg_settings):
         if df is not None:
             if cfg_settings.__contains__("json_transformation"):
+                # Standard library imports
                 import json
 
                 for column in cfg_settings["json_transformation"]["columns"]:
@@ -939,11 +966,11 @@ class Transform:
         return df.copy()
 
     def dataframe_to_json(self, df, cfg={}):
+        # Third party imports
         import pandas as pd
 
         json_string = ""
         if df is not None:
-            import json
 
             orient = cfg.get("orient", "records")
             index = cfg.get("index", True)
@@ -1029,6 +1056,7 @@ class Transform:
 
     def dataframe_to_html(self, df=None, cfg_settings={}):
         if df is None:
+            # Third party imports
             import pandas as pd
 
             df = pd.DataFrame(
@@ -1057,11 +1085,11 @@ class Transform:
             html = html.replace("<thead>", thead)
             return html
         else:
-            import json
 
             for column in cfg_settings["json_transformation"]["columns"]:
                 json_array = []
                 for df_row in range(0, len(df)):
+                    # Third party imports
                     import pandas as pd
 
                     try:
@@ -1088,6 +1116,16 @@ class Transform:
         else:
             print("data types not supported")
 
+    def get_transformed_df(self, cfg_transform, df):
+        transformed_df = df.copy()
+        for transform_item in cfg_transform:
+            column = transform_item["column"]
+            scale = transform_item["scale"]
+            shift = transform_item["shift"]
+            data = list(transformed_df[column])
+            transformed_df[column] = [item * scale + shift for item in data]
+
+        return transformed_df
 
 class TransformData:
 
@@ -1144,6 +1182,7 @@ if __name__ == "__main__":
     # df = xlsx_To_DataFrame(CustomData)
     # print(df)
 
+    # Third party imports
     import pandas as pd
 
     save_data = SaveData()
@@ -1170,6 +1209,7 @@ class PandasChainedAssignent:
         self.swcw = chained
 
     def __enter__(self):
+        # Third party imports
         import pandas as pd
 
         self.saved_swcw = pd.options.mode.chained_assignment
@@ -1177,6 +1217,7 @@ class PandasChainedAssignent:
         return self
 
     def __exit__(self, *args):
+        # Third party imports
         import pandas as pd
 
         pd.options.mode.chained_assignment = self.saved_swcw
@@ -1218,6 +1259,7 @@ class CopyAndPasteFiles:
             'file_names': ['test1.txt', 'test2.txt']
         }
         """
+        # Standard library imports
         import shutil
 
         file_names = cfg["files"]

@@ -1,16 +1,15 @@
+# Standard library imports
 import logging
-import os
-
-import numpy as np
-import pandas as pd
 
 import matplotlib.pyplot as plt
-from assetutilities.common.visualization.visualization_common import VisualizationCommon
+import pandas as pd
+
+# Reader imports
+from assetutilities.common.data_management import DataManagement
 from assetutilities.common.utilities import is_file_valid_func
-from assetutilities.common.data import ReadData
+from assetutilities.common.visualization.visualization_common import VisualizationCommon
 
-read_data = ReadData()
-
+dm = DataManagement()
 visualization_common = VisualizationCommon()
 
 
@@ -75,7 +74,8 @@ class VisualizationXY:
                 raise ValueError(f'Invalid file name/path: {group_cfg["file_name"]}')
 
             df = pd.read_csv(valid_file)
-            df = self.get_filtered_df(group_cfg, df)
+            df = dm.get_filtered_df(group_cfg, df)
+            df = dm.get_transformed_df(group_cfg, df)
             x_data_dict = df[group_cfg["columns"]["x"]].to_dict("list")
             y_data_dict = df[group_cfg["columns"]["y"]].to_dict("list")
 
@@ -233,8 +233,3 @@ class VisualizationXY:
         if not len(legend_data) == no_of_trends:
             legend_data = ["legend_" + str(i) for i in range(0, no_of_trends)]
 
-    def get_filtered_df(self, data_set_cfg, df):
-        df = df.copy()
-        if data_set_cfg.__contains__("filter"):
-            df = read_data.df_filter_by_column_values(data_set_cfg.copy(), df)
-        return df.copy()

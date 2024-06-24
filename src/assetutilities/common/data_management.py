@@ -5,10 +5,10 @@ import os
 import pandas as pd
 
 # Reader imports
-from assetutilities.common.data import ReadData
-from assetutilities.common.utilities import is_file_valid_func
+from assetutilities.common.data import ReadData, Transform
 
 read_data = ReadData()
+trans = Transform()
 
 
 class DataManagement:
@@ -51,4 +51,11 @@ class DataManagement:
         df = df.copy()
         if data_set_cfg.__contains__("filter"):
             df = read_data.df_filter_by_column_values(data_set_cfg.copy(), df)
+        return df.copy()
+
+    def get_transformed_df(self, data_set_cfg, df):
+        df = df.copy()
+        if data_set_cfg.__contains__("transform"):
+            df = trans.get_transformed_df(data_set_cfg['transform'].copy(), df)
+
         return df.copy()

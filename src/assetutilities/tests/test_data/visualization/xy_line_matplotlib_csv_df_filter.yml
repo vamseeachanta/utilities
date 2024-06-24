@@ -39,8 +39,12 @@ master_settings:
       edgecolors: True
     filter:
       - column: Heading
-        value: 0 #long-term
+        value: 0 # long-term
         contains: NULL
+    transform:
+      - { column: Heading, scale: 1, shift: 0 }
+      - { column: Cx, scale: 1, shift: 0 }
+      - { column: Cy, scale: 1, shift: 0 }
 
 data:
   type: csv
