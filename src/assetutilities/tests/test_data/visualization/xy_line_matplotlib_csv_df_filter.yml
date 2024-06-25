@@ -49,6 +49,7 @@ master_settings:
       - { column: Heading, scale: 1, shift: 0 }
       - { column: Cx, scale: 1, shift: 0 }
       - { column: Cy, scale: 1, shift: 0 }
+      - { column: no_col, scale: 1, shift: 0 }
 
 data:
   type: csv

@@ -1118,12 +1118,14 @@ class Transform:
 
     def get_transformed_df(self, cfg_transform, df):
         transformed_df = df.copy()
+        df_columns = list(df.columns)
         for transform_item in cfg_transform:
             column = transform_item["column"]
-            scale = transform_item["scale"]
-            shift = transform_item["shift"]
-            data = list(transformed_df[column])
-            transformed_df[column] = [item * scale + shift for item in data]
+            if column in df_columns:
+                scale = transform_item["scale"]
+                shift = transform_item["shift"]
+                data = list(transformed_df[column])
+                transformed_df[column] = [item * scale + shift for item in data]
 
         return transformed_df
 
