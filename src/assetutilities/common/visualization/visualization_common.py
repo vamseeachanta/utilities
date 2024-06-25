@@ -59,6 +59,7 @@ class VisualizationCommon:
                 else:
                     plt.set_xlim(xlim)
 
+        return plt
 
     def add_axes_to_plt(self, plt_properties, cfg):
         for axes_idx in range(0, len(cfg.add_axes)):
