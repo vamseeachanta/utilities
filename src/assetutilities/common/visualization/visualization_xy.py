@@ -1,8 +1,9 @@
 # Standard library imports
 import logging
 
-import matplotlib.pyplot as plt
-import pandas as pd
+# Third party imports
+import matplotlib.pyplot as plt  # noqa
+import pandas as pd  # noqa
 
 # Reader imports
 from assetutilities.common.data_management import DataManagement
@@ -118,7 +119,6 @@ class VisualizationXY:
         return data_dict, cfg
 
     def get_xy_plot_matplotlib(self, df, plt_settings, cfg):
-        import matplotlib.pyplot as plt
 
         if (
             "plt_properties" in plt_settings
