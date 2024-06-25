@@ -46,18 +46,18 @@ class VisualizationCommon:
     def add_x_y_lim_formats(self, cfg, plt):
         if cfg.settings.__contains__("ylim"):
             ylim = cfg.settings.get("ylim", None)
-            if ylim != None:
-                # if self.cfg_mult is None:
-                #     self.plot_object.ylim(ylim)
-                # else:
-                plt.set_ylim(ylim)
+            if ylim is not None:
+                if plt.__name__ == 'matplotlib.pyplot':
+                    plt.ylim(ylim)
+                else:
+                    plt.set_ylim(ylim)
         if cfg.settings.__contains__("xlim"):
             xlim = cfg.settings.get("xlim", None)
-            if xlim != None:
-                # if self.cfg_mult is None:
-                #     self.plot_object.xlim(xlim)
-                # else:
-                plt.set_xlim(xlim)
+            if xlim is not None:
+                if plt.__name__ == 'matplotlib.pyplot':
+                    plt.xlim(xlim)
+                else:
+                    plt.set_xlim(xlim)
 
 
     def add_axes_to_plt(self, plt_properties, cfg):
