@@ -26,6 +26,10 @@ settings:
     label: []
     loc: best
     prop: { family: Arial, size: 8 }
+  xlim: [0, 1.6]
+  ylim: [0, 1.6]
+  xscale:
+    log: False
 
 master_settings:
   groups:
