@@ -1,11 +1,11 @@
-import logging
+# Standard library imports
 import os
 
+# Third party imports
 import numpy as np
 import pandas as pd
 
 import matplotlib.pyplot as plt
-
 
 class VisualizationCommon:
 
@@ -35,6 +35,31 @@ class VisualizationCommon:
         self.add_markers
         self.save_and_close()
 
+    def add_x_y_scale_formats(self):
+        if self.plt_settings.__contains__("yscale"):
+            if self.plt_settings["yscale"]["log"]:
+                self.plt.yscale("log")
+        if self.plt_settings.__contains__("xscale"):
+            if self.plt_settings["xscale"]["log"]:
+                self.plt.xscale("log")
+
+    def add_x_y_lim_formats(self, cfg, plt):
+        if cfg.settings.__contains__("ylim"):
+            ylim = cfg.settings.get("ylim", None)
+            if ylim != None:
+                # if self.cfg_mult is None:
+                #     self.plot_object.ylim(ylim)
+                # else:
+                plt.set_ylim(ylim)
+        if cfg.settings.__contains__("xlim"):
+            xlim = cfg.settings.get("xlim", None)
+            if xlim != None:
+                # if self.cfg_mult is None:
+                #     self.plot_object.xlim(xlim)
+                # else:
+                plt.set_xlim(xlim)
+
+
     def add_axes_to_plt(self, plt_properties, cfg):
         for axes_idx in range(0, len(cfg.add_axes)):
             cfg_plt = cfg.add_axes[axes_idx]
@@ -52,7 +77,7 @@ class VisualizationCommon:
         # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.arrow.html
         # Add arrows with direct data
         # Try inset_axes: https://matplotlib.org/2.0.2/examples/pylab_examples/axes_demo.html
-        if not "arrows" in plt_settings:
+        if "arrows" not in plt_settings:
             return plt
 
         arrows = plt_settings["arrows"]
@@ -110,6 +135,7 @@ class VisualizationCommon:
         """
         https://help.tableau.com/current/pro/desktop/en-us/formatting_create_custom_colors.htm
         """
+        # Third party imports
         from webcolors import rgb_to_hex
 
         if set == "single":

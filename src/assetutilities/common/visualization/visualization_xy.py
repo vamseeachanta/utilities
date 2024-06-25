@@ -209,6 +209,8 @@ class VisualizationXY:
         )
         ax.label_outer()
 
+        plt = visualization_common.add_x_y_lim_formats(cfg, plt)
+        
         plt_properties = {"plt": plt, "fig": fig}
         return plt_properties
 
