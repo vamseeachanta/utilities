@@ -2,10 +2,10 @@
 import os
 
 # Third party imports
+import matplotlib.pyplot as plt  # noqa
 import numpy as np
-import pandas as pd
+import pandas as pd  # noqa
 
-import matplotlib.pyplot as plt
 
 class VisualizationCommon:
 

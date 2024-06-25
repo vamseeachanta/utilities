@@ -20,6 +20,20 @@ Utilize a fast linting solution such as Ruff
 <https://github.com/charliermarsh/ruff>
 <https://realpython.com/ruff-python/>
 
+### autoflake
+
+Autoflake removes unused imports and unused variables from Python code.
+
+However, it sometimes removes imports that are used in the code. Then using # noqa is the an option to keep these imports. See example code below.
+
+<code>
+
+import matplotlib.pyplot as plt  # noqa
+
+import pandas as pd  # noqa
+
+</code>
+
 ### Black
 
 <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
