@@ -303,6 +303,8 @@ class ConfigureApplicationInputs():
                                           application_configuration_parameters)
 
     def configure_overwrite_filenames(self):
+        logging.debug("self.cfg before checking overwrite: %s", self.cfg)
+        
         if self.cfg['default']['config']['overwrite']['output'] == True:
             self.cfg['Analysis']['file_name'] = self.cfg['Analysis'][
                 'file_name_for_overwrite']
