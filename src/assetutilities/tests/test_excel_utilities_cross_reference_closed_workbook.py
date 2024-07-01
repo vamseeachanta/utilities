@@ -49,4 +49,4 @@ def test_excel_utilties_closed_file_reference():
     run_excel_utilties_closed_file_reference(input_file, expected_result)
 
 
-# test_excel_utilties_closed_file_reference()
+test_excel_utilties_closed_file_reference()

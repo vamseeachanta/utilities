@@ -45,4 +45,4 @@ def test_edit_pdf():
     run_edit_pdf(input_file, expected_result)
 
 
-# test_edit_pdf()
+test_edit_pdf()
