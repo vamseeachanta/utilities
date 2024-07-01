@@ -22,6 +22,10 @@ pandoc
 wkhtmltopdf
 python-docx
 
+black
+isort
+poetry
+
 # imp
 # git
 # popplerqt5 Only available in linux systems

@@ -1,11 +1,9 @@
-import pytest
-import deepdiff
+# Standard library imports
 import os
 import sys
-import numpy as np
 
+# Reader imports
 from assetutilities.engine import engine
-from assetutilities.common.yml_utilities import ymlInput
 
 
 def run_visualization_polar(input_file, expected_result={}):
@@ -23,15 +21,13 @@ def run_visualization_polar(input_file, expected_result={}):
 
 
 def get_valid_pytest_output_file(pytest_output_file):
-    if pytest_output_file is not None and not os.path.isfile(
-            pytest_output_file):
-        pytest_output_file = os.path.join(os.path.dirname(__file__),
-                                          pytest_output_file)
+    if pytest_output_file is not None and not os.path.isfile(pytest_output_file):
+        pytest_output_file = os.path.join(os.path.dirname(__file__), pytest_output_file)
     return pytest_output_file
 
 
 def test_visualization_polar():
-    input_file = 'postproc_viz_cog_xyz.yml'
+    input_file = "xy_line_matplotlib_csv_df_filter.yml"
 
     # pytest_output_file = '../test_data/6d_buoy/buoy_6d_circular_px_0_pytest.yml'
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)
@@ -42,5 +38,6 @@ def test_visualization_polar():
         sys.argv.pop()
 
     run_visualization_polar(input_file, expected_result)
+
 
 test_visualization_polar()

@@ -1,9 +1,9 @@
-''' 
+""" 
 https://github.com/jorisschellekens/borb-examples#22-steps-to-creating-a-pdf-using-borb
 
 
 https://stackabuse.com/creating-a-form-in-a-pdf-document-in-python-with-borb/
-'''
+"""
 
 from borb.pdf import Document
 from borb.pdf import Page
@@ -36,44 +36,46 @@ from borb.pdf.canvas.layout.forms.drop_down_list import DropDownList
 layout.add(Paragraph("Patient Information:", font="Helvetica-Bold"))
 
 # Use a table to lay out the form
-table: FixedColumnWidthTable = FixedColumnWidthTable(number_of_rows=5,
-                                                     number_of_columns=2)
+table: FixedColumnWidthTable = FixedColumnWidthTable(
+    number_of_rows=5, number_of_columns=2
+)
 
 # Name
 table.add(
-    Paragraph("Name : ",
-              horizontal_alignment=Alignment.RIGHT,
-              font_color=HexColor("56cbf9")))
-table.add(
-    TextField(value="Doe", font_color=HexColor("56cbf9"),
-              font_size=Decimal(20)))
+    Paragraph(
+        "Name : ", horizontal_alignment=Alignment.RIGHT, font_color=HexColor("56cbf9")
+    )
+)
+table.add(TextField(value="Doe", font_color=HexColor("56cbf9"), font_size=Decimal(20)))
 
 # Surname
 table.add(
-    Paragraph("Surname : ",
-              horizontal_alignment=Alignment.RIGHT,
-              font_color=HexColor("56cbf9")))
-table.add(
-    TextField(value="John",
-              font_color=HexColor("56cbf9"),
-              font_size=Decimal(20)))
+    Paragraph(
+        "Surname : ",
+        horizontal_alignment=Alignment.RIGHT,
+        font_color=HexColor("56cbf9"),
+    )
+)
+table.add(TextField(value="John", font_color=HexColor("56cbf9"), font_size=Decimal(20)))
 
 # Gender
 table.add(Paragraph("Gender : ", horizontal_alignment=Alignment.RIGHT))
 table.add(
-    DropDownList(possible_values=[
-        "Female",
-        "Male",
-        "Other",
-        "Prefer not to disclose",
-    ]))
+    DropDownList(
+        possible_values=[
+            "Female",
+            "Male",
+            "Other",
+            "Prefer not to disclose",
+        ]
+    )
+)
 
 # New import(s)
 from borb.pdf.canvas.layout.forms.country_drop_down_list import CountryDropDownList
 
 # Country of Residence
-table.add(
-    Paragraph("Country of Residence : ", horizontal_alignment=Alignment.RIGHT))
+table.add(Paragraph("Country of Residence : ", horizontal_alignment=Alignment.RIGHT))
 table.add(CountryDropDownList(value="Belgium"))
 
 # Nationality
@@ -92,19 +94,23 @@ layout.add(Paragraph("Data Protection Policy", font="Helvetica-Bold"))
 
 # Dummy text
 layout.add(
-    Paragraph("""
+    Paragraph(
+        """
     ** Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
     Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     """,
-              font="Helvetica-Oblique"))
+        font="Helvetica-Oblique",
+    )
+)
 
 # New import(s)
 import typing
 from borb.pdf.canvas.geometry.rectangle import Rectangle
 from borb.pdf.page.page_size import PageSize
 from borb.pdf.canvas.line_art.line_art_factory import LineArtFactory
+
 # from borb.pdf.canvas.layout.image.shape import Shape
 from borb.pdf import ConnectedShape
 from borb.pdf import X11Color
@@ -120,9 +126,11 @@ r: Rectangle = Rectangle(Decimal(0), Decimal(32), ps[0], Decimal(8))
 #         line_width=Decimal(1),
 #     ))
 
-ConnectedShape(points=LineArtFactory.rectangle(r),
-               stroke_color=HexColor("56cbf9"),
-               fill_color=HexColor("56cbf9")).layout(page, r)
+ConnectedShape(
+    points=LineArtFactory.rectangle(r),
+    stroke_color=HexColor("56cbf9"),
+    fill_color=HexColor("56cbf9"),
+).layout(page, r)
 
 # Shape(points=LineArtFactory.rectangle(r),
 #       stroke_color=HexColor("56cbf9"),

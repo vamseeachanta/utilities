@@ -26,6 +26,10 @@ settings:
     label: []
     loc: best
     prop: { family: Arial, size: 8 }
+  xlim: [0, 1.6]
+  ylim: [0, 1.6]
+  xscale:
+    log: False
 
 master_settings:
   groups:
@@ -39,8 +43,13 @@ master_settings:
       edgecolors: True
     filter:
       - column: Heading
-        value: 0 #long-term
+        value: 0 # long-term
         contains: NULL
+    transform:
+      - { column: Heading, scale: 1, shift: 0 }
+      - { column: Cx, scale: 1, shift: 0 }
+      - { column: Cy, scale: 1, shift: 0 }
+      - { column: no_col, scale: 1, shift: 0 }
 
 data:
   type: csv
