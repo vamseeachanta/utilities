@@ -4,12 +4,13 @@ import datetime
 import logging
 import functools
 import pkgutil
+import sys
 
 from assetutilities.common.update_deep import update_deep_dictionary
 from assetutilities.common.data import AttributeDict
 from assetutilities.common.set_logging import set_logging
 
-# from common.database import Database
+from assetutilities.common.database import Database
 
 
 def applicationTimer(func):
@@ -189,7 +190,10 @@ class ConfigureApplicationInputs:
                     "tests/test_data/" + self.basename + "/" + self.basename + ".yml"
                 )
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
-            except:
+            except Exception as e:
+
+                print("Error loading application input file: {}".format(e))
+                sys.exit()
                 self.ApplicationInputFile = "tests/test_data/" + self.basename + ".yml"
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             self.ApplicationInputFile_dict = yaml.safe_load(data)
@@ -201,7 +205,7 @@ class ConfigureApplicationInputs:
         import sys
 
         try:
-            if sys.argv[1] != None:
+            if sys.argv[1] is not None:
                 self.customYaml = sys.argv[1]
                 print(
                     "Updating default values with contents in file {0}".format(
@@ -331,20 +335,12 @@ class ConfigureApplicationInputs:
         )
 
     def configure_overwrite_filenames(self):
-<<<<<<< HEAD
-        logging.debug("self.cfg before checking overwrite: %s", self.cfg)
-        
-        if self.cfg['default']['config']['overwrite']['output'] == True:
-            self.cfg['Analysis']['file_name'] = self.cfg['Analysis'][
-                'file_name_for_overwrite']
-=======
-        if self.cfg["default"]["config"]["overwrite"]["output"] == True:
+        if self.cfg["default"]["config"]["overwrite"]["output"] is True:
             self.cfg["Analysis"]["file_name"] = self.cfg["Analysis"][
                 "file_name_for_overwrite"
             ]
->>>>>>> c0c341229f37d50d5ecbe9ac98cdfd5a4bf0b3f9
         try:
-            if self.cfg["Analysis"]["fe_folder"] == None:
+            if self.cfg["Analysis"]["fe_folder"] is None:
                 self.cfg["Analysis"]["fe_folder"] = self.cfg["Analysis"][
                     "result_folder"
                 ]
@@ -367,7 +363,7 @@ class SaveApplicationResults:
         import pandas as pd
         import yaml
 
-        from common.database import Database
+        from assetutilities.common.database import Database
 
         try:
             db_properties = cfg.db
