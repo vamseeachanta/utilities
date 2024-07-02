@@ -26,6 +26,9 @@ black
 isort
 poetry
 
+gitpython==3.1.31
+
+
 # imp
 # git
 # popplerqt5 Only available in linux systems
