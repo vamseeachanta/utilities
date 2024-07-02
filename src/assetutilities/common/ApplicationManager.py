@@ -124,8 +124,8 @@ class ApplicationRuns:
 
         if self.cfg.__contains__("db"):
             db_properties = self.cfg.db
-            self.dbe = Database(db_properties)
-            self.dbe.set_up_db_connection(db_properties)
+            dbe = Database(db_properties)
+            dbe.set_up_db_connection(db_properties)
 
             run_file = os.path.join("tests\\cfg\\", self.basename, "runs.csv")
             run_file_updated = os.path.join(
@@ -143,7 +143,7 @@ class ApplicationRuns:
 
                 df = pd.read_csv(run_file, header="infer")
                 df["ApplicationId"] = self.ApplicationId
-                self.dbe.save_to_db(df, table_name="ApplicationRuns")
+                dbe.save_to_db(df, table_name="ApplicationRuns")
                 logging.info("Runs records to add to db")
             else:
                 logging.info("No Runs records to add to db")
@@ -190,10 +190,7 @@ class ConfigureApplicationInputs:
                     "tests/test_data/" + self.basename + "/" + self.basename + ".yml"
                 )
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
-            except Exception as e:
-
-                print("Error loading application input file: {}".format(e))
-                sys.exit()
+            except:
                 self.ApplicationInputFile = "tests/test_data/" + self.basename + ".yml"
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             self.ApplicationInputFile_dict = yaml.safe_load(data)
@@ -202,7 +199,6 @@ class ConfigureApplicationInputs:
         self.cfg = self.generateYMLInput(run_dict)
 
     def get_custom_file(self, run_dict=None):
-        import sys
 
         try:
             if sys.argv[1] is not None:
@@ -242,14 +238,12 @@ class ConfigureApplicationInputs:
                 with open(self.customYaml) as fp:
                     custom_file_data = fp.read()
             except Exception as e:
-                import sys
 
                 print("Update Input file could not be loaded successfully.")
                 print("Error is : {}".format(e))
                 print("Stopping program")
                 sys.exit()
         elif self.CustomInputs is not None:
-            import json
 
             custom_file_data = self.CustomInputs.replace("\\'", "'").replace(
                 "\\n", "\n"
