@@ -7,7 +7,7 @@ default:
       output: True
 
 settings:
-  plt_kind: polar_scatter
+  type: polar_scatter
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
