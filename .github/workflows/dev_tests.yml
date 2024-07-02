@@ -21,6 +21,9 @@ jobs:
       - name: Install git
         run: sudo apt-get install -y git
       
+      - name: Verify git installation
+        run: git --version
+      
       - name: Install dependencies
         uses: py-actions/py-dependency-install@v4
         
