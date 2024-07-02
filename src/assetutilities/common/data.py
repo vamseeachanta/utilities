@@ -1,7 +1,9 @@
 # Standard library imports
+from datetime import datetime
 import logging
 import operator
 from functools import reduce
+from unittest import result
 
 # Third party imports
 import pandas as pd
@@ -149,7 +151,7 @@ class ReadData:
             sh, data["KeyWords"]
         )
 
-        if KeyWordRowNumber == None:
+        if KeyWordRowNumber is None:
             raise Exception("Error in keyword provided for search criteria")
 
         StartRowNumber = KeyWordRowNumber + data["RowsToSkip"]
@@ -162,7 +164,7 @@ class ReadData:
         df = pd.DataFrame(ReadData)
 
         # Assign columns
-        if data["Columns"] != None:
+        if data["Columns"] is not None:
             if data["Columns"] == "1st Row":
                 df.columns = df.iloc[0]
                 df.drop([0], inplace=True)
@@ -391,9 +393,10 @@ class ReadData:
 
             etl_components = ETL_components(cfg=None)
             cfg["io"] = etl_components.convert_text_list_to_combined_text(cfg["io"])
+        
         with open(cfg["io"]) as f:
             for line in f:
-                all_lines.append(line)
+                all_lines.append(line.strip()) # strip() removes the newline character
 
         if cfg.__contains__("start_line"):
             start_line = cfg["start_line"]
@@ -409,8 +412,14 @@ class ReadData:
             end_line = len(all_lines)
             start_line = end_line - cfg["lines_from_end"]
 
-        if end_line == None:
-            result = all_lines[start_line - 1]
+        start_line = int(start_line) if start_line is not None else 1
+        end_line = int(end_line) if end_line is not None else len(all_lines) 
+
+        start_line = max(start_line, 1)
+        end_line = min(end_line, len(all_lines))
+
+        if end_line is None:
+            result = [all_lines[start_line - 1]]
         else:
             result = all_lines[start_line - 1 : end_line]
 
@@ -556,10 +565,14 @@ class SaveData:
     def saveDataYaml(self, data, fileName, default_flow_style=False, sort_keys=False):
         # Third party imports
         import yaml
+        from ruamel.yaml import noalias_dumper
+        from ruamel.yaml import ruamel
 
-        if default_flow_style == None:
+        if default_flow_style is None:
             with open(fileName + ".yml", "w") as f:
                 yaml.dump(data, f)
+        
+        
         elif default_flow_style == "NonAlias":
             with open(fileName + ".yml", "w") as f:
                 yaml.dump(data, f, Dumper=noalias_dumper)
@@ -601,6 +614,7 @@ class SaveData:
         https://xlsxwriter.readthedocs.io/working_with_pandas.html
         """
         writer = pd.ExcelWriter(data["FileName"], engine="xlsxwriter")
+        wb = writer.book
 
         try:
             # WorkSheet = wb.get_sheet_by_name(data['SheetName'])
@@ -1108,7 +1122,7 @@ class Transform:
             return df_dict
 
     def convert_numpy_types_to_native_python_types(self, cfg):
-        if cfg["datatype"] == dict:
+        if cfg["datatype"] is dict:
             for key in cfg["data"].keys():
                 if type(cfg["data"][key]) not in [str, int, float]:
                     cfg["data"].update({key: cfg["data"][key].item()})

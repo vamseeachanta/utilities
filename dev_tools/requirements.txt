@@ -27,6 +27,7 @@ isort
 poetry
 
 gitpython==3.1.31
+excel2img
 
 
 # imp
