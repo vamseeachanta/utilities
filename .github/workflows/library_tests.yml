@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install git
+        run: sudo apt-get install -y git
+        
       - name: Install dependencies
         uses: py-actions/py-dependency-install@v4
         with:

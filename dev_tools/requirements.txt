@@ -27,11 +27,11 @@ isort
 poetry
 
 # imp
-git
+# git
 # popplerqt5 Only available in linux systems
 # pdfannots
 # fitz
 # camelot
 # tabula
-GitPython
+# GitPython
 # PyPDF2
