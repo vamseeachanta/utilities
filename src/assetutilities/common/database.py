@@ -35,7 +35,7 @@ def test_saving_service_data_to_db():
 class Database():
 
     def __init__(self, db_properties):
-        from common.data import AttributeDict
+        from assetutilities.common.data import AttributeDict
         self.init_assign_db_properties(db_properties)
         self.analysis = AttributeDict()
 
@@ -92,7 +92,7 @@ class Database():
     def enable_connection_and_cursor(self):
         from urllib.parse import quote_plus
 
-        from sqlalchemy import create_engine
+        from sqlalchemy import create_engine # type: ignore
         if self.server_type == 'mssql':
             cfg_sql_express = {
                 'server_type': 'mssql',
@@ -106,7 +106,7 @@ class Database():
             logging.info("Attempt to connect to Server: {0}, user: {1}, password:not displayed, database: {2}".format(
                 self.server, self.user, self.database))
             try:
-                if self.user != None:
+                if self.user is not None:
                     connection_string_driver_specific = "Driver={ODBC Driver 13 for SQL Server};Server=" + self.server + ";Database=" + self.database + ";Uid=" + self.user + ";Pwd=" + self.password + ";"
                     connection_string_generic = "Driver=SQL+Server;Server=" + self.server + ";Database=" + self.database + ";Uid=" + self.user + ";Pwd=" + self.password + ";"
                     if self.highAvailability:
@@ -122,7 +122,7 @@ class Database():
                         print("Generic driver did not work. Utilizing specific driver")
                         self.engine = create_engine(connection_string_driver_specific, encoding='utf-8', echo=False)
                 else:
-                    import pyodbc
+                    import pyodbc # type: ignore
                     server_database_string = 'Server={0};Database={1};Trusted_Connection=yes;'.format(
                         self.server, self.database)
                     sql_alchemy_connection_string_generic = "mssql+pyodbc:///?odbc_connect=" + quote_plus(
@@ -144,7 +144,7 @@ class Database():
         if self.server_type == 'postgresql':
             import logging
 
-            import psycopg2
+            import psycopg2 # type: ignore
             logging.info("  ******DATABASE******")
             logging.info("Attempt to connect to Server: {0}, user: {1}, password:not displayed, database: {2}".format(
                 self.server, self.user, self.database))
@@ -167,18 +167,18 @@ class Database():
 
         if self.server_type == 'mongodb':
             from pprint import pprint
-
-            from pymongo import MongoClient
-            pprint(serverStatusResult)
+        
+            from pymongo import MongoClient # type: ignore
             logging.info("  ******DATABASE******")
             logging.info("Attempt to connect to Server: {0}, user: {1}, password:not displayed, database: {2}".format(
-                self.server, self.database))
+                self.server, self.user, self.database))
             try:
                 client = MongoClient()
                 db = client.admin
                 # Issue the serverStatus command and print the results
                 serverStatusResult = db.command("serverStatus")
-
+                pprint(serverStatusResult)
+        
                 connection_string = "postgresql+psycopg2://{0}:{1}@{2}:{4}/{3}".format(
                     self.user, self.password, self.server, self.database, self.port)
                 self.engine = create_engine(connection_string)
@@ -194,9 +194,9 @@ class Database():
                 None, None, self.database))
             try:
                 # Could not get this working
-                from pathlib import Path, PureWindowsPath
+                from pathlib import PureWindowsPath
 
-                import pyodbc
+                import pyodbc # type: ignore
                 dbq = r"DBQ={0}".format(PureWindowsPath(self.database))
                 # below not working
                 connection_string_generic = r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" + dbq + ";"
@@ -204,7 +204,7 @@ class Database():
                 print(connection_string_generic)
                 self.conn = pyodbc.connect(connection_string_generic)
 
-                import pypyodbc
+                import pypyodbc # type: ignore
                 pypyodbc.lowercase = False
                 from pathlib import Path, PureWindowsPath
                 dbq = r"DBQ={0}".format(PureWindowsPath(self.database))
@@ -664,7 +664,7 @@ class Database():
         sql = query
 
     def executeNoDataQuery(self, query, arg_array=[]):
-        from sqlalchemy.sql import text
+        from sqlalchemy.sql import text # type: ignore
         sql = query
         if len(arg_array) == 1:
             sql = sql.format(arg_array[0])
@@ -678,7 +678,7 @@ class Database():
             sql = sql.format(arg_array[0], arg_array[1], arg_array[2], arg_array[3], arg_array[4])
         try:
             print("     .....Executing query: {}".format(sql))
-            from sqlalchemy.orm import scoped_session, sessionmaker
+            from sqlalchemy.orm import scoped_session, sessionmaker # type: ignore
             Session = scoped_session(sessionmaker(bind=self.engine))
             s = Session()
             s.execute(query)
@@ -820,7 +820,7 @@ class Database():
         return statistics_df
 
     def get_create_table_sql_code_from_df(self, df, table_name='table_name', file_name='results/filename.txt'):
-        from common.data import SaveData
+        from assetutilities.common.data import SaveData
         save_data = SaveData()
         import pandas as pd
         sql_table_code = pd.io.sql.get_schema(df.reset_index(), table_name, con=self.conn)

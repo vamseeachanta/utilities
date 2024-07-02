@@ -4,12 +4,13 @@ import datetime
 import logging
 import functools
 import pkgutil
+import sys
 
 from assetutilities.common.update_deep import update_deep_dictionary
 from assetutilities.common.data import AttributeDict
 from assetutilities.common.set_logging import set_logging
 
-# from common.database import Database
+from assetutilities.common.database import Database
 
 
 def applicationTimer(func):
@@ -123,8 +124,8 @@ class ApplicationRuns:
 
         if self.cfg.__contains__("db"):
             db_properties = self.cfg.db
-            self.dbe = Database(db_properties)
-            self.dbe.set_up_db_connection(db_properties)
+            dbe = Database(db_properties)
+            dbe.set_up_db_connection(db_properties)
 
             run_file = os.path.join("tests\\cfg\\", self.basename, "runs.csv")
             run_file_updated = os.path.join(
@@ -142,7 +143,7 @@ class ApplicationRuns:
 
                 df = pd.read_csv(run_file, header="infer")
                 df["ApplicationId"] = self.ApplicationId
-                self.dbe.save_to_db(df, table_name="ApplicationRuns")
+                dbe.save_to_db(df, table_name="ApplicationRuns")
                 logging.info("Runs records to add to db")
             else:
                 logging.info("No Runs records to add to db")
@@ -198,10 +199,9 @@ class ConfigureApplicationInputs:
         self.cfg = self.generateYMLInput(run_dict)
 
     def get_custom_file(self, run_dict=None):
-        import sys
 
         try:
-            if sys.argv[1] != None:
+            if sys.argv[1] is not None:
                 self.customYaml = sys.argv[1]
                 print(
                     "Updating default values with contents in file {0}".format(
@@ -238,14 +238,12 @@ class ConfigureApplicationInputs:
                 with open(self.customYaml) as fp:
                     custom_file_data = fp.read()
             except Exception as e:
-                import sys
 
                 print("Update Input file could not be loaded successfully.")
                 print("Error is : {}".format(e))
                 print("Stopping program")
                 sys.exit()
         elif self.CustomInputs is not None:
-            import json
 
             custom_file_data = self.CustomInputs.replace("\\'", "'").replace(
                 "\\n", "\n"
@@ -331,12 +329,12 @@ class ConfigureApplicationInputs:
         )
 
     def configure_overwrite_filenames(self):
-        if self.cfg["default"]["config"]["overwrite"]["output"] == True:
+        if self.cfg["default"]["config"]["overwrite"]["output"] is True:
             self.cfg["Analysis"]["file_name"] = self.cfg["Analysis"][
                 "file_name_for_overwrite"
             ]
         try:
-            if self.cfg["Analysis"]["fe_folder"] == None:
+            if self.cfg["Analysis"]["fe_folder"] is None:
                 self.cfg["Analysis"]["fe_folder"] = self.cfg["Analysis"][
                     "result_folder"
                 ]
@@ -359,7 +357,7 @@ class SaveApplicationResults:
         import pandas as pd
         import yaml
 
-        from common.database import Database
+        from assetutilities.common.database import Database
 
         try:
             db_properties = cfg.db

@@ -42,4 +42,4 @@ def test_gitpython():
     run_gitpython(input_file, expected_result)
 
 
-# test_gitpython()
+test_gitpython()

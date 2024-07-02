@@ -55,7 +55,7 @@ add_axes:
         flag: False
         label: [label1, label2]
         loc: best
-      grid: False
+      grid_1: False
 
     data:
       r : 

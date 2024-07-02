@@ -14,7 +14,6 @@ from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.yml_utilities import ymlInput
-from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
 from assetutilities.tools.pdf.edit_pdf import EditPDF
 from assetutilities.tools.pdf.read_pdf import ReadPDF
 
@@ -63,6 +62,8 @@ def engine(inputfile: str = None, cfg: dict = None) -> dict:
         edit_pdf = EditPDF()
         edit_pdf.edit_pdf(cfg_base)
     elif basename in ["gitpython"]:
+        # Reader imports
+        from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
         gpu = GitPythonUtilities()
         gpu.router(cfg_base)
     elif basename in ["text_analytics"]:
