@@ -6,6 +6,7 @@ import pandas as pd
 
 # Reader imports
 from assetutilities.common.data import ReadData, Transform
+from assetutilities.common.utilities import is_file_valid_func
 
 read_data = ReadData()
 trans = Transform()
@@ -56,6 +57,6 @@ class DataManagement:
     def get_transformed_df(self, data_set_cfg, df):
         df = df.copy()
         if data_set_cfg.__contains__("transform"):
-            df = trans.get_transformed_df(data_set_cfg['transform'].copy(), df)
+            df = trans.get_transformed_df(data_set_cfg["transform"].copy(), df)
 
         return df.copy()
