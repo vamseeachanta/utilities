@@ -387,34 +387,39 @@ class ReadData:
         }
 
         all_lines = []
-        if type(cfg["io"]) is list:
-            # Third party imports
+        if isinstance(cfg["io"], list):
             from common.ETL_components import ETL_components
 
             etl_components = ETL_components(cfg=None)
             cfg["io"] = etl_components.convert_text_list_to_combined_text(cfg["io"])
-        
-        with open(cfg["io"]) as f:
+
+        with open(cfg["io"], "r") as f:
             for line in f:
-                all_lines.append(line.strip()) # strip() removes the newline character
+                all_lines.append(line.strip())
 
-        if cfg.__contains__("start_line"):
-            start_line = cfg["start_line"]
-        else:
-            start_line = 1
+        start_line = 1
+        end_line = len(all_lines)
 
-        if cfg.__contains__("end_line"):
-            end_line = cfg["end_line"]
-        else:
-            end_line = len(all_lines)
-
+    # Check for 'lines_from_end' first to avoid conflicts with 'start_line' and 'end_line'
         if cfg.__contains__("lines_from_end"):
             end_line = len(all_lines)
             start_line = end_line - cfg["lines_from_end"]
 
-        start_line = int(start_line) if start_line is not None else 1
-        end_line = int(end_line) if end_line is not None else len(all_lines) 
+        if cfg.__contains__("start_line"):
+            start_line = cfg["start_line"]
+    
+        if cfg.__contains__("end_line"):
+            end_line = cfg["end_line"]
 
+        if isinstance(start_line, (list, tuple)):
+            raise TypeError("start_line should not be a list or tuple.")
+        if isinstance(end_line, (list, tuple)):
+            raise TypeError("end_line should not be a list or tuple.")
+    
+        start_line = int(start_line) if start_line is not None else 1
+        end_line = int(end_line) if end_line is not None else len(all_lines)
+
+    # Ensure start_line is at least 1 and end_line does not exceed the number of lines
         start_line = max(start_line, 1)
         end_line = min(end_line, len(all_lines))
 
