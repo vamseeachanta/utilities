@@ -400,26 +400,25 @@ class ReadData:
         start_line = 1
         end_line = len(all_lines)
 
-    # Check for 'lines_from_end' first to avoid conflicts with 'start_line' and 'end_line'
-        if cfg.__contains__("lines_from_end"):
-            end_line = len(all_lines)
-            start_line = end_line - cfg["lines_from_end"]
-
-        if cfg.__contains__("start_line"):
-            start_line = cfg["start_line"]
     
-        if cfg.__contains__("end_line"):
-            end_line = cfg["end_line"]
+        if "lines_from_end" in cfg:
+            end_line = len(all_lines)
+        start_line = end_line - cfg["lines_from_end"]
+        
+        if isinstance(cfg.get("start_line"), (list, tuple)):
+            start_line = cfg["start_line"][0] 
+        else:
+            start_line = cfg.get("start_line", 1)
 
-        if isinstance(start_line, (list, tuple)):
-            raise TypeError("start_line should not be a list or tuple.")
-        if isinstance(end_line, (list, tuple)):
-            raise TypeError("end_line should not be a list or tuple.")
+        if isinstance(cfg.get("end_line"), (list, tuple)):
+            end_line = cfg["end_line"][0]  
+        else:
+            end_line = cfg.get("end_line", len(all_lines))
     
         start_line = int(start_line) if start_line is not None else 1
         end_line = int(end_line) if end_line is not None else len(all_lines)
 
-    # Ensure start_line is at least 1 and end_line does not exceed the number of lines
+    
         start_line = max(start_line, 1)
         end_line = min(end_line, len(all_lines))
 
