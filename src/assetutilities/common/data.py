@@ -403,7 +403,7 @@ class ReadData:
     
         if "lines_from_end" in cfg:
             end_line = len(all_lines)
-        start_line = end_line - cfg["lines_from_end"]
+            start_line = end_line - cfg["lines_from_end"]
         
         if isinstance(cfg.get("start_line"), (list, tuple)):
             start_line = cfg["start_line"][0] 
