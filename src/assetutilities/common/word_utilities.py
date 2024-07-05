@@ -1,4 +1,5 @@
-from docx import Document
+from re import search
+from docx import Document, opendocx
 
 # from docx import opendocx
 
@@ -18,7 +19,7 @@ class WordUtilities:
         document_name = cfg["files"]["file_name"]
         document_data = Document(document_name)
         search_string = None
-        for paragraph in document.paragraphs:
+        for paragraph in document_data.paragraphs:
             if search_string in paragraph.text:
                 print(True)
 

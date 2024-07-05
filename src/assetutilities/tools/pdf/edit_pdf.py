@@ -25,7 +25,10 @@ class EditPDF:
         file_name = cfg["files"][file_index]["io"]
         pages_groups = cfg["files"][file_index]["pages"]
 
-        pdf_reader = PyPDF2.PdfReader(file_name)
+        import os
+        
+        file_path = os.path.join(os.getcwd(), file_name)
+        pdf_reader = PyPDF2.PdfReader(file_path)
 
         for pages in pages_groups:
             pdf_writer = PyPDF2.PdfWriter()
