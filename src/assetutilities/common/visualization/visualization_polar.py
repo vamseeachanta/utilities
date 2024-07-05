@@ -170,7 +170,7 @@ class VisualizationPolar:
 
         plt_properties = {"plt": plt, "fig": fig}
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
-            self.add_axes_to_plt(plt_properties, cfg)
+            visualization_common.add_axes_to_plt(plt_properties, cfg)
 
         return {"plt": plt, "fig": fig}
 

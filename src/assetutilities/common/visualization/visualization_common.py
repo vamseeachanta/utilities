@@ -68,10 +68,10 @@ class VisualizationCommon:
             plt_settings.update({"add_axes": True})
             plt_settings.update({"plt_properties": plt_properties})
 
-            data_df = self.get_polar_data(cfg_plt)
-            plt_settings["traces"] = int(len(data_df.columns) / 2)
+            # data_df = self.get_polar_data(cfg_plt)
+            # plt_settings["traces"] = int(len(data_df.columns) / 2)
 
-            plt = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg_plt)
+            # plt = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg_plt)
 
     def get_plt_with_arrows(self, plt, plt_settings):
 

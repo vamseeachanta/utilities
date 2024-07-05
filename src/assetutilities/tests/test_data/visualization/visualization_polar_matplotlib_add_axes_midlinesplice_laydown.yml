@@ -8,7 +8,7 @@ default:
 
     
 settings:
-  plt_kind: polar
+  type: polar
   plt_engine: matplotlib
   rect: NULL
   facecolor: NULL

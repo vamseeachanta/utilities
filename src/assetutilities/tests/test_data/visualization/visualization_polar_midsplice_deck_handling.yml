@@ -8,7 +8,7 @@ default:
 
     
 settings:
-  plt_kind: polar
+  type: polar
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False

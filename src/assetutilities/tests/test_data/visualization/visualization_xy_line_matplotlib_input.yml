@@ -7,7 +7,7 @@ default:
       output: True
 
 settings:
-  plt_kind: xy_line
+  type: xy_line
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
