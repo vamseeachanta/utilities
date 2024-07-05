@@ -1,7 +1,7 @@
 # Standard library imports
-from datetime import datetime
 import logging
 import operator
+from datetime import datetime
 from functools import reduce
 from unittest import result
 
@@ -388,6 +388,7 @@ class ReadData:
 
         all_lines = []
         if isinstance(cfg["io"], list):
+            # Third party imports
             from common.ETL_components import ETL_components
 
             etl_components = ETL_components(cfg=None)
@@ -569,8 +570,6 @@ class SaveData:
     def saveDataYaml(self, data, fileName, default_flow_style=False, sort_keys=False):
         # Third party imports
         import yaml
-        from ruamel.yaml import noalias_dumper
-        from ruamel.yaml import ruamel
 
         if default_flow_style is None:
             with open(fileName + ".yml", "w") as f:
@@ -581,6 +580,8 @@ class SaveData:
             with open(fileName + ".yml", "w") as f:
                 yaml.dump(data, f, Dumper=noalias_dumper)
         elif default_flow_style == "ruamel":
+            # Third party imports
+            from ruamel.yaml import ruamel
             with open(fileName + ".yml", "w") as f:
                 ruamel.yaml.dump(data, f)
         elif default_flow_style == "round_trip_dump":
