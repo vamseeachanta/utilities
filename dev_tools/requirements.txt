@@ -28,8 +28,9 @@ poetry
 
 gitpython==3.1.31
 
-pypiwin32==223
-excel2img
+
+excel2img; sys_platform == 'win32'
+
  
 
 
