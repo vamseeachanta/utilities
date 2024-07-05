@@ -1,10 +1,11 @@
-import logging
-import os
 
+# Third party imports
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-import matplotlib.pyplot as plt
+
+# Reader imports
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
 
 visualization_common = VisualizationCommon()
@@ -74,6 +75,7 @@ class VisualizationPolar:
             plt.polar(df["x"], df["y"], label=plt_settings["label"])
         elif plt_settings["plt_kind"] == "polar_scatter":
             # Radial scatter
+            # Third party imports
             import plotly.express as px
 
             plt = px.scatter_polar(df, r=df["r_0"], theta=df["theta_0"])
@@ -82,6 +84,7 @@ class VisualizationPolar:
 
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
+        # Third party imports
         import matplotlib.pyplot as plt
 
         if (
@@ -94,7 +97,7 @@ class VisualizationPolar:
 
         alpha = plt_settings.get("alpha", 1)
         facecolor = plt_settings.get("facecolor", None)
-        if (not "add_axes" in plt_settings) or (not plt_settings["add_axes"]):
+        if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
             fig, ax = plt.subplots(
                 subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
             )
@@ -110,7 +113,7 @@ class VisualizationPolar:
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):
-            if plt_settings["plt_kind"][index] == "polar":
+            if plt_settings["type"][index] == "polar":
                 ax.plot(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
@@ -119,7 +122,7 @@ class VisualizationPolar:
                     linestyle=cfg["data"]["linestyle"][index],
                     alpha=cfg["data"]["alpha"][index],
                 )
-            elif plt_settings["plt_kind"][index] == "polar_scatter":
+            elif plt_settings["type"][index] == "polar_scatter":
                 ax.scatter(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
@@ -136,7 +139,7 @@ class VisualizationPolar:
             if prop is not None:
                 plt.legend(prop=prop)
 
-        plt = self.get_plt_with_arrows(plt, plt_settings)
+        plt = visualization_common.get_plt_with_arrows(plt, plt_settings)
 
         set_rmax = plt_settings.get("set_rmax", None)
         if set_rmax is not None:
@@ -182,7 +185,7 @@ class VisualizationPolar:
         plt.close()
 
     def save_polar_plot_and_close_matplotlib(self, plt_properties, cfg):
-        plot_name_paths = self.get_plot_name_path(cfg)
+        plot_name_paths = visualization_common.get_plot_name_path(cfg)
 
         plt = plt_properties["plt"]
         for file_name in plot_name_paths:

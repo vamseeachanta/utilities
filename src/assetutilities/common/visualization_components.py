@@ -4,6 +4,7 @@ import logging
 # Reader imports
 from assetutilities.common.update_deep import update_deep_dictionary
 from assetutilities.common.visualization.visualization_xy import VisualizationXY
+from assetutilities.common.visualization.visualization_polar import VisualizationPolar
 
 
 class VisualizationComponents:
@@ -21,7 +22,8 @@ class VisualizationComponents:
 
         plt_settings = cfg["settings"]
         if "polar" in cfg["settings"]["type"]:
-            self.polar_plot_set_up(cfg, plt_settings)
+            visualization_polar = VisualizationPolar()
+            visualization_polar.polar_plot_set_up(cfg, plt_settings)
         elif "xy" in cfg["settings"]["type"]:
             visualization_xy = VisualizationXY()
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
