@@ -1,23 +1,28 @@
-import os
-import yaml
+# Standard library imports
 import datetime
-import logging
 import functools
+import logging
+import os
 import pkgutil
 import sys
 
-from assetutilities.common.update_deep import update_deep_dictionary
-from assetutilities.common.data import AttributeDict
-from assetutilities.common.set_logging import set_logging
+# Third party imports
+import yaml
 
+# Reader imports
+from assetutilities.common.data import AttributeDict
 from assetutilities.common.database import Database
+from assetutilities.common.set_logging import set_logging
+from assetutilities.common.update_deep import update_deep_dictionary
 
 
 def applicationTimer(func):
+    # Standard library imports
     import functools
 
     @functools.wraps(func)
     def wrapper_applicationTimer(*args, **kwargs):
+        # Standard library imports
         import time
 
         start_time = time.perf_counter()
@@ -37,6 +42,7 @@ def setupApplicationRuns(func):
 
     @functools.wraps(func)
     def wrapper_applicationRuns(*args, **kwargs):
+        # Standard library imports
         import logging
 
         app_runs = ApplicationRuns(basename=func.__name__)
@@ -44,6 +50,7 @@ def setupApplicationRuns(func):
         cfg = app_runs.configureApplication()
         kwargs["cfg"] = cfg
 
+        # Standard library imports
         import time
 
         save_results = SaveApplicationResults()
@@ -88,6 +95,7 @@ def setupApplicationRuns(func):
 
 def decoratorWithArgumentExample(func=None, *, kw1=None):
     """Decotrator with keyword argument Boiler Plate Example"""
+    # Standard library imports
     import functools
 
     @functools.wraps(func)
@@ -110,6 +118,7 @@ class ApplicationRuns:
         return self.cfg
 
     def getRuns(self):
+        # Third party imports
         import pandas as pd
 
         run_df = pd.DataFrame()
@@ -139,6 +148,7 @@ class ApplicationRuns:
             self.ApplicationId = result_df["ApplicationID"].iloc[0]
 
             if os.path.isfile(run_file):
+                # Third party imports
                 import pandas as pd
 
                 df = pd.read_csv(run_file, header="infer")
@@ -334,7 +344,8 @@ class ConfigureApplicationInputs:
                 "file_name_for_overwrite"
             ]
         try:
-            if self.cfg["Analysis"]["fe_folder"] is None:
+            fe_folder = self.cfg["Analysis"].get("fe_folder", None)
+            if fe_folder is None:
                 self.cfg["Analysis"]["fe_folder"] = self.cfg["Analysis"][
                     "result_folder"
                 ]
@@ -352,11 +363,14 @@ class SaveApplicationResults:
         pass
 
     def saveApplicationResultsToDB(self, cfg, run_time, run_dict=None):
+        # Standard library imports
         import json
 
+        # Third party imports
         import pandas as pd
         import yaml
 
+        # Reader imports
         from assetutilities.common.database import Database
 
         try:
