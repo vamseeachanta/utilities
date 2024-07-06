@@ -1,4 +1,5 @@
 from re import search
+from docx import docx
 from docx import Document, opendocx
 
 # from docx import opendocx
