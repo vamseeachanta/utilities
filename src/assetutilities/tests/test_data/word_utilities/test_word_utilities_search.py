@@ -6,6 +6,7 @@ Easier to just do a brute force copy and paste and rerun script if needed.
 # Standard library imports
 import os
 import sys
+import pytest
 
 
 # Third party imports
