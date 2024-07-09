@@ -5,6 +5,8 @@ import pathlib
 from assetutilities.common.utilities import is_file_valid_func
 from assetutilities.common.utilities import is_dir_valid_func
 
+import logging
+
 
 class FileManagement:
 
@@ -24,9 +26,7 @@ class FileManagement:
 
     def get_files_in_directory(self, cfg):
         file_management_input_directory = self.get_file_management_input_directory(cfg)
-        file_management_output_directory = self.get_file_management_output_directory(
-            cfg
-        )
+        file_management_output_directory = self.get_file_management_output_directory(cfg)
 
         cfg["Analysis"].update(
             {"file_management_input_directory": file_management_input_directory}
@@ -117,7 +117,7 @@ class FileManagement:
             filter_flag = False
             if (
                 len(cfg_filter["filename_contains"]) > 0
-                and not cfg_filter["filename_contains"][0] in file
+                and cfg_filter["filename_contains"][0] not in file
             ):
                 filter_flag = True
             if (
