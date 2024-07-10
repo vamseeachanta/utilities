@@ -152,7 +152,7 @@ class VisualizationXY:
                 fillstyle="none",
             )
 
-            if "line" in plot_mode or "scatter" in plot_mode:
+            if "line" in plot_mode and "scatter" in plot_mode:
                 ax.plot(
                     df["x_" + str(index)],
                     df["y_" + str(index)],
