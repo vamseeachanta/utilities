@@ -43,20 +43,22 @@ class VisualizationXY:
         return data_df, cfg
 
     def get_xy_mapped_data_dict_from_input(self, mapped_data_cfg):
-        x_data = mapped_data_cfg["data"]["x"]
-        y_data = mapped_data_cfg["data"]["y"]
-
-        no_of_trends = max(len(x_data), len(y_data))
-
-        if len(x_data) < len(y_data):
-            x_data = [x_data[0]] * len(y_data)
-        if len(x_data) > len(y_data):
-            y_data = [y_data[0]] * len(x_data)
-
         data_dict = {}
-        for i in range(0, no_of_trends):
-            data_dict.update({"x_" + str(i): x_data[i]})
-            data_dict.update({"y_" + str(i): y_data[i]})
+
+        for group_cfg in mapped_data_cfg["data"]['groups']:
+            x_data = group_cfg["x"]
+            y_data = group_cfg["y"]
+
+            no_of_trends = max(len(x_data), len(y_data))
+
+            if len(x_data) < len(y_data):
+                x_data = [x_data[0]] * len(y_data)
+            if len(x_data) > len(y_data):
+                y_data = [y_data[0]] * len(x_data)
+
+            for i in range(0, no_of_trends):
+                data_dict.update({"x_" + str(i): x_data[i]})
+                data_dict.update({"y_" + str(i): y_data[i]})
 
         return data_dict
 
@@ -112,7 +114,7 @@ class VisualizationXY:
             )
             logging.warning("Ignoring the legend labels in the input file")
 
-        mapped_data_cfg = {"data": {"x": x_data_array, "y": y_data_array}}
+        mapped_data_cfg = {"data": {"groups": [{"x": x_data_array, "y": y_data_array}]}}
         cfg["settings"]["legend"]["label"] = legend_data
         data_dict = self.get_xy_mapped_data_dict_from_input(mapped_data_cfg)
 
