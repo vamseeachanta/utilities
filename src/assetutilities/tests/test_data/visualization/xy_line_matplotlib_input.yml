@@ -27,13 +27,17 @@ settings:
     loc: best
     prop: { family: Arial, size: 5 }
 
+master_settings:
+  groups: {}
+
 data:
   type: input
-  x:
-    - [35, 70, 120, 155, 205, 240]
-  y:
-    - [0.5, 1, 2, 2.5, 3, 4]
-    - [1, 2, 2.5, 2.5, 3, 5]
+  groups:
+    - x:
+        - [35, 70, 120, 155, 205, 240]
+      y:
+        - [0.5, 1, 2, 2.5, 3, 4]
+        - [1, 2, 2.5, 2.5, 3, 5]
   color: [blue, green]
   alpha: [1, 0.75]
   linestyle: ["--", "-", "-", ":"]

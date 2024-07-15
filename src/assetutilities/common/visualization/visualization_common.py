@@ -267,9 +267,15 @@ class VisualizationCommon:
         y_count_array = []
         plot_count_array = []
         for group_cfg in cfg["data"]["groups"]:
-            x_count = len(group_cfg["columns"]["x"])
+
+            if "columns" in group_cfg:
+                x_count = len(group_cfg["columns"]["x"])
+                y_count = len(group_cfg["columns"]["y"])
+            else:
+                x_count = len(group_cfg["x"])
+                y_count = len(group_cfg["y"])
+
             x_count_array.append(x_count)
-            y_count = len(group_cfg["columns"]["y"])
             y_count_array.append(y_count)
 
             plot_count_array.append(x_count * y_count)

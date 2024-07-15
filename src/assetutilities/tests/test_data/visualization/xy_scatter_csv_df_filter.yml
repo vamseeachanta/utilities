@@ -26,8 +26,8 @@ settings:
     label: []
     loc: best
     prop: { family: Arial, size: 8 }
-  xlim: [0, 1.6]
-  ylim: [0, 1.6]
+  xlim: [-1, 1.0]
+  ylim: [-1, 1.0]
   xscale:
     log: False
 
