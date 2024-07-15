@@ -252,7 +252,7 @@ class VisualizationCommon:
     def get_plot_properties_for_df(self, cfg, df):
 
         plot_count_dict = self.get_plot_count_array_for_df(cfg)
-        cfg["settings"]["color"] = self.get_plot_colors_for_df(plot_count_dict)
+        cfg["settings"]["color"] = self.get_plot_colors_for_df(plot_count_dict, cfg)
         cfg["settings"]["linestyle"] = self.get_plot_linestyle_for_df(plot_count_dict)
         cfg["settings"]["markerprops"] = self.get_plot_markerprops_for_df(
             plot_count_dict
@@ -287,15 +287,18 @@ class VisualizationCommon:
         }
         return plot_count_dict
 
-    def get_plot_colors_for_df(self, plot_count_dict, key="color"):
+    def get_plot_colors_for_df(self, plot_count_dict, cfg, key="color"):
 
         x_count_array = plot_count_dict["x_count_array"]
         y_count_array = plot_count_dict["y_count_array"]
         plot_count_array = plot_count_dict["plot_count_array"]
 
+
         repeat_flag = True
         # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
         #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         if repeat_flag:
             count = plot_count_array[0]
