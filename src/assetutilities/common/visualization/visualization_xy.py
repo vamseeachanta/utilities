@@ -1,5 +1,6 @@
 # Standard library imports
 import logging
+import math
 
 # Third party imports
 import matplotlib.pyplot as plt  # noqa
@@ -132,17 +133,23 @@ class VisualizationXY:
 
         fig, ax = plt.subplots()
 
-        color_list = cfg["settings"]["color"]
-        linestyle_list = cfg["settings"]["linestyle"]
-        alpha_list = cfg["settings"]["alpha"]
-        markerprops_list = cfg["settings"]["markerprops"]
-
         # Add trace or plot style
         plt_settings["traces"] = int(len(df.columns) / 2)
+
+        color_list = cfg["settings"]["color"]
+        linestyle_list = cfg["settings"]["linestyle"]
+        if len(linestyle_list) < plt_settings["traces"]:
+            linestyle_list = linestyle_list * math.ceil(plt_settings["traces"]/len(linestyle_list))
+        alpha_list = cfg["settings"]["alpha"]
+        markerprops_list = cfg["settings"]["markerprops"]
+        if len(markerprops_list) < plt_settings["traces"]:
+            markerprops_list = markerprops_list * math.ceil(plt_settings["traces"]/len(markerprops_list))
 
         plot_mode = cfg["settings"].get("mode", ["line"])
 
         for index in range(0, plt_settings["traces"]):
+            
+            linestyle = linestyle_list[index]
             marker_style = dict(
                 color=color_list[index],
                 linestyle=linestyle_list[index],
