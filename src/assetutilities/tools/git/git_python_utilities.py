@@ -1,4 +1,4 @@
-# import git
+import git
 
 
 class GitPythonUtilities:
@@ -12,12 +12,12 @@ class GitPythonUtilities:
         for repo in repos:
             repo_cfg = cfg.common_cfg.copy()
             repo_cfg.update(repo)
-            repo = git.Repo(repo_cfg['io'])
-            if repo_cfg['status']:
+            repo = git.Repo(repo_cfg["io"])
+            if repo_cfg["status"]:
                 self.get_status(repo)
-            if repo_cfg['commit']:
+            if repo_cfg["commit"]:
                 self.commit(repo)
-            if repo_cfg['push']:
+            if repo_cfg["push"]:
                 self.push(repo)
 
     def get_status(self, repo):

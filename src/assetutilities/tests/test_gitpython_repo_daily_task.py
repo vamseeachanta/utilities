@@ -1,11 +1,12 @@
-import pytest
-import deepdiff
+# Standard library imports
 import os
 import sys
-import numpy as np
 
+# Third party imports
+import pytest
+
+# Reader imports
 from assetutilities.engine import engine
-from assetutilities.common.yml_utilities import ymlInput
 
 
 def run_gitpython(input_file, expected_result={}):
@@ -21,17 +22,15 @@ def run_gitpython(input_file, expected_result={}):
     #                              ignore_order=True,
     #                              significant_digits=4)
 
-
+@pytest.mark.skip(reason="Only works in local drive")
 def get_valid_pytest_output_file(pytest_output_file):
-    if pytest_output_file is not None and not os.path.isfile(
-            pytest_output_file):
-        pytest_output_file = os.path.join(os.path.dirname(__file__),
-                                          pytest_output_file)
+    if pytest_output_file is not None and not os.path.isfile(pytest_output_file):
+        pytest_output_file = os.path.join(os.path.dirname(__file__), pytest_output_file)
     return pytest_output_file
 
-
+@pytest.mark.skip(reason="Only works in local drive")
 def test_gitpython():
-    input_file = 'test_data/gitpython.yml'
+    input_file = "test_data/gitpython.yml"
 
     # pytest_output_file = '../test_data/6d_buoy/buoy_6d_circular_px_0_pytest.yml'
     # pytest_output_file = get_valid_pytest_output_file(pytest_output_file)
@@ -44,4 +43,4 @@ def test_gitpython():
     run_gitpython(input_file, expected_result)
 
 
-# test_gitpython()
+test_gitpython()

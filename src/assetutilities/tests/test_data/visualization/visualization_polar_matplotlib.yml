@@ -7,7 +7,7 @@ default:
       output: True
 
 settings:
-  plt_kind: polar_scatter
+  type: polar_scatter
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
@@ -26,6 +26,7 @@ settings:
     prop: { family: Arial, size: 5 }
 
 data:
+  type: input
   r:
     - [0.5, 1, 2, 2.5, 3, 4]
     - [0.5, 1, 2, 2.5, 3, 4]

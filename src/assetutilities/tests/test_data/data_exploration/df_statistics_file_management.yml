@@ -1,0 +1,31 @@
+basename: data_exploration
+type:
+  df_statistics:
+    flag: True
+    df_array: True
+    df: True
+
+data:
+  type: file_management
+  groups: []
+
+master_settings:
+  groups:
+    columns: { x: [Heading], y: [Cx] }
+
+file_management:
+  flag: True
+
+  files:
+    files_in_current_directory:
+      flag: False
+      auto_read: True
+      directory: csv
+      file_extensions: [csv]
+      filename_pattern: NULL
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True

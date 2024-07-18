@@ -10,7 +10,8 @@ title ASCII EcoSystem
 
 * ASCII EcoSystem
 
-** Project Management
+** Project Management \nand Collaboration
+*** Github Issues
 *** Jira
 
 ** Version control
@@ -22,14 +23,14 @@ title ASCII EcoSystem
 *** Flowcharts in **PlantUML**
 
 ** Programming - Core
-*** Miniconda Python
 *** VS Code
+*** Miniconda Python \nVirtual envioronments
 *** Github  Copilot
+*** Github Actions \nfor CI/CD and testing
 
 ** Programming - accessories
-*** Github Actions \nfor CI/CD and testing
-*** VS Code Settings \nto execute scripts
 *** VS Code Settings Sync  \nwork env in multiple computers
+*** VS Code Settings \nto execute scripts
 
 footer
 %date("yyyy.MM.dd' at 'HH:mm")

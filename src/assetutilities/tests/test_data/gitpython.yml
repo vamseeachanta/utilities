@@ -13,9 +13,6 @@ common_cfg:
   #TODO
   current_branch: True
   clone: False
-  
 
 repos:
-    -
-      io: C:\Users\ss7a2365\Documents\github\achantas-data
-
+  - io: C:\Users\ss7a2365\Documents\github\achantas-data

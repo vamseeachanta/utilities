@@ -8,7 +8,7 @@ default:
 
     
 settings:
-  plt_kind: polar_scatter
+  type: polar_scatter
   plt_engine: matplotlib
   rect: NULL
   facecolor: NULL
@@ -30,6 +30,7 @@ settings:
     prop: {family: Arial, size: 8}
 
 data:
+  type: input
   r : 
     - [0.5,1,2,2.5,3,4]
     - [0.5,1,2,2.5,3,4]
@@ -54,7 +55,7 @@ add_axes:
         flag: False
         label: [label1, label2]
         loc: best
-      grid: False
+      grid_1: False
 
     data:
       r : 

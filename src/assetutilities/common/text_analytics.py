@@ -7,10 +7,8 @@ class TextAnalytics:
         pass
 
     def router(self, cfg):
-        
-        self.get_subset_files(cfg)
 
+        self.get_subset_files(cfg)
 
     def get_subset_files(self, cfg):
         pass
-    

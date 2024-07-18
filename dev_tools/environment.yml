@@ -3,28 +3,50 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - python
+  - python=3.11
   - pip
   - pip:
-      - numpy
-      - pandas
+      - assetutilities
+
       - build
       - twine
+      - bumpver
+
+      - pyyaml
+      - numpy
+      - pandas
+      - plotly
+      - matplotlib
       - chardet
       - python-certifi-win32
-      - plotly-express
-      - matplotlib
-      - pyyaml
-      - pandoc
-      - wkhtmltopdf
-      - plantuml
+
       - webcolors
       - xlsxwriter
-      - imp
+      - plantuml
+      - pytest
+      - deepdiff
+
+      - pandoc
+      - wkhtmltopdf
+      - python-docx
+
+      - excel2img
+
+      - black
+      - isort
+      - poetry
+      - gitpython==3.1.31
+
+
+      # - openpyxl
+      # - openpyxl-image-loader
+
+      # - imp
+      # - git
       # - popplerqt5 Only available in linux systems
       # - pdfannots
       # - fitz
       # - camelot
       # - tabula
       # - GitPython
-      # - git
+      # - PyPDF2
