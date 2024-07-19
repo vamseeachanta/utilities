@@ -69,7 +69,7 @@ class VisualizationPolar:
         return rect_polar
 
     def get_polar_plot_plotly(self, df, plt_settings):
-        if plt_settings["plt_kind"] == "polar":
+        if "plt_kind" in plt_settings and plt_settings["plt_kind"] == "polar":
             # Radial line
 
             plt.polar(df["x"], df["y"], label=plt_settings["label"])
