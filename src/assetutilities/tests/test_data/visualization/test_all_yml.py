@@ -1,7 +1,7 @@
 # read all yml files in the current directory
 # Loop through each yml file and run the below command
   # Hint1: python subprocess;  (Easier route). 
-  # Hint2: subprocess separate command prompt. You have open a minconda prompt and ensure same python enviornment is used. to run each yml file
+  # Hint2: subprocess separate command prompt. You have to open a minconda prompt and ensure same python enviornment is used to run each yml file
 # If it ran, get success or failure. If one yml file fails.. then fail the test else the test passes
     # save a csv with all success and failures.
 
@@ -28,9 +28,8 @@ def run_yaml_files(directory):
                 statuses.append('Failed')
 
     df = pd.DataFrame({'Filename': filenames, 'Status': statuses})
-    output_csv = os.path.join(directory, 'results.csv')
+    output_csv = os.path.join(directory, 'file_status.csv')
     df.to_csv(output_csv, index=False)
-    print(f'Results saved to {output_csv}')
 
 directory = r'src\assetutilities\tests\test_data\visualization'
 run_yaml_files(directory)
