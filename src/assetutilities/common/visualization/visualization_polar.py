@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-
 # Reader imports
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
 
@@ -113,29 +112,38 @@ class VisualizationPolar:
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):
-            if plt_settings["type"][index] == "polar":
+
+            label = None
+            if "legend" in plt_settings:
+                label=plt_settings["legend"]["label"][index]
+            
+            if plt_settings["type"] == "polar":
                 ax.plot(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     color=cfg["data"]["color"][index],
                     linestyle=cfg["data"]["linestyle"][index],
                     alpha=cfg["data"]["alpha"][index],
                 )
-            elif plt_settings["type"][index] == "polar_scatter":
+            elif plt_settings["type"] == "polar_scatter":
                 ax.scatter(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     color=cfg["data"]["color"][index],
                     linestyle=cfg["data"]["linestyle"][index],
                     alpha=cfg["data"]["alpha"][index],
                 )
 
-        legend_flag = plt_settings["legend"].get("flag", True)
+        legend_flag = True
+        if "legend" in plt_settings:
+            legend_flag = plt_settings["legend"].get("flag", True)
         if legend_flag:
             ax.legend(loc="best")
-            prop = plt_settings["legend"].get("prop", None)
+            prop = None
+            if "legend" in plt_settings and "prop" in plt_settings["legend"]:
+                prop = plt_settings["legend"].get("prop", None)
             if prop is not None:
                 plt.legend(prop=prop)
 
