@@ -198,3 +198,5 @@ class VisualizationPolar:
         plt = plt_properties["plt"]
         for file_name in plot_name_paths:
             plt.savefig(file_name, dpi=800)
+
+        plt.close()

@@ -1,16 +1,18 @@
 basename: visualization
 
 default:
-  log_level: DEBUG
+  log_level: INFO
   config:
     overwrite:
       output: True
 
 settings:
-  type: xy_line
+  type: xy
+  mode: line
+  pairs: False
+  multiple: False
   plt_engine: matplotlib
   label: Allowable Wave Height
-  multiple: False
   file_name: x_y_line
   plt_save_extensions: [".png"]
   title: Allowable Significant Wave Height (Hs)
@@ -22,8 +24,7 @@ settings:
   set_rlabel_position: -22.5
   legend:
     flag: True
-    label:
-      [vessel inline with product route, vessel rotation wrt. product route]
+    label: []
     loc: best
     prop: { family: Arial, size: 5 }
 

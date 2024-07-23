@@ -33,8 +33,11 @@ class VisualizationXY:
 
     def get_data_df_and_plot_properties(self, cfg):
         if cfg["data"]["type"] == "input":
-            data_dict = self.get_xy_mapped_data_dict_from_input(cfg)
+            data_dict, legend = self.get_xy_mapped_data_dict_from_input(cfg)
+            if len(cfg["settings"]["legend"]["label"]) == 0:
+                cfg["settings"]["legend"]["label"] = legend
             data_df = pd.DataFrame.from_dict(data_dict, orient="index").transpose()
+
         elif cfg["data"]["type"] == "csv":
             data_dict, cfg = self.get_xy_mapped_data_dict_from_csv(cfg)
             data_df = pd.DataFrame.from_dict(data_dict, orient="index").transpose()
@@ -45,10 +48,13 @@ class VisualizationXY:
 
     def get_xy_mapped_data_dict_from_input(self, mapped_data_cfg):
         data_dict = {}
-
+        legend = []
+        trace_count = 0
         for group_cfg in mapped_data_cfg["data"]['groups']:
             x_data = group_cfg["x"]
             y_data = group_cfg["y"]
+            legend_item = group_cfg.get("label", None)
+            legend.append(legend_item)
 
             no_of_trends = max(len(x_data), len(y_data))
 
@@ -58,10 +64,10 @@ class VisualizationXY:
                 y_data = [y_data[0]] * len(x_data)
 
             for i in range(0, no_of_trends):
-                data_dict.update({"x_" + str(i): x_data[i]})
-                data_dict.update({"y_" + str(i): y_data[i]})
-
-        return data_dict
+                data_dict.update({"x_" + str(i+trace_count): x_data[i]})
+                data_dict.update({"y_" + str(i+trace_count): y_data[i]})
+            trace_count += no_of_trends
+        return data_dict, legend
 
     def get_xy_mapped_data_dict_from_csv(self, cfg):
         mapped_data_cfg = {}
@@ -230,6 +236,8 @@ class VisualizationXY:
         plt = plt_properties["plt"]
         for file_name in plot_name_paths:
             plt.savefig(file_name, dpi=800)
+
+        plt.close()
 
     def resolve_legends(self):
         # TODO Resolve legends in a comprehensive manner
