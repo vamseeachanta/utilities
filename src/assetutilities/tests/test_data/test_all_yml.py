@@ -1,10 +1,12 @@
 # Standard library imports
 import os
+import subprocess
 
 # Third party imports
 import pandas as pd
 
 
+def run_yaml_files(root_directory, subfolders):
     
     folders = []
     filenames = []
