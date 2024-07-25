@@ -123,7 +123,7 @@ class VisualizationXY:
 
         mapped_data_cfg = {"data": {"groups": [{"x": x_data_array, "y": y_data_array}]}}
         cfg["settings"]["legend"]["label"] = legend_data
-        data_dict = self.get_xy_mapped_data_dict_from_input(mapped_data_cfg)
+        data_dict, ledgend_unused = self.get_xy_mapped_data_dict_from_input(mapped_data_cfg)
 
         return data_dict, cfg
 
