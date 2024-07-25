@@ -4,7 +4,10 @@ import subprocess
 
 # Third party imports
 import pandas as pd
+from colorama import Fore, Style
+from colorama import init as colorama_init
 
+colorama_init()
 
 def run_yaml_files(root_directory, subfolders):
     
@@ -37,11 +40,12 @@ def run_yaml_files(root_directory, subfolders):
 
             output_csv = os.path.join(root_directory, 'file_status.csv')
             df.to_csv(output_csv, index=False)
+print(f"This is {Fore.GREEN}color{Style.RESET_ALL}!")
 
     print(f'Detailed output: {df}')
     print(f'No. of files processed: {len(filenames)}')
-    print("Tests passed: ", len(df[df['Status'] == 'Success']))
-    print("Tests failed: ", len(df[df['Status'] == 'Failed']))
+    print(f"Tests passed: {Fore.GREEN}{len(df[df['Status'] == 'Success'])}{Style.RESET_ALL}")
+    print(f"Tests passed: {Fore.RED}{len(df[df['Status'] == 'Failed'])}{Style.RESET_ALL}")
     print('Done!')
 
 
