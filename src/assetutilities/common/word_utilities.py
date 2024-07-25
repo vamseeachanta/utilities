@@ -17,8 +17,8 @@ class WordUtilities:
     def router(self, cfg):
         if cfg.task == "search_strings":
             self.search_strings(cfg)
-            elif cfg.task == "csv_to_docx":
-                self.csv_to_docx(cfg)
+        elif cfg.task == "csv_to_docx":
+            self.csv_to_docx(cfg)
         else:
             raise ValueError("Task not found in WorkUtilities")
 

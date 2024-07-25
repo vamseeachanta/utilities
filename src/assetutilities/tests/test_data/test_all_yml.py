@@ -33,7 +33,7 @@ def run_yaml_files(root_directory, subfolders):
 
             df = pd.DataFrame({'Folder': folders, 'Filename': filenames, 'Status': statuses})
 
-            df.loc[df['Folder'].duplicated(), 'Folder'] = ''
+            df = df.sort_values(by=['Status', 'Folder'], ascending=[False, True])
 
             output_csv = os.path.join(root_directory, 'file_status.csv')
             df.to_csv(output_csv, index=False)
