@@ -40,12 +40,12 @@ def run_yaml_files(root_directory, subfolders):
 
             output_csv = os.path.join(root_directory, 'file_status.csv')
             df.to_csv(output_csv, index=False)
-print(f"This is {Fore.GREEN}color{Style.RESET_ALL}!")
+
 
     print(f'Detailed output: {df}')
     print(f'No. of files processed: {len(filenames)}')
     print(f"Tests passed: {Fore.GREEN}{len(df[df['Status'] == 'Success'])}{Style.RESET_ALL}")
-    print(f"Tests passed: {Fore.RED}{len(df[df['Status'] == 'Failed'])}{Style.RESET_ALL}")
+    print(f"Tests Failed: {Fore.RED}{len(df[df['Status'] == 'Failed'])}{Style.RESET_ALL}")
     print('Done!')
 
 
