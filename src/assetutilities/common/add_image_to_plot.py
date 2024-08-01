@@ -25,8 +25,8 @@ def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, transperancy):
     plt.show()
 
 image_path = r'src\assetutilities\common\plot.png'
-x_min, x_max = 10, 2
-y_min, y_max = 2, 3
+x_min, x_max = 10, 2 # horizontal alignment of image on plot
+y_min, y_max = 2, 3  # vertical ......
 transperancy = 0.3
 
 add_image_to_plot(image_path, x_min, x_max, y_min, y_max, transperancy)
