@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha):
+def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, transperancy):
     """
     Add an image to a plot with specified parameters.
     """
@@ -10,7 +10,7 @@ def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha):
 
     fig, ax = plt.subplots()
 
-    ax.imshow(im, aspect='auto', extent=(x_min, x_max, y_min, y_max), zorder=-1, alpha=alpha)
+    ax.imshow(im, aspect='auto', extent=(x_min, x_max, y_min, y_max), zorder=-1, alpha=transperancy)
 
     plt.xlabel('X Axis')
     plt.ylabel('Y Axis')
@@ -27,6 +27,6 @@ def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha):
 image_path = r'src\assetutilities\common\plot.png'
 x_min, x_max = 10, 2
 y_min, y_max = 2, 3
-alpha = 0.3
+transperancy = 0.3
 
-add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha)
+add_image_to_plot(image_path, x_min, x_max, y_min, y_max, transperancy)
