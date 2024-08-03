@@ -12,8 +12,8 @@ visualization_common = VisualizationCommon()
 
 class AddImageToPlot:
 
-    def __init__(self):
-        pass
+    def __init__(self, cfg=None):
+        self.cfg = cfg
 
     def plot_setup(self, cfg, plt_settings):
         data_df = self.get_polar_data(cfg)
@@ -24,7 +24,9 @@ class AddImageToPlot:
         elif cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
-            self.add_image_to_plot(cfg, plt_properties,plt_settings,plt_properties["fig"])
+            if plt_settings["add_image"]["flag"]:
+                self.add_image_to_plot(plt_properties, cfg,plt_settings["add_image"])
+        
 
     def get_polar_data(self, cfg):
         data_dict = self.get_polar_mapped_data_dict(cfg)
@@ -115,8 +117,6 @@ class AddImageToPlot:
                 axis = self.get_axis_for_polar(axis)
             plt.axis(axis)
 
-        plt_properties = {"plt": plt, "fig": fig, "ax": ax}
-
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):
 
@@ -188,21 +188,18 @@ class AddImageToPlot:
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
-        if "add_image" in plt_settings and plt_settings["add_image"]["flag"]:
-            self.add_image_to_plot(cfg,plt_properties,plt_settings["add_image"])
-
-        return {"plt": plt, "fig": fig,"ax":ax}
+        return plt_properties
     
-    def add_image_to_plot(self, plt_properties,cfg,plt_settings):
+    def add_image_to_plot(self,plt_properties, cfg,plt_settings):
         
         img_path = plt_settings['image_path']
         transparency = plt_settings['transperancy']
 
         img = Image.open(img_path)
 
-        ax = plt_properties["ax"]
+        ax = plt_properties['ax']
 
-        image_extent = [-0.5, 0.5, -0.5, 0.5] 
+        image_extent = [-2, 1, -2, 1] 
 
         # Add the image to the plot
         ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
@@ -222,11 +219,6 @@ class AddImageToPlot:
 
         plt = plt_properties["plt"]
         for file_name in plot_name_paths:
-            if file_name:  # Ensure file_name is not None or empty
-                try:
-                    plt.savefig(file_name, dpi=300)
-                except Exception as e:
-                    print(f"Error saving file {file_name}: {e}")
-            else:
-                print("Invalid file name detected:", file_name)
+            plt.savefig(file_name, dpi=200)
+
         plt.close()
