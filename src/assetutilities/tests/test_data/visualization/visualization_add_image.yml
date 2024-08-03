@@ -7,7 +7,7 @@ default:
       output: True
 
 settings:
-  type: add_image
+  type: add_image_to_plot
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
@@ -27,8 +27,6 @@ settings:
   add_image:
     flag: True
     image_path: src/assetutilities/common/visualization/plot.png
-    x: { min: 10, max: 2 } # horizontal alignment of image on plot
-    y: { min: 2, max: 3 } # vertical alignment of image on plot
     transperancy: 0.3
 
 data:

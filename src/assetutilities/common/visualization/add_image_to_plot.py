@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.image as mpimg
+from PIL import Image
 
 # Reader imports
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
@@ -24,6 +24,7 @@ class AddImageToPlot:
         elif cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
+            self.add_image_to_plot(cfg, plt_properties,plt_settings,plt_properties["fig"])
 
     def get_polar_data(self, cfg):
         data_dict = self.get_polar_mapped_data_dict(cfg)
@@ -107,11 +108,14 @@ class AddImageToPlot:
             fig = plt_settings["plt_properties"]["fig"]
             rect = plt_settings["rect"]
             ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
+        
 
             axis = plt_settings["axis"]
             if axis != "off":
                 axis = self.get_axis_for_polar(axis)
             plt.axis(axis)
+
+        plt_properties = {"plt": plt, "fig": fig, "ax": ax}
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):
@@ -179,30 +183,29 @@ class AddImageToPlot:
         if title is not None:
             ax.set_title(plt_settings["title"], va="bottom")
 
-        plt_properties = {"plt": plt, "fig": fig}
+        plt_properties = {"plt": plt, "fig": fig,"ax":ax}
+
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
         if "add_image" in plt_settings and plt_settings["add_image"]["flag"]:
-            self.add_image_to_plot(cfg,ax, plt_settings["add_image"])
+            self.add_image_to_plot(cfg,plt_properties,plt_settings["add_image"])
 
-        return {"plt": plt, "fig": fig}
+        return {"plt": plt, "fig": fig,"ax":ax}
     
-    def add_image_to_plot(self, cfg,ax,plt_settings):
+    def add_image_to_plot(self, plt_properties,cfg,plt_settings):
         
-        image_path = cfg.get('settings', {}).get('add_image', {}).get("image_path")
-        img = mpimg.imread(image_path)
-    
-        x_min = cfg.get('settings', {}).get('add_image', {}).get('x', {}).get('x_min')
-        x_max = cfg.get('settings', {}).get('add_image', {}).get('x', {}).get('x_max')
-        y_min = cfg.get('settings', {}).get('add_image', {}).get('y', {}).get('y_min')
-        y_max = cfg.get('settings', {}).get('add_image', {}).get('y', {}).get('y_max')
-        transperancy = cfg.get('settings', {}).get('add_image', {}).get('transperancy')
-    
-        extent = [x_min, x_max, y_min, y_max]
+        img_path = plt_settings['image_path']
+        transparency = plt_settings['transperancy']
 
-        ax.imshow(img, extent=extent, alpha=transperancy, zorder=-1)
+        img = Image.open(img_path)
 
+        ax = plt_properties["ax"]
+
+        image_extent = [-0.5, 0.5, -0.5, 0.5] 
+
+        # Add the image to the plot
+        ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
 
     def save_polar_plot_and_close_plotly(self, plt, cfg):
         plot_name_paths = self.get_plot_name_path(cfg)

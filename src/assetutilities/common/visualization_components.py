@@ -28,7 +28,7 @@ class VisualizationComponents:
         elif "xy" in cfg["settings"]["type"]:
             visualization_xy = VisualizationXY()
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
-        elif "add_image" in cfg["settings"]["type"]:
+        elif "add_image_to_plot" in cfg["settings"]["type"]:
             add_image_to_plot = AddImageToPlot()
             add_image_to_plot.plot_setup(cfg, plt_settings)
         else:
