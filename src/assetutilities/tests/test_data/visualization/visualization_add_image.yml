@@ -7,7 +7,7 @@ default:
       output: True
 
 settings:
-  type: polar_scatter
+  type: add_image
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
@@ -26,9 +26,7 @@ settings:
     prop: { family: Arial, size: 5 }
   add_image:
     flag: True
-    image_path: src/assetutilities/tests/test_data/visualization/visualization_add_image.png
-    image_position: [0.5, 0.5]
-    image_size: [0.1, 0.1]
+    image_path: src/assetutilities/common/visualization/plot.png
     x: { min: 10, max: 2 } # horizontal alignment of image on plot
     y: { min: 2, max: 3 } # vertical alignment of image on plot
     transperancy: 0.3

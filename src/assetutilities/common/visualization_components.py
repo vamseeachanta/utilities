@@ -5,6 +5,7 @@ import logging
 from assetutilities.common.update_deep import update_deep_dictionary
 from assetutilities.common.visualization.visualization_polar import VisualizationPolar
 from assetutilities.common.visualization.visualization_xy import VisualizationXY
+from assetutilities.common.visualization.add_image_to_plot import AddImageToPlot
 
 
 class VisualizationComponents:
@@ -27,6 +28,9 @@ class VisualizationComponents:
         elif "xy" in cfg["settings"]["type"]:
             visualization_xy = VisualizationXY()
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
+        elif "add_image" in cfg["settings"]["type"]:
+            add_image_to_plot = AddImageToPlot()
+            add_image_to_plot.plot_setup(cfg, plt_settings)
         else:
             raise (Exception("Other plots coding to be completed ... FAIL"))
 
