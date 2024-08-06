@@ -5,6 +5,7 @@ import os
 import matplotlib.pyplot as plt  # noqa
 import numpy as np
 import pandas as pd  # noqa
+from PIL import Image
 
 
 class VisualizationCommon:
@@ -248,6 +249,28 @@ class VisualizationCommon:
         marker_settings = {"markerfacecolor": markerfacecolor, "markersize": markersize}
 
         return marker_settings
+
+    def add_image_to_plot(self, cfg, plt_settings):
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
+
+            img_path = plt_settings['add_image']['image_path']
+            transparency = plt_settings['add_image']['transperancy']
+            x = plt_settings['add_image']['x']
+            y = plt_settings['add_image']['y']
+            img = Image.open(img_path)
+
+            ax = plt.axes()
+            # ax = plt_properties['ax']
+            
+            image_extent = [x['min'], x['max'], y['min'], y['max']]
+            # image_extent = [-2, 1, -2, 1] 
+
+            # Add the image to the plot
+            ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
+
+        return cfg, plt_settings
+
+
 
     def get_plot_properties_for_df(self, cfg, df):
 

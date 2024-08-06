@@ -1,13 +1,13 @@
 basename: visualization
 
 default:
-  log_level: DEBUG
+  log_level: INFO
   config:
     overwrite:
       output: True
 
 settings:
-  type: add_image_to_plot
+  type: polar_scatter
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
@@ -28,6 +28,8 @@ settings:
     flag: True
     image_path: src/assetutilities/common/visualization/plot.png
     transperancy: 0.3
+    x: { min: 10, max: 2 }
+    y: { min: 2, max: 3 }
 
 data:
   type: input

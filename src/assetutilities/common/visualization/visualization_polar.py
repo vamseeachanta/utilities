@@ -15,14 +15,16 @@ class VisualizationPolar:
     def __init__(self):
         pass
 
-    def polar_plot_set_up(self, cfg, plt_settings):
+    def polar_plot_set_up_and_save(self, cfg, plt_settings):
         data_df = self.get_polar_data(cfg)
         plt_settings["traces"] = int(len(data_df.columns) / 2)
         if cfg["settings"]["plt_engine"] == "plotly":
-            plt = self.get_polar_plot_plotly(data_df, plt_settings)
+            plt_properties = self.get_polar_plot_plotly(data_df, plt_settings)
+            visualization_common.add_image_to_plot(cfg, plt_settings)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
+            visualization_common.add_image_to_plot(cfg, plt_settings)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
@@ -79,7 +81,9 @@ class VisualizationPolar:
 
             plt = px.scatter_polar(df, r=df["r_0"], theta=df["theta_0"])
 
-        return plt
+        plt_properties = {"plt": plt, "fig": None}
+
+        return plt_properties
 
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
@@ -180,7 +184,7 @@ class VisualizationPolar:
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
-        return {"plt": plt, "fig": fig}
+        return plt_properties
 
     def save_polar_plot_and_close_plotly(self, plt, cfg):
         plot_name_paths = self.get_plot_name_path(cfg)

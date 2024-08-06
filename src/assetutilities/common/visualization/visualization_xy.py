@@ -27,6 +27,7 @@ class VisualizationXY:
         #     self.save_xy_plot_and_close_plotly(plt, cfg)
         if cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_xy_plot_matplotlib(data_df, plt_settings, cfg)
+            visualization_common.add_image_to_plot(cfg, plt_settings)
             self.save_xy_plot_and_close_matplotlib(plt_properties, cfg)
         else:
             raise ValueError("Invalid plt_engine")
