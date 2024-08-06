@@ -28,7 +28,7 @@ settings:
   add_image:
     flag: True
     image_path: src/assetutilities/common/visualization/plot.png
-    transperancy: 0.3
+    transperancy: 0.5
     x: { min: 10, max: 2 }
     y: { min: 2, max: 3 }
 
