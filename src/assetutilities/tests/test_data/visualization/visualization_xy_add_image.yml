@@ -29,8 +29,8 @@ settings:
     flag: True
     image_path: src/assetutilities/common/visualization/plot.png
     transperancy: 0.3
-    x: { min: 100, max: 300 }
-    y: { min: -0.5, max: 0.5 }
+    x: { min: 50, max: 300 }
+    y: { min: -0.25, max: 0.25 }
 
 master_settings:
   groups:
