@@ -26,8 +26,8 @@ class VisualizationXY:
         #     plt = self.get_xy_plot_plotly(data_df, plt_settings)
         #     self.save_xy_plot_and_close_plotly(plt, cfg)
         if cfg["settings"]["plt_engine"] == "matplotlib":
-            plt_properties = self.get_xy_plot_matplotlib(data_df, plt_settings, cfg)
-            visualization_common.add_image_to_plot(cfg, plt_settings)
+            plt_properties = visualization_common.add_image_to_xy_plot(cfg, plt_settings)
+            plt_properties = self.get_xy_plot_matplotlib(data_df, plt_settings, cfg, plt_properties)
             self.save_xy_plot_and_close_matplotlib(plt_properties, cfg)
         else:
             raise ValueError("Invalid plt_engine")
@@ -128,9 +128,16 @@ class VisualizationXY:
 
         return data_dict, cfg
 
-    def get_xy_plot_matplotlib(self, df, plt_settings, cfg):
+    def get_xy_plot_matplotlib(self, df, plt_settings, cfg, plt_properties):
         # Third party imports
-        import matplotlib.pyplot as plt  # noqa
+        if "plt_properties" != None:
+            plt = plt_properties["plt"]
+            fig = plt_properties["fig"]
+            ax = plt_properties["ax"]
+        else:
+            # Third party imports
+            import matplotlib.pyplot as plt  # noqa
+            fig, ax = plt.subplots()
 
         if (
             "plt_properties" in plt_settings
@@ -138,7 +145,6 @@ class VisualizationXY:
         ):
             plt = plt_settings["plt_properties"]["plt"]
 
-        fig, ax = plt.subplots()
 
         # Add trace or plot style
         plt_settings["traces"] = int(len(df.columns) / 2)
@@ -229,7 +235,7 @@ class VisualizationXY:
 
         plt = visualization_common.add_x_y_lim_formats(cfg, plt)
         
-        plt_properties = {"plt": plt, "fig": fig}
+        plt_properties = {"plt": plt, "fig": fig, 'ax': ax}
         return plt_properties
 
     def save_xy_plot_and_close_matplotlib(self, plt_properties, cfg):

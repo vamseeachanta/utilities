@@ -270,6 +270,28 @@ class VisualizationCommon:
 
         return cfg, plt_settings
 
+    def add_image_to_xy_plot(self, cfg, plt_settings):
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
+
+            img_path = plt_settings['add_image']['image_path']
+            transparency = plt_settings['add_image']['transperancy']
+            x = plt_settings['add_image']['x']
+            y = plt_settings['add_image']['y']
+            img = Image.open(img_path)
+
+            fig, ax = plt.subplots()
+            # ax = plt_properties['ax']
+            
+            image_extent = [x['min'], x['max'], y['min'], y['max']]
+            # image_extent = [-2, 1, -2, 1] 
+
+            # Add the image to the plot
+            # ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
+            ax.imshow(img, aspect='auto', extent=image_extent, alpha=transparency, zorder=-1)
+
+            plt_properties = {"fig": fig, "ax": ax, "plt": plt}
+
+        return plt_properties
 
 
     def get_plot_properties_for_df(self, cfg, df):
