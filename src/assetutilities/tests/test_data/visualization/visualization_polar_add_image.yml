@@ -26,7 +26,7 @@ settings:
     prop: { family: Arial, size: 5 }
   add_image:
     flag: True
-    image_path: src/assetutilities/common/visualization/plot.png
+    image_path: src\assetutilities\tests\test_data\visualization\test_data\plot.png
     transperancy: 0.3
     x: { min: 10, max: 2 }
     y: { min: 2, max: 3 }
