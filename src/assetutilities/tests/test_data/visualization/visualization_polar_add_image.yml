@@ -11,7 +11,7 @@ settings:
   plt_engine: matplotlib
   label: Allowable Wave Height
   multiple: False
-  file_name: add_image_to_plot
+  file_name: NULL
   plt_save_extensions: [".png"]
   title: Allowable Significant Wave Height (Hs)
   set_rmax: 10
