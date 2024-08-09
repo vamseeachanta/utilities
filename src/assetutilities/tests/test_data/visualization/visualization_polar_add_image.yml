@@ -28,8 +28,8 @@ settings:
     flag: True
     image_path: src\assetutilities\tests\test_data\visualization\test_data\plot.png
     transperancy: 0.3
-    x: { min: 10, max: 2 }
-    y: { min: 2, max: 3 }
+    r: { min: 0, max: 2.5 }
+    theta: { min: 150, max: 340 }
 
 data:
   type: input

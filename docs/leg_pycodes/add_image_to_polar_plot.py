@@ -44,7 +44,7 @@ def add_image_to_polar_plot(image_path, r_min, r_max, theta_min_deg, theta_max_d
 
 image_path = r'C:\github\assetutilities\docs\leg_pycodes\add_image_to_plot.png'
 r_min, r_max = 0,2.5
-theta_min_deg, theta_max_deg = 155, 338
+theta_min_deg, theta_max_deg = 150, 340
 transparency = 0.3
 
 add_image_to_polar_plot(image_path, r_min, r_max, theta_min_deg, theta_max_deg, transparency)

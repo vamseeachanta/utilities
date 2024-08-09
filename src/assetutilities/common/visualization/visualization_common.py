@@ -3,6 +3,7 @@ import os
 
 # Third party imports
 import matplotlib.pyplot as plt  # noqa
+from matplotlib import gridspec
 import numpy as np
 import pandas as pd  # noqa
 from PIL import Image
@@ -255,20 +256,35 @@ class VisualizationCommon:
 
             img_path = plt_settings['add_image']['image_path']
             transparency = plt_settings['add_image']['transperancy']
-            x = plt_settings['add_image']['x']
-            y = plt_settings['add_image']['y']
+            r = plt_settings['add_image']['r']
+            r_min = r['min']
+            r_max = r['max']
+            theta = plt_settings['add_image']['theta']
+            theta_min_deg = theta['min']
+            theta_max_deg = theta['max']
+            
+            theta_min = np.deg2rad(theta_min_deg)
+            theta_max = np.deg2rad(theta_max_deg)
+            
             img = Image.open(img_path)
 
-            ax = plt.axes()
-            # ax = plt_properties['ax']
+            fig = plt.figure()
+
+            spec = gridspec.GridSpec(ncols=1, nrows=2,
+                            width_ratios=[1], wspace=0.5,
+                            hspace=0.5, height_ratios=[1, 4])
+ 
+
+            ax0 = fig.add_subplot(spec[0])
+            ax1 = fig.add_subplot(spec[1], projection='polar')
+
+            extent = [theta_min, theta_max, r_min, r_max]
+
+            ax0.imshow(img, aspect='auto', extent=extent, alpha=transparency, zorder=-1)
             
-            image_extent = [x['min'], x['max'], y['min'], y['max']]
-            # image_extent = [-2, 1, -2, 1] 
+            plt_properties = {"fig": fig,"ax1": ax1,"ax0":ax0, "plt": plt}
 
-            # Add the image to the plot
-            ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
-
-        return cfg, plt_settings
+        return plt_properties
 
     def add_image_to_xy_plot(self, cfg, plt_settings):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
