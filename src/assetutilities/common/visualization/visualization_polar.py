@@ -24,9 +24,8 @@ class VisualizationPolar:
             visualization_common.add_image_to_polar_plot(cfg, plt_settings)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
-            plt_properties = visualization_common.add_image_to_polar_plot(cfg, plt_settings)
-            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg,plt_properties)
-            
+            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
+            plt_properties = visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
@@ -87,23 +86,18 @@ class VisualizationPolar:
 
         return plt_properties
 
-    def get_polar_plot_matplotlib(self, df, plt_settings, cfg,plt_properties):
+    def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
-        if "plt_properties" != None:
-            plt = plt_properties["plt"]
-            fig = plt_properties["fig"]
-            ax0 = plt_properties["ax0"]
-            ax1 = plt_properties["ax1"]
-        else:
-            # Third party imports
-            import matplotlib.pyplot as plt  # noqa
-            fig = plt.figure()
-            spec = gridspec.GridSpec(ncols=1, nrows=2,
-                            width_ratios=[1], wspace=0.5,
-                            hspace=0.5, height_ratios=[1, 4])
-            
-            ax0 = fig.add_subplot(spec[0])
-            ax1 = fig.add_subplot(spec[1],projection='polar')
+        
+        # Third party imports
+        import matplotlib.pyplot as plt  # noqa
+        fig = plt.figure()
+        spec = gridspec.GridSpec(ncols=1, nrows=2,
+                        width_ratios=[1], wspace=0.5,
+                        hspace=0.5, height_ratios=[1, 4])
+        
+        ax0 = fig.add_subplot(spec[0])
+        ax1 = fig.add_subplot(spec[1],projection='polar')
 
         if (
             "plt_properties" in plt_settings

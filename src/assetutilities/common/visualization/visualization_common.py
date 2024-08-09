@@ -251,7 +251,7 @@ class VisualizationCommon:
 
         return marker_settings
 
-    def add_image_to_polar_plot(self, cfg, plt_settings):
+    def add_image_to_polar_plot(self, cfg, plt_settings,plt_properties):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
 
             img_path = plt_settings['add_image']['image_path']
@@ -267,16 +267,24 @@ class VisualizationCommon:
             theta_max = np.deg2rad(theta_max_deg)
             
             img = Image.open(img_path)
+            
+            if "plt_properties" != None:
+                plt = plt_properties["plt"]
+                fig = plt_properties["fig"]
+                ax0 = plt_properties["ax0"]
+                ax1 = plt_properties["ax1"]
+            else:
+            # Third party imports
+                import matplotlib.pyplot as plt  # noqa
+                fig = plt.figure()
 
-            fig = plt.figure()
+                spec = gridspec.GridSpec(ncols=1, nrows=2,
+                                width_ratios=[1], wspace=0.5,
+                                hspace=0.5, height_ratios=[1, 4])
+    
 
-            spec = gridspec.GridSpec(ncols=1, nrows=2,
-                            width_ratios=[1], wspace=0.5,
-                            hspace=0.5, height_ratios=[1, 4])
- 
-
-            ax0 = fig.add_subplot(spec[0])
-            ax1 = fig.add_subplot(spec[1], projection='polar')
+                ax0 = fig.add_subplot(spec[0])
+                ax1 = fig.add_subplot(spec[1], projection='polar')
 
             extent = [theta_min, theta_max, r_min, r_max]
 
