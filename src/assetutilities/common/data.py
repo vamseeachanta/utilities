@@ -396,7 +396,7 @@ class ReadData:
 
         with open(cfg["io"], "r") as f:
             for line in f:
-                all_lines.append(line.strip())
+                all_lines.append(line)
 
         start_line = 1
         end_line = len(all_lines)
