@@ -250,7 +250,7 @@ class VisualizationCommon:
 
         return marker_settings
 
-    def add_image_to_plot(self, cfg, plt_settings):
+    def add_image_to_polar_plot(self, cfg, plt_settings):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
 
             img_path = plt_settings['add_image']['image_path']
