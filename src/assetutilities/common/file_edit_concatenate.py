@@ -21,7 +21,8 @@ class FileConcatenate:
 
     def concatenate_files_array(self, cfg):
 
-        for input_set in cfg["input"]:
+        for idx in range(0, len(cfg["input"])):
+            input_set = cfg["input"][idx]
             output_files = {"ext": [], "no_ext": []}
             input_file_groups = input_set["input_files"]
             for input_file_group_indx in range(0, len(input_file_groups)):
@@ -52,7 +53,7 @@ class FileConcatenate:
                     cfg, input_file_group, output_filename_path
                 )
 
-            self.prepare_custom_batch(input_set, output_files, cfg)
+            self.prepare_custom_batch(cfg, input_set, idx, output_files)
 
         return cfg
 
@@ -115,11 +116,11 @@ class FileConcatenate:
 
         return cfg
 
-    def prepare_custom_batch(self, input_set, output_files, cfg):
+    def prepare_custom_batch(self, cfg, input_set, idx, output_files):
         batch_cfg = input_set.get("batch", None)
         batch_filename = os.path.join(
             cfg["Analysis"]["analysis_root_folder"],
-            cfg["Analysis"]["file_name"] + ".bat",
+            cfg["Analysis"]["file_name"] + '_' + str(idx) + ".bat",
         )
         if batch_cfg is not None and batch_cfg["flag"]:
             with open(batch_filename, "w") as the_file:
