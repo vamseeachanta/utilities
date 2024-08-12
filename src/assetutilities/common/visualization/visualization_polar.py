@@ -24,8 +24,8 @@ class VisualizationPolar:
             visualization_common.add_image_to_polar_plot(cfg, plt_settings)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
-            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
-            plt_properties = visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
+            plt_properties = visualization_common.add_image_to_polar_plot(cfg, plt_settings)
+            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg,plt_properties)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
@@ -86,18 +86,16 @@ class VisualizationPolar:
 
         return plt_properties
 
-    def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
+    def get_polar_plot_matplotlib(self, df, plt_settings, cfg,plt_properties):
 
-        
-        # Third party imports
-        import matplotlib.pyplot as plt  # noqa
-        fig = plt.figure()
-        spec = gridspec.GridSpec(ncols=1, nrows=2,
-                        width_ratios=[1], wspace=0.5,
-                        hspace=0.5, height_ratios=[1, 4])
-        
-        ax0 = fig.add_subplot(spec[0])
-        ax1 = fig.add_subplot(spec[1],projection='polar')
+        if "plt_properties" != None:
+            plt = plt_properties["plt"]
+            fig = plt_properties["fig"]
+            ax = plt_properties["ax"]
+        else:
+            # Third party imports
+            import matplotlib.pyplot as plt  # noqa
+            fig, ax = plt.subplots()
 
         if (
             "plt_properties" in plt_settings
@@ -111,18 +109,12 @@ class VisualizationPolar:
         facecolor = plt_settings.get("facecolor", None)
         if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
             
-            fig = plt.figure()
-            spec = gridspec.GridSpec(ncols=1, nrows=2,
-                            width_ratios=[1], wspace=0.5,
-                            hspace=0.5, height_ratios=[1, 4])
-            
-            ax0 = fig.add_subplot(spec[0])
-            ax1 = fig.add_subplot(spec[1],projection='polar',facecolor=facecolor, alpha=alpha
+            fig,ax = plt.subplots(subplot_kw=dict(polar=True),figsize=(8,8)
             )
         else:
             fig = plt_settings["plt_properties"]["fig"]
             rect = plt_settings["rect"]
-            ax1 = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
+            ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
 
             axis = plt_settings["axis"]
             if axis != "off":
@@ -137,7 +129,7 @@ class VisualizationPolar:
                 label=plt_settings["legend"]["label"][index]
             
             if plt_settings["type"] == "polar":
-                ax1.plot(
+                ax.plot(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
                     label=label,
@@ -146,7 +138,7 @@ class VisualizationPolar:
                     alpha=cfg["data"]["alpha"][index],
                 )
             elif plt_settings["type"] == "polar_scatter":
-                ax1.scatter(
+                ax.scatter(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
                     label=label,
@@ -159,7 +151,7 @@ class VisualizationPolar:
         if "legend" in plt_settings:
             legend_flag = plt_settings["legend"].get("flag", True)
         if legend_flag:
-            ax1.legend(loc="best")
+            ax.legend(loc="best")
             prop = None
             if "legend" in plt_settings and "prop" in plt_settings["legend"]:
                 prop = plt_settings["legend"].get("prop", None)
@@ -170,36 +162,36 @@ class VisualizationPolar:
 
         set_rmax = plt_settings.get("set_rmax", None)
         if set_rmax is not None:
-            ax1.set_rmax(set_rmax)
+            ax.set_rmax(set_rmax)
 
         set_rticks = plt_settings.get("set_rticks", None)
         if set_rticks is not None:
-            ax1.set_rticks(set_rticks)
+            ax.set_rticks(set_rticks)
 
         set_rlabel_position = plt_settings.get("set_rlabel_position", None)
         if set_rlabel_position is not None:
-            ax1.set_rlabel_position(set_rlabel_position)
+            ax.set_rlabel_position(set_rlabel_position)
 
         set_thetagrids = plt_settings.get("set_thetagrids", None)
         if set_thetagrids is not None:
-            ax1.set_thetagrids(set_thetagrids)
+            ax.set_thetagrids(set_thetagrids)
 
         set_theta_zero_location = plt_settings.get("set_theta_zero_location", None)
         if set_theta_zero_location is not None:
-            ax1.set_theta_zero_location(set_theta_zero_location)
+            ax.set_theta_zero_location(set_theta_zero_location)
 
         grid = plt_settings.get("grid", True)
-        ax1.grid(grid)
+        ax.grid(grid)
 
         title = plt_settings.get("title", None)
         if title is not None:
-            ax1.set_title(plt_settings["title"], va="bottom")
+            ax.set_title(plt_settings["title"], va="bottom")
 
         plt_properties = {"plt": plt, "fig": fig}
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
-        plt_properties = {"fig": fig, "ax1": ax1,"ax0":ax0, "plt": plt}
+        plt_properties = {"plt": plt,"fig": fig, "ax": ax}
         return plt_properties
 
     def save_polar_plot_and_close_plotly(self, plt, cfg):

@@ -28,8 +28,8 @@ settings:
     flag: True
     image_path: src\assetutilities\tests\test_data\visualization\test_data\plot.png
     transperancy: 0.3
-    r: { min: 0, max: 2.5 }
-    theta: { min: 150, max: 340 }
+    r: 1.5
+    theta: np.pi
 
 data:
   type: input

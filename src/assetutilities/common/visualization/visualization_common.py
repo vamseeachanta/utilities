@@ -3,10 +3,10 @@ import os
 
 # Third party imports
 import matplotlib.pyplot as plt  # noqa
-from matplotlib import gridspec
 import numpy as np
 import pandas as pd  # noqa
 from PIL import Image
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 
 class VisualizationCommon:
@@ -251,46 +251,36 @@ class VisualizationCommon:
 
         return marker_settings
 
-    def add_image_to_polar_plot(self, cfg, plt_settings,plt_properties):
+    def add_image_to_polar_plot(self, cfg, plt_settings):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
 
             img_path = plt_settings['add_image']['image_path']
             transparency = plt_settings['add_image']['transperancy']
             r = plt_settings['add_image']['r']
-            r_min = r['min']
-            r_max = r['max']
             theta = plt_settings['add_image']['theta']
-            theta_min_deg = theta['min']
-            theta_max_deg = theta['max']
-            
-            theta_min = np.deg2rad(theta_min_deg)
-            theta_max = np.deg2rad(theta_max_deg)
             
             img = Image.open(img_path)
-            
-            if "plt_properties" != None:
-                plt = plt_properties["plt"]
-                fig = plt_properties["fig"]
-                ax0 = plt_properties["ax0"]
-                ax1 = plt_properties["ax1"]
-            else:
-            # Third party imports
-                import matplotlib.pyplot as plt  # noqa
-                fig = plt.figure()
 
-                spec = gridspec.GridSpec(ncols=1, nrows=2,
-                                width_ratios=[1], wspace=0.5,
-                                hspace=0.5, height_ratios=[1, 4])
+            im_array = np.array(img.convert("RGBA"))
+            im_array[:, :, 3] = (im_array[:, :, 3].astype(float) * transparency).astype(np.uint8)
     
+            fig,ax = plt.subplots(subplot_kw={'projection': 'polar'})
 
-                ax0 = fig.add_subplot(spec[0])
-                ax1 = fig.add_subplot(spec[1], projection='polar')
+            theta_center = theta  
+            r_center = r 
+            zoom_factor = 0.5
 
-            extent = [theta_min, theta_max, r_min, r_max]
-
-            ax0.imshow(img, aspect='auto', extent=extent, alpha=transparency, zorder=-1)
+            image_box = OffsetImage(im_array, zoom=zoom_factor)
+    
+            ab = AnnotationBbox(image_box, (theta_center, r_center), frameon=False, xycoords='polar')
             
-            plt_properties = {"fig": fig,"ax1": ax1,"ax0":ax0, "plt": plt}
+            ax.add_artist(ab)
+
+            ax.set_ylim(0, 3)
+    
+            plt.show() 
+            
+            plt_properties = {"fig": fig,"ax": ax,"plt": plt}
 
         return plt_properties
 
@@ -316,7 +306,6 @@ class VisualizationCommon:
             plt_properties = {"fig": fig, "ax": ax, "plt": plt}
 
         return plt_properties
-
 
     def get_plot_properties_for_df(self, cfg, df):
 
