@@ -109,7 +109,8 @@ class VisualizationPolar:
         facecolor = plt_settings.get("facecolor", None)
         if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
             
-            fig,ax = plt.subplots(subplot_kw=dict(polar=True),figsize=(8,8)
+            fig, ax = plt.subplots(
+                subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
             )
         else:
             fig = plt_settings["plt_properties"]["fig"]
