@@ -24,8 +24,8 @@ class VisualizationPolar:
             visualization_common.add_image_to_polar_plot(cfg, plt_settings)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
-            plt_properties = visualization_common.add_image_to_polar_plot(cfg, plt_settings)
-            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg,plt_properties)
+            plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
+            visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
@@ -86,16 +86,9 @@ class VisualizationPolar:
 
         return plt_properties
 
-    def get_polar_plot_matplotlib(self, df, plt_settings, cfg,plt_properties):
+    def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
-        if "plt_properties" != None:
-            plt = plt_properties["plt"]
-            fig = plt_properties["fig"]
-            ax = plt_properties["ax"]
-        else:
-            # Third party imports
-            import matplotlib.pyplot as plt  # noqa
-            fig, ax = plt.subplots()
+        import matplotlib.pyplot as plt #noqa
 
         if (
             "plt_properties" in plt_settings
@@ -107,21 +100,20 @@ class VisualizationPolar:
 
         alpha = plt_settings.get("alpha", 1)
         facecolor = plt_settings.get("facecolor", None)
-        if "plt_properties" != None:
-            if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
-            
-                fig, ax = plt.subplots(
-                    subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
-                )
-            else:
-                fig = plt_settings["plt_properties"]["fig"]
-                rect = plt_settings["rect"]
-                ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
+        if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
+            fig, ax = plt.subplots(
+                subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
+            )
 
-                axis = plt_settings["axis"]
-                if axis != "off":
-                    axis = self.get_axis_for_polar(axis)
-                plt.axis(axis)
+        else:
+            fig = plt_settings["plt_properties"]["fig"]
+            rect = plt_settings["rect"]
+            ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
+
+            axis = plt_settings["axis"]
+            if axis != "off":
+                axis = self.get_axis_for_polar(axis)
+            plt.axis(axis)
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):

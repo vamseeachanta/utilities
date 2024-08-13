@@ -251,7 +251,7 @@ class VisualizationCommon:
 
         return marker_settings
 
-    def add_image_to_polar_plot(self, cfg, plt_settings):
+    def add_image_to_polar_plot(self, cfg, plt_settings,plt_properties):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
 
             img_path = plt_settings['add_image']['image_path']
@@ -264,10 +264,11 @@ class VisualizationCommon:
             im_array = np.array(img.convert("RGBA"))
             im_array[:, :, 3] = (im_array[:, :, 3].astype(float) * transparency).astype(np.uint8)
     
-            fig,ax = plt.subplots(subplot_kw={'projection': 'polar'})
+            fig = plt_properties['fig']
+            ax = plt_properties['ax']
 
             # theta_center = theta  
-            theta_center = 3.14
+            theta_center = np.radians(theta)
             r_center = r 
             zoom_factor = 0.5
 
@@ -280,11 +281,11 @@ class VisualizationCommon:
             ax.set_ylim(0, 3)
     
             # plt.show() 
-            plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
+            #plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
             
-            plt_properties = {"fig": fig,"ax": ax,"plt": plt}
+            #plt_properties = {"fig": fig,"ax": ax,"plt": plt}
 
-        return plt_properties
+        #return plt_properties
 
     def add_image_to_xy_plot(self, cfg, plt_settings):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
