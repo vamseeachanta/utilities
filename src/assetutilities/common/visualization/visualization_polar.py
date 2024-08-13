@@ -21,7 +21,7 @@ class VisualizationPolar:
         plt_settings["traces"] = int(len(data_df.columns) / 2)
         if cfg["settings"]["plt_engine"] == "plotly":
             plt_properties = self.get_polar_plot_plotly(data_df, plt_settings)
-            visualization_common.add_image_to_polar_plot(cfg, plt_settings)
+            visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
@@ -89,6 +89,7 @@ class VisualizationPolar:
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
         import matplotlib.pyplot as plt #noqa
+
 
         if (
             "plt_properties" in plt_settings
@@ -186,6 +187,7 @@ class VisualizationPolar:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
         plt_properties = {"plt": plt,"fig": fig, "ax": ax}
+
         return plt_properties
 
     def save_polar_plot_and_close_plotly(self, plt, cfg):

@@ -29,7 +29,7 @@ settings:
     image_path: src\assetutilities\tests\test_data\visualization\test_data\plot.png
     transperancy: 0.3
     r: 1.5
-    theta: 3.14
+    theta_center: 3.14
 
 data:
   type: input
