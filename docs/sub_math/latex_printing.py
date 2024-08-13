@@ -1,7 +1,11 @@
+# Not working. 
+#TODO Troubleshoot
+
+# Standard library imports
 import os
 
+# Third party imports
 import numpy as np
-
 from pylatex import (
     Alignat,
     Axis,
