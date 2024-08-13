@@ -107,20 +107,21 @@ class VisualizationPolar:
 
         alpha = plt_settings.get("alpha", 1)
         facecolor = plt_settings.get("facecolor", None)
-        if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
+        if "plt_properties" != None:
+            if ("add_axes" not in plt_settings) or (not plt_settings["add_axes"]):
             
-            fig, ax = plt.subplots(
-                subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
-            )
-        else:
-            fig = plt_settings["plt_properties"]["fig"]
-            rect = plt_settings["rect"]
-            ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
+                fig, ax = plt.subplots(
+                    subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
+                )
+            else:
+                fig = plt_settings["plt_properties"]["fig"]
+                rect = plt_settings["rect"]
+                ax = fig.add_axes(rect, polar=True, facecolor=facecolor, alpha=alpha)
 
-            axis = plt_settings["axis"]
-            if axis != "off":
-                axis = self.get_axis_for_polar(axis)
-            plt.axis(axis)
+                axis = plt_settings["axis"]
+                if axis != "off":
+                    axis = self.get_axis_for_polar(axis)
+                plt.axis(axis)
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):

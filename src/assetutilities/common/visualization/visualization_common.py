@@ -5,8 +5,8 @@ import os
 import matplotlib.pyplot as plt  # noqa
 import numpy as np
 import pandas as pd  # noqa
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from PIL import Image
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 
 class VisualizationCommon:
@@ -266,7 +266,8 @@ class VisualizationCommon:
     
             fig,ax = plt.subplots(subplot_kw={'projection': 'polar'})
 
-            theta_center = theta  
+            # theta_center = theta  
+            theta_center = 3.14
             r_center = r 
             zoom_factor = 0.5
 
@@ -278,7 +279,8 @@ class VisualizationCommon:
 
             ax.set_ylim(0, 3)
     
-            plt.show() 
+            # plt.show() 
+            plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
             
             plt_properties = {"fig": fig,"ax": ax,"plt": plt}
 
