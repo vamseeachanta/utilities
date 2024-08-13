@@ -1,9 +1,12 @@
-import matplotlib.pyplot as plt
-from PIL import Image
+# Third party imports
 import numpy as np
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+
+import matplotlib.pyplot as plt #noqa
+from PIL import Image
 
 def add_image_to_polar_plot(image_path, transparency):
+
     """
     Add an image to a polar plot 
 
@@ -33,7 +36,8 @@ def add_image_to_polar_plot(image_path, transparency):
     # Set limits for the radial axis
     ax.set_ylim(0, 3)
     
-    plt.show()
+    plt.savefig('docs/leg_pycodes/add_image_to_polar_plot.png')
+
 
 image_path = r'C:\github\assetutilities\docs\leg_pycodes\add_image_to_plot.png'
 transparency = 0.3
