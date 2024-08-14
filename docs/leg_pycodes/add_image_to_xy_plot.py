@@ -25,7 +25,7 @@ def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha):
     plt.legend()
     plt.show()
 
-image_path = r'C:\github\assetutilities\docs\leg_pycodes\add_image_to_plot.png'
+image_path = r'C:\github\assetutilities\docs\leg_pycodes\image_for_plot.png'
 x_min, x_max = 10, 2
 y_min, y_max = 2, 3
 alpha = 0.3

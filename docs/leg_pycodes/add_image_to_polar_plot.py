@@ -34,12 +34,12 @@ def add_image_to_polar_plot(image_path, transparency):
     ax.plot(theta, r, color='blue', linewidth=2)
     
     # Set limits for the radial axis
-    ax.set_ylim(0, 3)
+    ax.set_ylim(0, 3) # this is optional , because it will effect existing polar plot  
     
     plt.savefig('docs/leg_pycodes/add_image_to_polar_plot.png')
 
 
-image_path = r'C:\github\assetutilities\docs\leg_pycodes\add_image_to_plot.png'
+image_path = r'C:\github\assetutilities\docs\leg_pycodes\image_for_plot.png'
 transparency = 0.3
 
 add_image_to_polar_plot(image_path, transparency)

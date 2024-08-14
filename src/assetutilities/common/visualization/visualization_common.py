@@ -278,14 +278,10 @@ class VisualizationCommon:
             
             ax.add_artist(ab)
 
-            ax.set_ylim(0, 14)
+            #ax.set_ylim(0, 14)
     
             # plt.show() 
             #plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
-            
-            plt_properties = {"fig": fig,"ax": ax,"plt": plt}
-
-        return plt_properties
 
     def add_image_to_xy_plot(self, cfg, plt_settings):
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
