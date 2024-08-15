@@ -284,6 +284,7 @@ class VisualizationCommon:
             #plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
 
     def add_image_to_xy_plot(self, cfg, plt_settings):
+        plt_properties = None
         if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
 
             img_path = plt_settings['add_image']['image_path']

@@ -130,7 +130,7 @@ class VisualizationXY:
 
     def get_xy_plot_matplotlib(self, df, plt_settings, cfg, plt_properties):
         # Third party imports
-        if "plt_properties" != None:
+        if plt_properties != None:
             plt = plt_properties["plt"]
             fig = plt_properties["fig"]
             ax = plt_properties["ax"]
@@ -138,6 +138,7 @@ class VisualizationXY:
             # Third party imports
             import matplotlib.pyplot as plt  # noqa
             fig, ax = plt.subplots()
+            plt_properties = {"plt": plt, "fig": fig, 'ax': ax}
 
         if (
             "plt_properties" in plt_settings
@@ -161,7 +162,6 @@ class VisualizationXY:
         plot_mode = cfg["settings"].get("mode", ["line"])
 
         for index in range(0, plt_settings["traces"]):
-            
             linestyle = linestyle_list[index]
             marker_style = dict(
                 color=color_list[index],
