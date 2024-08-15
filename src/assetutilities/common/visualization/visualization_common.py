@@ -252,7 +252,7 @@ class VisualizationCommon:
         return marker_settings
 
     def add_image_to_polar_plot(self, cfg, plt_settings,plt_properties):
-        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"].get("flag", False):
 
             img_path = plt_settings['add_image']['image_path']
             transparency = plt_settings['add_image']['transperancy']
@@ -276,8 +276,7 @@ class VisualizationCommon:
     
             ab = AnnotationBbox(image_box, (theta_center, r_center), frameon=False, xycoords='polar')
             
-            ax.add_artist(ab)
-
+            ax.add_artist(ab)   
             #ax.set_ylim(0, 14)
     
             # plt.show() 
@@ -285,7 +284,7 @@ class VisualizationCommon:
 
     def add_image_to_xy_plot(self, cfg, plt_settings):
         plt_properties = None
-        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"]:
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"].get("flag", False):
 
             img_path = plt_settings['add_image']['image_path']
             transparency = plt_settings['add_image']['transperancy']
@@ -304,6 +303,9 @@ class VisualizationCommon:
             ax.imshow(img, aspect='auto', extent=image_extent, alpha=transparency, zorder=-1)
 
             plt_properties = {"fig": fig, "ax": ax, "plt": plt}
+        else:
+            print("add_image data is not available")    
+
 
         return plt_properties
 
