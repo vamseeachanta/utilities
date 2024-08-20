@@ -1,6 +1,5 @@
-
-# Third party imports
 import latexify
+# Third party imports
 
 
 
@@ -10,7 +9,6 @@ import latexify
 
 # solve
 
-@latexify.function
 def fib(x):
     if x==0:
         return 1
@@ -18,4 +16,7 @@ def fib(x):
         return 1
     else:
         return fib(x-1)+fib(x-2)
-fib
+
+latexify.get_latex(fib)
+
+
