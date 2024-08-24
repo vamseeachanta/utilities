@@ -25,7 +25,6 @@ save_data = SaveData()
 
 
 def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) -> dict:
-    fm = FileManagement()
     if cfg is None:
         inputfile = validate_arguments_run_methods(inputfile)
         cfg = ymlInput(inputfile, updateYml=None)
@@ -121,10 +120,3 @@ def validate_arguments_run_methods(inputfile):
     return inputfile
 
 
-def save_cfg(cfg_base):
-    output_dir = cfg_base.Analysis["result_folder"]
-
-    filename = cfg_base.Analysis["file_name"]
-    filename_path = os.path.join(output_dir, filename)
-
-    save_data.saveDataYaml(cfg_base, filename_path, default_flow_style=False)

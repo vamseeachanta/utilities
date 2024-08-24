@@ -1,13 +1,8 @@
-import latexify
+# Standard library imports
+
 # Third party imports
+import latexify
 
-
-
-# @latexify.function
-# def solve(a,b,c):
-#     return (-b + math.sqrt(b**2-4*a*c))/(2*a)
-
-# solve
 
 def fib(x):
     if x==0:
@@ -18,5 +13,4 @@ def fib(x):
         return fib(x-1)+fib(x-2)
 
 latexify.get_latex(fib)
-
 
