@@ -37,6 +37,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     application_manager.configure(cfg, library_name)
 
     if config_flag:
+        fm = FileManagement()
         cfg_base = application_manager.cfg
         cfg_base = fm.router(cfg_base)
     else:
