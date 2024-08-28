@@ -13,7 +13,14 @@ Other history using flog
 
 Prior to pull request, make sure the branch is up to date with the master branch. The key steps in VS Code are below
 
-You should be in the branch you are currently modifying (not master) and first merge master into this branch: under source control, click the three dots and select in the menu Branch -> Merge Branch (see screenshot) and select Master. It will say you now have conflicts that you need to resolve manually, and then you should be clear to go.
+- You should be in the branch you are currently modifying (not master) 
+- First merge master into this branch: To do merging:
+  - Under source control, click the three dots 
+  - Select in the menu Branch -> Merge Branch (see screenshot) 
+  - Select Master. 
+  - Based on changes, 
+    - It may have conflicts that need to be resolve manually, 
+    - Following conflict resolution, should be clear to go.
 
 <https://phoenixnap.com/kb/git-merge-master-into-branch>
 <https://www.git-tower.com/learn/git/faq/git-pull-origin-master>
