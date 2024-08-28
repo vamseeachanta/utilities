@@ -28,4 +28,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest src/assetutilities/tests/pipeline_pass
+          pytest src/assetutilities/tests
