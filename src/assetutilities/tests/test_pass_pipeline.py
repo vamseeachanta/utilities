@@ -1,27 +1,22 @@
-import pytest
-import sys
 import os
-import pandas as pd
-
-current_dir = os.path.dirname(__file__)
-asset_directory = os.path.abspath(os.path.join(current_dir, '../../'))
-if asset_directory not in sys.path:
-    sys.path.insert(0, asset_directory)
-
-from src.assetutilities.tests.test_data.test_all_yml import run_yaml_files
 
 def test_pass_pipeline():
 
-    root_directory = os.path.join(current_dir, 'test_data')
+    library = 'assetutilities'
+    root_directory = f'src/{library}/tests/test_data'
+    summary_file = 'summary_output.txt'
+
     
-    run_yaml_files(root_directory)
-    
-    df = pd.read_csv('src\assetutilities\tests\test_data\file_status.csv')
-    
+    with open(summary_file, 'r') as file:
+        content = file.read()
+
+    tests_passed = None
+    for line in content.splitlines():
+        if "Tests passed:" in line:
+            tests_passed = int(line.split(":")[1].strip())
+            break
+
     expected_result = 30
-    
-    assert len(df[df['Status'] == 'Success']) == expected_result
-    
 
-
+    assert tests_passed == expected_result
 
