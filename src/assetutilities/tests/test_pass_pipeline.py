@@ -4,7 +4,7 @@ def test_pass_pipeline():
 
     library = 'assetutilities'
     root_directory = f'src/{library}/tests/test_data'
-    summary_file = 'summary_output.txt'
+    summary_file = r'src\assetutilities\tests\yml_summary.txt'
 
     
     with open(summary_file, 'r') as file:
