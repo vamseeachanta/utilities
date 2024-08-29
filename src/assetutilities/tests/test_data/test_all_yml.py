@@ -14,6 +14,7 @@ def run_yaml_files(root_directory):
     folders = []
     filenames = []
     statuses = []
+    processed_files = set()
 
     for root, dirs, files in os.walk(root_directory):
         
@@ -24,9 +25,13 @@ def run_yaml_files(root_directory):
         for filename in files:
 
             if filename.endswith(('.yml', '.yaml')) and not filename.lower().startswith('app'):
+                
+                if filename in processed_files:
+                    continue
+                
                 file_path = os.path.join(root, filename)
                 try:
-                    result = subprocess.run(['python', '-m', 'assetutilities', file_path], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    result = subprocess.run(['python', '-m', library, file_path], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     print(result.stdout.decode())
                     folders.append(os.path.relpath(root, root_directory))  
                     filenames.append(filename)
@@ -36,6 +41,8 @@ def run_yaml_files(root_directory):
                     folders.append(os.path.relpath(root, root_directory)) 
                     filenames.append(filename)
                     statuses.append('Failed')
+
+                processed_files.add(filename)
 
         df = pd.DataFrame({'Folder': folders, 'Filename': filenames, 'Status': statuses})
 
