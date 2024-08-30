@@ -20,9 +20,6 @@ def get_module_path(module=None):
     module_info = imp.find_module(module)
     module_path = module_info[1]
     return module_path
-`
-
-`
 
 # Determine if file is valid
 def is_dir_valid_func(dir, analysis_root_folder=None):
