@@ -1,6 +1,10 @@
-import os
+# Standard library imports
 import itertools
+import os
 import shutil
+
+
+# Reader imports
 from assetutilities.common.utilities import is_file_valid_func
 
 
@@ -15,16 +19,21 @@ class FileConcatenate:
 
     def concatenate_files(self, cfg):
         if cfg["concatenate_type"] == "array":
-            self.concatenate_files_array(cfg)
+            cfg, batch_filename = self.concatenate_files_array(cfg)
         elif cfg["concatenate_type"] == "2d_array":
-            self.concatenate_files_2d_array(cfg)
+            cfg, batch_filename = self.concatenate_files_2d_array(cfg)
+
+        return cfg, batch_filename
 
     def concatenate_files_array(self, cfg):
 
+        output_filename_array = []
+        batch_filename_array = []
         for idx in range(0, len(cfg["input"])):
             input_set = cfg["input"][idx]
             output_files = {"ext": [], "no_ext": []}
             input_file_groups = input_set["input_files"]
+            input_idx_output_filename_array = []
             for input_file_group_indx in range(0, len(input_file_groups)):
                 input_file_group = input_file_groups[input_file_group_indx]
                 output_filename = (
@@ -32,6 +41,8 @@ class FileConcatenate:
                     + "_"
                     + input_set["input_file_labels"][input_file_group_indx]
                 )
+                input_idx_output_filename_array.append(output_filename)
+
                 output_dir = input_set.get("output_dir", None)
                 if output_dir is None:
                     output_dir = cfg["Analysis"]["analysis_root_folder"]
@@ -53,9 +64,14 @@ class FileConcatenate:
                     cfg, input_file_group, output_filename_path
                 )
 
-            self.prepare_custom_batch(cfg, input_set, idx, output_files)
+            output_filename_array.append(input_idx_output_filename_array)
+            batch_filename = self.prepare_custom_batch(cfg, input_set, idx, output_files)
+        
+        batch_filename_array.append(batch_filename)
 
-        return cfg
+        cfg[cfg['basename']] = {"output_filename": output_filename_array, 'batch_filename': batch_filename_array}
+
+        return cfg, batch_filename
 
     def concatenate_one_set(self, cfg, input_files, output_filename_path):
         analysis_root_folder = cfg["Analysis"]["analysis_root_folder"]
@@ -112,9 +128,9 @@ class FileConcatenate:
 
                 cfg = self.concatenate_one_set(cfg, file_array, output_filename_path)
 
-            self.prepare_custom_batch(input_set, output_files, cfg)
+            batch_filename = self.prepare_custom_batch(input_set, output_files, cfg)
 
-        return cfg
+        return cfg, batch_filename
 
     def prepare_custom_batch(self, cfg, input_set, idx, output_files):
         batch_cfg = input_set.get("batch", None)
@@ -134,3 +150,5 @@ class FileConcatenate:
                         the_file.write(
                             batch_cfg["content"] + " " + output_file_name + "\n"
                         )
+
+        return batch_filename

@@ -20,6 +20,10 @@ def get_module_path(module=None):
     module_info = imp.find_module(module)
     module_path = module_info[1]
     return module_path
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4a3ffca4ae72757bbfd947601e80fdacb7491972
 # Determine if file is valid
 def is_dir_valid_func(dir, analysis_root_folder=None):
     dir_is_valid = True
