@@ -18,8 +18,8 @@ def run_yaml_files(root_directory):
 
     for root, dirs, files in os.walk(root_directory):
         
-        # Skip files in the root directory
-        if root == root_directory:
+        # Skip files in the root directory and results subfolders
+        if root == root_directory or 'results' in root.split(os.sep):
             continue
         
         for filename in files:
