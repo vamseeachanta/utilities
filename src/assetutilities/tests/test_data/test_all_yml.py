@@ -62,7 +62,9 @@ def run_yaml_files(root_directory):
         f"Tests Failed: {tests_failed}\n"
     )
 
-    summary_file = 'yml_summary.txt'
+    os.makedirs(root_directory, exist_ok=True)
+
+    summary_file = os.path.join(root_directory, 'yml_summary.txt')
     with open(summary_file, 'w') as f:
         f.write(summary_output)
 
