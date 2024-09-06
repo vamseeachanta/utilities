@@ -172,11 +172,15 @@ class VisualizationXY:
                 fillstyle="none",
             )
 
+            label = None
+            if (isinstance(plt_settings["legend"]["label"], list) and len(plt_settings["legend"]["label"]) > index):
+                label = plt_settings["legend"]["label"][index]
+
             if "line" in plot_mode and "scatter" in plot_mode:
                 ax.plot(
                     df["x_" + str(index)],
                     df["y_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     alpha=alpha_list[index],
                     **marker_style,
                 )
@@ -184,7 +188,7 @@ class VisualizationXY:
                 ax.plot(
                     df["x_" + str(index)],
                     df["y_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label= label,
                     color=color_list[index],
                     linestyle=linestyle_list[index],
                     alpha=alpha_list[index],
@@ -194,7 +198,7 @@ class VisualizationXY:
                 ax.scatter(
                     df["x_" + str(index)],
                     df["y_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     color=color_list[index],
                     edgecolors=color_list[index],
                     facecolors="none",

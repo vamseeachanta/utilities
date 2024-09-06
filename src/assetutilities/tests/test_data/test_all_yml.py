@@ -18,8 +18,8 @@ def run_yaml_files(root_directory):
 
     for root, dirs, files in os.walk(root_directory):
         
-        # Skip files in the root directory
-        if root == root_directory:
+        # Skip files in the root directory and results subfolders
+        if root == root_directory or 'results' in root.split(os.sep):
             continue
         
         for filename in files:
@@ -62,7 +62,9 @@ def run_yaml_files(root_directory):
         f"Tests Failed: {tests_failed}\n"
     )
 
-    summary_file = 'yml_summary.txt'
+    os.makedirs(root_directory, exist_ok=True)
+
+    summary_file = os.path.join(root_directory, 'yml_summary.txt')
     with open(summary_file, 'w') as f:
         f.write(summary_output)
 
