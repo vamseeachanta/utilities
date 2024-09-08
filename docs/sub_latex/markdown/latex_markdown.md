@@ -27,3 +27,5 @@ Other References:
 <https://github.blog/news-insights/product-news/math-support-in-markdown/>
 
 <https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions>
+
+<https://pypi.org/project/markdown-pdf/>
