@@ -216,6 +216,8 @@ class VisualizationXY:
         suptitle = plt_settings.get("suptitle", None)
         if suptitle is not None:
             fig.suptitle(suptitle)
+        if cfg['settings']['xlabel'] == "Date" or cfg['settings']['ylabel'] == "Date":
+            fig.autofmt_xdate()
 
         legend_settings = plt_settings.get("legend", None)
         legend_flag = legend_settings.get("flag", True)
@@ -237,8 +239,8 @@ class VisualizationXY:
         )
         ax.label_outer()
 
-        plt = visualization_common.add_x_y_lim_formats(cfg, plt)
-        
+        plt = visualization_common.add_x_y_lim_formats(cfg, plt)    
+
         plt_properties = {"plt": plt, "fig": fig, 'ax': ax}
         return plt_properties
 
