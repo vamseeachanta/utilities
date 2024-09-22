@@ -29,9 +29,6 @@ class VisualizationComponents:
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
         else:
             raise (Exception("Other plots coding to be completed ... FAIL"))
-
-        #TODO This is the place where we can place the add picture code.
-
         
         logging.info("Starting visualization application ...")
 
