@@ -8,9 +8,6 @@ from assetutilities.common.visualization.visualization_xy import VisualizationXY
 
 
 class VisualizationComponents:
-    # https://plot.ly/python/v3/fft-filters/
-    # http://scipy-lectures.org/intro/scipy/auto_examples/plot_fftpack.html
-    # https://dsp.stackexchange.com/questions/724/low-pass-filter-and-fft-for-beginners-with-python
 
     def __init__(self, cfg=None):
         self.cfg = cfg

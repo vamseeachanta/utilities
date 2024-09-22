@@ -313,11 +313,9 @@ class VisualizationCommon:
 
         plot_count_dict = self.get_plot_count_array_for_df(cfg)
         cfg["settings"]["color"] = self.get_plot_colors_for_df(plot_count_dict, cfg)
-        cfg["settings"]["linestyle"] = self.get_plot_linestyle_for_df(plot_count_dict)
-        cfg["settings"]["markerprops"] = self.get_plot_markerprops_for_df(
-            plot_count_dict
-        )
-        cfg["settings"]["alpha"] = self.get_plot_alpha_for_df(plot_count_dict)
+        cfg["settings"]["linestyle"] = self.get_plot_linestyle_for_df(cfg, plot_count_dict)
+        cfg["settings"]["markerprops"] = self.get_plot_markerprops_for_df(cfg, plot_count_dict)
+        cfg["settings"]["alpha"] = self.get_plot_alpha_for_df(cfg, plot_count_dict)
 
         return cfg
 
@@ -355,8 +353,6 @@ class VisualizationCommon:
 
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
         if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
             repeat_flag = False
 
@@ -370,7 +366,7 @@ class VisualizationCommon:
 
         return color_list
 
-    def get_plot_linestyle_for_df(self, plot_count_dict, key="linestyle"):
+    def get_plot_linestyle_for_df(self, cfg, plot_count_dict, key="linestyle"):
 
         default_linestyle_list = ["-", "--", "-.", ":"]
         x_count_array = plot_count_dict["x_count_array"]
@@ -378,8 +374,8 @@ class VisualizationCommon:
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         linestyle_list = []
         if repeat_flag:
@@ -388,11 +384,14 @@ class VisualizationCommon:
             ):
                 linestyle_list = linestyle_list + [linestyle_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, linestyle_item in zip(
+                plot_count_array, default_linestyle_list
+            ):
+                linestyle_list = linestyle_list + [default_linestyle_list[0]] * plot_count
 
         return linestyle_list
 
-    def get_plot_markerprops_for_df(self, plot_count_dict, key="marker"):
+    def get_plot_markerprops_for_df(self, cfg, plot_count_dict, key="marker"):
 
         default_marker_list = [
             "o",
@@ -411,21 +410,20 @@ class VisualizationCommon:
             "P",
             "X",
         ]
-        default_markersize_list = [4, 5, 6, 7]
+        default_markersize_list = [2, 2, 2, 2]
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # x_count_array = plot_count_dict['x_count_array']
-        # y_count_array = plot_count_dict['y_count_array']
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         marker_list = []
         if repeat_flag:
             for plot_count, marker_item in zip(plot_count_array, default_marker_list):
                 marker_list = marker_list + [marker_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, marker_item in zip(plot_count_array, default_marker_list):
+                marker_list = marker_list + [None] * plot_count
 
         markersize_list = []
         if repeat_flag:
@@ -434,7 +432,10 @@ class VisualizationCommon:
             ):
                 markersize_list = markersize_list + [markersize_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, markersize_item in zip(
+                plot_count_array, default_markersize_list
+            ):
+                markersize_list = markersize_list + [None] * plot_count
 
         markerprops_list = []
         for marker, markersize in zip(marker_list, markersize_list):
@@ -442,7 +443,7 @@ class VisualizationCommon:
 
         return markerprops_list
 
-    def get_plot_alpha_for_df(self, plot_count_dict, key="alpha"):
+    def get_plot_alpha_for_df(self, cfg, plot_count_dict, key="alpha"):
 
         default_alpha_list = [round(1 - n * 0.05, 2) for n in range(0, 10)]
         x_count_array = plot_count_dict["x_count_array"]
@@ -450,14 +451,15 @@ class VisualizationCommon:
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         alpha_list = []
         if repeat_flag:
             for plot_count, alpha_item in zip(plot_count_array, default_alpha_list):
                 alpha_list = alpha_list + [alpha_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, alpha_item in zip(plot_count_array, default_alpha_list):
+                alpha_list = alpha_list + [default_alpha_list[0]] * plot_count
 
         return alpha_list
