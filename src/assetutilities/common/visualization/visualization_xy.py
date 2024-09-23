@@ -216,8 +216,8 @@ class VisualizationXY:
         suptitle = plt_settings.get("suptitle", None)
         if suptitle is not None:
             fig.suptitle(suptitle)
-        if cfg['settings']['xlabel'] == "Date" or cfg['settings']['ylabel'] == "Date":
-            fig.autofmt_xdate()
+        # if cfg['settings']['xlabel'] == "Date" or cfg['settings']['ylabel'] == "Date":
+        #     fig.autofmt_xdate()
 
         legend_settings = plt_settings.get("legend", None)
         legend_flag = legend_settings.get("flag", True)
@@ -239,7 +239,16 @@ class VisualizationXY:
         )
         ax.label_outer()
 
-        plt = visualization_common.add_x_y_lim_formats(cfg, plt)    
+        plt = visualization_common.add_x_y_lim_formats(cfg, plt) 
+
+        import matplotlib.dates as mdates # noqa
+
+        if cfg['settings']['xlabel'] == "date" or cfg['settings']['xlabel'] == "Date":
+            ax.xaxis.set_major_locator(mdates.DayLocator(interval=2)) # sets interval of 2 days
+
+            plt.xticks(rotation=45) # rotates x-axis labels
+            fig.autofmt_xdate() # auto formats x-axis date
+               
 
         plt_properties = {"plt": plt, "fig": fig, 'ax': ax}
         return plt_properties
