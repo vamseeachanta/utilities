@@ -41,7 +41,7 @@ def solve_function(cfg, f, y):
     Solve function
     '''
     y_solution = sp.solvers.solve(f, y)
-    
+
     md_text = 'Solution to the above quadratic equation is:\n'
     cfg['md'].append(md_text)
     md_text = f'$${sp.latex(y_solution)}$$'
@@ -57,7 +57,7 @@ filename_stem = Path(__file__).stem
 filename_md = os.path.join(current_directory, filename_stem + ".md")
 filename_pdf = os.path.join(current_directory, filename_stem + ".pdf")
 
-out_file = open(filename_md,"w")
+out_file = open(filename_md, "w")
 for line in cfg['md']:
     out_file.write(line)
 out_file.close()
