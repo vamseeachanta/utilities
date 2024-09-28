@@ -5,12 +5,15 @@ import math
 # Third party imports
 import matplotlib.pyplot as plt  # noqa
 import pandas as pd  # noqa
+from colorama import Fore, Style
+from colorama import init as colorama_init
 
 # Reader imports
 from assetutilities.common.data_management import DataManagement
 from assetutilities.common.utilities import is_file_valid_func
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
 
+colorama_init()
 dm = DataManagement()
 visualization_common = VisualizationCommon()
 
@@ -82,36 +85,39 @@ class VisualizationXY:
                 group_cfg["file_name"], analysis_root_folder
             )
             if not file_is_valid:
-                raise ValueError(f'Invalid file name/path: {group_cfg["file_name"]}')
+                logging.error(FileNotFoundError(f'Invalid file name/path: {group_cfg["file_name"]}'))
+                logging.error(f'Please check the file name/path in the input file: {group_cfg["file_name"]}' )
+                logging.error(f'Program {Fore.RED}continues to run ...{Style.RESET_ALL}')
 
-            df = pd.read_csv(valid_file)
-            df = dm.get_filtered_df(group_cfg, df)
-            df = dm.get_transformed_df(group_cfg, df)
-            x_data_dict = df[group_cfg["columns"]["x"]].to_dict("list")
-            y_data_dict = df[group_cfg["columns"]["y"]].to_dict("list")
-
-            x_legend_array = []
-            y_legend_array = []
-
-            for x_column in group_cfg["columns"]["x"]:
-                x_data = x_data_dict[x_column]
-                x_data_array = x_data_array + [x_data]
-
-                legend_label = group_cfg["label"] + ", " + x_column
-                x_legend_array.append(legend_label)
-
-            for y_column in group_cfg["columns"]["y"]:
-                y_data = y_data_dict[y_column]
-                y_data_array = y_data_array + [y_data]
-
-                legend_label = group_cfg["label"] + ", " + y_column
-                y_legend_array.append(legend_label)
-
-            # Consolidate x and y data
-            if len(group_cfg["columns"]["x"]) <= len(group_cfg["columns"]["y"]):
-                legend_data = legend_data + y_legend_array
             else:
-                legend_data = legend_data + x_legend_array
+                df = pd.read_csv(valid_file)
+                df = dm.get_filtered_df(group_cfg, df)
+                df = dm.get_transformed_df(group_cfg, df)
+                x_data_dict = df[group_cfg["columns"]["x"]].to_dict("list")
+                y_data_dict = df[group_cfg["columns"]["y"]].to_dict("list")
+
+                x_legend_array = []
+                y_legend_array = []
+
+                for x_column in group_cfg["columns"]["x"]:
+                    x_data = x_data_dict[x_column]
+                    x_data_array = x_data_array + [x_data]
+
+                    legend_label = group_cfg["label"] + ", " + x_column
+                    x_legend_array.append(legend_label)
+
+                for y_column in group_cfg["columns"]["y"]:
+                    y_data = y_data_dict[y_column]
+                    y_data_array = y_data_array + [y_data]
+
+                    legend_label = group_cfg["label"] + ", " + y_column
+                    y_legend_array.append(legend_label)
+
+                # Consolidate x and y data
+                if len(group_cfg["columns"]["x"]) <= len(group_cfg["columns"]["y"]):
+                    legend_data = legend_data + y_legend_array
+                else:
+                    legend_data = legend_data + x_legend_array
 
         if len(cfg["settings"]["legend"]["label"]) == len(legend_data):
             legend_data = cfg["settings"]["legend"]["label"]
@@ -241,7 +247,8 @@ class VisualizationXY:
 
         plt = visualization_common.add_x_y_lim_formats(cfg, plt) 
 
-        import matplotlib.dates as mdates # noqa
+        # Third party imports
+        import matplotlib.dates as mdates  # noqa
 
         if cfg['settings']['xlabel'] == "date" or cfg['settings']['xlabel'] == "Date":
             ax.xaxis.set_major_locator(mdates.DayLocator(interval=2)) # sets interval of 2 days
