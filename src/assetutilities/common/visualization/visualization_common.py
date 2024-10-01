@@ -445,7 +445,7 @@ class VisualizationCommon:
 
     def get_plot_alpha_for_df(self, cfg, plot_count_dict, key="alpha"):
 
-        default_alpha_list = [round(1 - n * 0.05, 2) for n in range(0, 10)]
+        default_alpha_list = [round(1 - n * 0.05, 2) for n in range(0, 20)]
         x_count_array = plot_count_dict["x_count_array"]
         y_count_array = plot_count_dict["y_count_array"]
         plot_count_array = plot_count_dict["plot_count_array"]
