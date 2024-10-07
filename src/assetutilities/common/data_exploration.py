@@ -101,8 +101,8 @@ class DataExploration:
         df_columns = list(df.columns)
         df_column_data_types = []
         for column in df_columns:
-            print(f"Data type for '{column}' : {type(df[column].iloc[0])}")
-            print(f"First element for '{column}': {df[column].iloc[0]}")
+            logging.debug(f"Data type for '{column}' : {type(df[column].iloc[0])}")
+            logging.debug(f"First element for '{column}': {df[column].iloc[0]}")
 
             column_data_type = None
             if is_numeric_dtype(df[column]):
@@ -124,7 +124,7 @@ class DataExploration:
                 column_data_type = "datetime"
 
             df_column_data_types.append(column_data_type)
-            print(f"Data type array is :{df_column_data_types}")
+            logging.debug(f"Data type array is :{df_column_data_types}")
 
         return df_column_data_types
 
