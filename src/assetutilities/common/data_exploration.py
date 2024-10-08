@@ -2,6 +2,7 @@
 import datetime
 import logging
 import os
+import copy
 
 # Third party imports
 import pandas as pd
@@ -191,7 +192,7 @@ class DataExploration:
             for group_index in range(0, len(data_settings["groups"])):
                 group = data_settings["groups"][group_index].copy()
                 group = update_deep_dictionary(master_settings["groups"], group)
-                data_settings["groups"][group_index] = group.copy()
+                data_settings["groups"][group_index] = copy.deepcopy(group)
 
         return cfg
 
