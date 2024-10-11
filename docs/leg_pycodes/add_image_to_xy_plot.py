@@ -23,7 +23,7 @@ def add_image_to_plot(image_path, x_min, x_max, y_min, y_max, alpha):
     plt.plot(x2, y2, label='Line 2', marker='o')
 
     plt.legend()
-    plt.show()
+    plt.savefig('docs/leg_pycodes/add_image_to_xy_plot.png')
 
 image_path = r'C:\github\assetutilities\docs\leg_pycodes\image_for_plot.png'
 x_min, x_max = 10, 2

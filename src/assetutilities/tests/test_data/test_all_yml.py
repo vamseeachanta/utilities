@@ -48,7 +48,7 @@ def run_yaml_files(root_directory):
 
         df = df.sort_values(by=['Status', 'Folder'], ascending=[False, True])
 
-        output_csv = os.path.join(root_directory, 'file_status.csv')
+        output_csv = os.path.join(root_directory, 'all_yml_status.csv')
         df.to_csv(output_csv, index=False)
 
     no_of_files = len(filenames)
@@ -74,7 +74,7 @@ def run_yaml_files(root_directory):
     print(f"Tests passed: {Fore.GREEN}{len(df[df['Status'] == 'Success'])}{Style.RESET_ALL}")
 
     print(f"Tests Failed: {Fore.RED}{len(df[df['Status'] == 'Failed'])}{Style.RESET_ALL}")
-    print('Done!')
+    print('Done !')
 
 
 if __name__ == '__main__':
