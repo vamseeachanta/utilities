@@ -14,6 +14,10 @@ API tools to get data from websites. Web Scraping etc.
 
 <https://youtu.be/lOzyQgv71_4> Tech With Tim
 
+## ASPX pages
+
+It is an aspx and therefore hard to crack the rest of the endpoint responsible for getting the data.  I assume behinds the scenes they would be making either a SOAP or REST call to get that data.  If we know who the vendor is that's the route you should go.  
+
 ### Example AI Journal
 
 <code>
