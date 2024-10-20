@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 dynamic = ["dependencies"]
+
 name = "assetutilities"
 version = "0.0.5"
 description = "utilities for general use"
