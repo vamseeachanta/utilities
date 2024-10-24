@@ -6,13 +6,19 @@ API tools to get data from websites. Web Scraping etc.
 
 ### Web Scrapping
 
-## Introduction
+### Summary
 
-<https://www.digitalocean.com/community/tutorials/how-to-work-with-web-data-using-requests-and-beautiful-soup-with-python-3>
+Packages explored:
 
-<https://automatetheboringstuff.com/chapter11/>
+- Scrapy
+- Beautiful Soup & requests
+- Selenium
 
-<https://youtu.be/lOzyQgv71_4> Tech With Tim
+| Package | Description | Advantages | Disadvantages | Rank | AceEngineer Notes |
+| --- | --- | --- | --- | --- | --- |
+| Scrapy | Web crawling and scraping framework | Scalable, flexible, extensive documentation <br> Maintainable Code | Steeper learning curve <br> tba | 2 | Trying a test run |
+| Beautiful Soup | HTML and XML parsing library | Simplicity, ease of use | Limited JavaScript support | 1 | Code devleoped |
+| Selenium | Browser automation tool | Handles dynamic content, complex (and manual) scenarios can be handled | Slower, requires browser <br> Large code to maintain | 3 | Code devleoped |
 
 ## ASPX pages
 
@@ -111,3 +117,12 @@ ParseHub Reviews
 ParseHub Usage in Startups
 Explanation: ParseHub is known for its ease of use and effectiveness in the startup community. It is recommended for its visual approach to data extraction.
 These recommendations are based on their popularity, community support, and endorsements from industry professionals.
+
+## References
+
+<https://www.digitalocean.com/community/tutorials/how-to-work-with-web-data-using-requests-and-beautiful-soup-with-python-3>
+
+<https://automatetheboringstuff.com/chapter11/>
+
+<https://youtu.be/lOzyQgv71_4> Tech With Tim
+
