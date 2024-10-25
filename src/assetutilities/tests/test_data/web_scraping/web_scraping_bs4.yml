@@ -1,0 +1,19 @@
+basename: web_scraping
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+web_scrape_engine: scrapy
+
+settings_master:
+  save_csv: True
+  url: https://www.data.bsee.gov/Well/APD/Default.aspx
+
+input:
+  - label: well_data_1
+    input_box:
+      label: ASPxFormLayout1$ASPxTextBoxAPI
+      value: 608164024500

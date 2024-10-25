@@ -37,6 +37,7 @@ dependencies:
       - poetry
       - gitpython==3.1.31
 
+      - scrapy
 
       # - openpyxl
       # - openpyxl-image-loader

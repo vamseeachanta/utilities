@@ -1,0 +1,43 @@
+# Third party imports
+import pandas as pd  # noqa
+import scrapy
+from scrapy import FormRequest
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.response import (  # noqa useful while program is running
+    open_in_browser,
+)
+
+
+class SipderScrapy(scrapy.Spider):
+
+    name = 'API_well_data'
+    start_urls = ['https://www.data.bsee.gov/Well/APD/Default.aspx']
+
+    def parse(self, response):
+        data = {
+            'ASPxFormLayout1$ASPxTextBoxAPI': '608164024500',
+            'ASPxFormLayout1$ASPxButtonSubmitQ': 'Submit Query'
+        }
+        yield FormRequest.from_response(response,formdata=data, callback=self.step2)
+
+    def step2(self, response):
+
+        data = {
+            'ASPxFormLayout1$ASPxTextBoxAPI': '608164024500',
+            '__EVENTTARGET': 'ASPxFormLayout2$btnCsvExport',
+            '__EVENTARGUMENT': 'Click'
+        }
+        yield FormRequest.from_response(response,formdata=data, callback=self.parse_csv_data)
+
+    def parse_csv_data(self, response): 
+        with open('downloaded_data.csv', 'wb') as f:
+            f.write(response.body)
+
+def run_spider():
+    process = CrawlerProcess()
+    process.crawl(SipderScrapy)
+    process.start()
+
+if __name__ == "__main__":
+    run_spider()
+

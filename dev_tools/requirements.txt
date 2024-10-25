@@ -26,12 +26,13 @@ black
 isort
 poetry
 
+scrapy
+
 gitpython==3.1.31
 
 
 excel2img; sys_platform == 'win32'
 
- 
 
 
 
