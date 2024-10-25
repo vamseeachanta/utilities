@@ -1,6 +1,6 @@
 # A class for scraping web pages. 
 # Class gives option to choose of the following methods:
-# 1. BeautifulSoup and Requests
+# 1. BeautifulSoup and requests
 # 2. Selenium
 # 3. Scrapy
 
