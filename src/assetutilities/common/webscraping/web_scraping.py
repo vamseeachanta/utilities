@@ -1,8 +1,7 @@
 # Third party imports
 # Reader imports
-from assetutilities.common.webscraping.scrapper_scrapy import SipderScrapy
+from assetutilities.common.webscraping.scrapper_scrapy import SpiderScrapy
 from assetutilities.common.webscraping.scrapper_bs4 import BS4Scrapper
-from scrapy.crawler import CrawlerProcess
 
 
 # A class for scraping web pages. 
@@ -11,8 +10,8 @@ from scrapy.crawler import CrawlerProcess
 # 2. Selenium
 # 3. Scrapy
 
-ss = SipderScrapy()
-bs4s = BS4Scrapper()
+ss = SpiderScrapy()
+bs4 = BS4Scrapper()
 
 class WebScraping:
     def __init__(self):
@@ -22,25 +21,11 @@ class WebScraping:
 
         web_scrape_engine = cfg['web_scrape_engine']
 
-        if web_scrape_engine == 'beautiful_soup':
-            return self.beautiful_soup()
+        if web_scrape_engine == 'bs4':
+            bs4.router(cfg)
+        elif web_scrape_engine == 'scrapy':
+            ss.router(cfg)
         elif web_scrape_engine == 'selenium':
             return self.selenium()
-        elif web_scrape_engine == 'scrapy':
-            return self.scrapy()
-
-        # Check data exists
-
-    def beautiful_soup(self):
-        bs4s.router()
-
-    def selenium(self):
-        pass
-
-    def scrapy(self):
-        process = CrawlerProcess()
-        process.crawl(SipderScrapy)
-        process.start()
-
 
 

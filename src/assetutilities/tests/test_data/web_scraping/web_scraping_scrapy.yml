@@ -15,5 +15,4 @@ settings_master:
 input:
   - label: well_data_1
     input_box:
-      label: ASPxFormLayout1$ASPxTextBoxAPI
       value: 608164024500
