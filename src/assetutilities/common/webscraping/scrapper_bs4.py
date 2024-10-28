@@ -1,10 +1,8 @@
 # Standard library imports
-import os
-from io import BytesIO
+import os #noqa
+from io import BytesIO #noqa
 
 import pandas as pd
-import requests
-from bs4 import BeautifulSoup
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore, Style
@@ -23,14 +21,15 @@ class BS4Scrapper:
         return cfg
     
     def input_data(self, cfg):
-
+        master_settings = cfg['input_settings']
         for input_item in cfg['input']:
+            input_item = {**master_settings, **input_item}
             self.get_data(cfg, input_item)
 
     def get_data(self, cfg, input_item):
 
         url = input_item['url']
-        API_number = input_item['well_api12']
+        API_number = input_item['input_box']['value']
 
         session = requests.Session()  
 
@@ -75,7 +74,7 @@ class BS4Scrapper:
         csv_response = session.post(url, data=csv_export_payload)
 
         label = input_item['label']
-        csv_path = os.path.join(r'src\energydata\tests\test_data\bsee\results\Data', f'{label}.csv')
+        csv_path = os.path.join(r'src\assetutilities\tests\test_data\web_scraping\results\Data', f'{label}.csv')
 
         if csv_response.status_code == 200:
             with open(csv_path, 'wb') as f:
