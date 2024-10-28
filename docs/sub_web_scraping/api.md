@@ -16,7 +16,7 @@ Packages explored:
 
 | Package | Description | Advantages | Disadvantages | Rank | AceEngineer Notes |
 | --- | --- | --- | --- | --- | --- |
-| Scrapy | Web crawling and scraping framework | Scalable, flexible, extensive documentation <br> Maintainable Code | Steeper learning curve <br> tba | 1 | Trying a test run |
+| Scrapy | Web crawling and scraping framework | Scalable, flexible, extensive documentation <br> Maintainable Code | Steeper learning curve <br> tba | 1 | Code developed|
 | Beautiful Soup | HTML and XML parsing library | Simplicity, ease of use | Limited JavaScript support | 2 | Code devleoped |
 | Selenium | Browser automation tool | Handles dynamic content, complex (and manual) scenarios can be handled | Slower, requires browser <br> Large code to maintain | 3 | Code devleoped |
 
