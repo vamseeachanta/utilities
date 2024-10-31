@@ -2,7 +2,6 @@ Detailed output:               Folder                                           
 0   data_exploration                                  df_statistics.yml  Success
 1   data_exploration                  df_statistics_file_management.yml  Success
 5    excel_utilities             excel_utilities_custom_calculation.yml  Success
-6    excel_utilities                 excel_utilities_excel_to_image.yml  Success
 7          file_edit                                      file_edit.yml  Success
 9          file_edit                    file_edit_concatenate_array.yml  Success
 10         file_edit                                file_edit_split.yml  Success
@@ -30,20 +29,23 @@ Detailed output:               Folder                                           
 34     visualization                          xy_line_csv_df_filter.yml  Success
 35     visualization                         xy_line_matplotlib_csv.yml  Success
 36     visualization                       xy_scatter_csv_df_filter.yml  Success
-38    word_utilities                      word_utilities_df_to_docx.yml  Success
+40    word_utilities                      word_utilities_df_to_docx.yml  Success
 2           edit_pdf                                 edit_large_pdf.yml   Failed
 3           edit_pdf                               edit_large_pdf_1.yml   Failed
 4    excel_utilities  excel_utilities_cross_reference_closed_workboo...   Failed
+6    excel_utilities                 excel_utilities_excel_to_image.yml   Failed
 8          file_edit                 file_edit_concatenate_2d_array.yml   Failed
 31     visualization        visualization_polar_normal_lay_forecast.yml   Failed
 32     visualization                     visualization_polar_plotly.yml   Failed
-37    word_utilities                                 word_utilities.yml   Failed
-39    word_utilities                   word_utilities_search_string.yml   Failed
-40               yml                                     SZ_trim_QA.yml   Failed
-41               yml                                     SZ_trim_VA.yml   Failed
-42               yml                     wwyaml_SZ_trim_VA_QA_items.yml   Failed
-43               yml            wwyaml_SZ_trim_VA_QA_updated_values.yml   Failed
-44               yml            wwyaml_SZ_trim_VA_QA_values_changed.yml   Failed
-No. of files processed: 45
-Tests passed: 32
-Tests Failed: 13
+37      web_scraping                               web_scraping_bs4.yml   Failed
+38      web_scraping                            web_scraping_scrapy.yml   Failed
+39    word_utilities                                 word_utilities.yml   Failed
+41    word_utilities                   word_utilities_search_string.yml   Failed
+42               yml                                     SZ_trim_QA.yml   Failed
+43               yml                                     SZ_trim_VA.yml   Failed
+44               yml                     wwyaml_SZ_trim_VA_QA_items.yml   Failed
+45               yml            wwyaml_SZ_trim_VA_QA_updated_values.yml   Failed
+46               yml            wwyaml_SZ_trim_VA_QA_values_changed.yml   Failed
+No. of files processed: 47
+Tests passed: 31
+Tests Failed: 16

@@ -2,7 +2,6 @@ Folder,Filename,Status
 data_exploration,df_statistics.yml,Success
 data_exploration,df_statistics_file_management.yml,Success
 excel_utilities,excel_utilities_custom_calculation.yml,Success
-excel_utilities,excel_utilities_excel_to_image.yml,Success
 file_edit,file_edit.yml,Success
 file_edit,file_edit_concatenate_array.yml,Success
 file_edit,file_edit_split.yml,Success
@@ -34,9 +33,12 @@ word_utilities,word_utilities_df_to_docx.yml,Success
 edit_pdf,edit_large_pdf.yml,Failed
 edit_pdf,edit_large_pdf_1.yml,Failed
 excel_utilities,excel_utilities_cross_reference_closed_workbook.yml,Failed
+excel_utilities,excel_utilities_excel_to_image.yml,Failed
 file_edit,file_edit_concatenate_2d_array.yml,Failed
 visualization,visualization_polar_normal_lay_forecast.yml,Failed
 visualization,visualization_polar_plotly.yml,Failed
+web_scraping,web_scraping_bs4.yml,Failed
+web_scraping,web_scraping_scrapy.yml,Failed
 word_utilities,word_utilities.yml,Failed
 word_utilities,word_utilities_search_string.yml,Failed
 yml,SZ_trim_QA.yml,Failed
