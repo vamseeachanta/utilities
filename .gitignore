@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# donot include developer private stuff. 
+.dev-private/* 
