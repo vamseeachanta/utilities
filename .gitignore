@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # donot include developer private stuff. 
-.dev-private/* 
+_dev-private/* 
+_dashboards/*

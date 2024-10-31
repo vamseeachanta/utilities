@@ -26,11 +26,12 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
 ```
 - **dependencies** ``pip install -r dev_tools/requirements.txt``
-  - [ ] #todo #13_siva_AceEngineer #ae_au review and clean up un-necessary requirements 
+  - [x] #todo #13_siva_AceEngineer #ae_au review and clean up un-necessary requirements ✅ 2024-10-31
   - [ ] #todo #13_siva_AceEngineer #ae_au figure out a way to give copilot a set of tasks and have it reliably take those actions in the context provided (that current file, or full code base . have it confirm before making edits or changes)
   - [ ] #todo #13_siva_AceEngineer #ae_au research then move this up to project root.
-  - [ ] #todo #13_siva_AceEngineer #ae_au discuss with undi. choose either conda or pip. not both. 
-    - [ ] #todo #13_siva_AceEngineer #ae_au conda if we will manage more than python packages. 
+  - [x] #todo #13_siva_AceEngineer #ae_au discuss with undi. choose either conda or pip. not both. ✅ 2024-10-31
+	- [ ] undi is clear he needs both conda and pip. 
+    - [x] #todo #13_siva_AceEngineer #ae_au conda if we will manage more than python packages. ✅ 2024-10-31
   
 - **run a script**
   - [ ] run a script, python path/to/script.py
