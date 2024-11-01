@@ -87,5 +87,6 @@ exclude = '''
   | buck-out
   | build
   | dist
+  | _dev_private
 )/
 '''
