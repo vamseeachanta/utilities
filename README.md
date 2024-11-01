@@ -19,6 +19,19 @@ This project provides utilities for automating day-to-day business tasks. It inc
 
 - **Installations** 
     - Python Installation: Ensure Python 3.11 is installed
+    - ? install : pip module in python 
+    - ? install : pip build submodule ?
+    - ? install : conda ? 
+    - ? env setup : venv or conda to develop the package ? 
+    - ? twine to publish? 
+      - is publishing to PyPI being done manually ? 
+      - if so, script it. add to dev_tools folder. 
+      - we can remove dev_tools from uploaded distribution 
+    - how do we formalize these ? into whats needed for 
+      - someone just using the binary dist (wheel?) 
+      - someone who will build and use locally (sdist?)
+      - someone who will just build , use locally and check-in as well 
+      - someone who will then package and publish both binary and sdist to PyPI? 
     - upgrade pip if needed ``python.exe -m pip install --upgrade pip``
 - **Virtual Environment**: 
 ```sh
