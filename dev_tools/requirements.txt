@@ -24,7 +24,7 @@ python-docx
 
 black
 isort
-poetry
+# poetry # why do we need poetry here? we are not using it anywhere. we use setup tools instead now.
 
 scrapy
 
