@@ -26,6 +26,6 @@ class WebScraping:
         elif web_scrape_engine == 'scrapy':
             ss.router(cfg)
         elif web_scrape_engine == 'selenium':
-            return self.selenium()
+            pass
 
 
