@@ -1,0 +1,17 @@
+basename: downloading_data
+
+default:
+  log_level: INFO
+  config:
+    overwrite:
+      output: True
+
+type:
+
+input_data:
+  urls:
+    url1: https://www.data.bsee.gov/Well/Files/APDRawData.zip
+    url2: https://www.data.bsee.gov/Well/Files/BoreholeRawData.zip
+  out_directory: src\assetutilities\tests\test_data\downloading_data\results\Data
+
+     
