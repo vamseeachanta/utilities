@@ -3,7 +3,7 @@ import zipfile
 import io
 import pandas as pd
 import os
-#from urllib.parse import urlparse
+from urllib.parse import urlparse
 
 class DownloadingDataFromURL:
     
@@ -19,6 +19,7 @@ class DownloadingDataFromURL:
     
     def download_and_process_zip(self, url ,cfg):
 
+        base_name = os.path.basename(urlparse(url).path).replace('.zip', '')
         r = requests.get(url)
         r.raise_for_status()  # Check if the download was successful
 
@@ -31,7 +32,7 @@ class DownloadingDataFromURL:
         for file in extracted_files:
             if file.endswith('/'):
                 continue
-            csv_filename = os.path.splitext(os.path.basename(file))[0]+'.csv'
+            csv_filename = f"{base_name}_{os.path.splitext(os.path.basename(file))[0]}"+'.csv'
             with z.open(file) as file:   
                 try:
                     df = pd.read_csv(file, sep=',', encoding='ISO-8859-1', low_memory=False, nrows=100)
