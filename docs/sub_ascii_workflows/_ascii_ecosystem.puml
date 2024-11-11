@@ -32,6 +32,9 @@ title ASCII EcoSystem
 *** VS Code Settings Sync  \nwork env in multiple computers
 *** VS Code Settings \nto execute scripts
 
+** Programming - Shell Scripting
+*** Git Bash  \nWorks in Linux, Windows
+
 footer
 %date("yyyy.MM.dd' at 'HH:mm")
 %filename()
