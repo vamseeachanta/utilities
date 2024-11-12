@@ -3,13 +3,6 @@
 from assetutilities.common.webscraping.scrapper_scrapy import SpiderScrapy
 from assetutilities.common.webscraping.scrapper_bs4 import BS4Scrapper
 
-
-# A class for scraping web pages. 
-# Class gives option to choose of the following methods:
-# 1. BeautifulSoup and requests
-# 2. Selenium
-# 3. Scrapy
-
 ss = SpiderScrapy()
 bs4 = BS4Scrapper()
 
