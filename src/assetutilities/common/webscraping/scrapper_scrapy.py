@@ -34,8 +34,10 @@ class SpiderScrapy(scrapy.Spider):
         }
 
         process = CrawlerProcess(settings=settings)
-
+ 
+        master_settings = cfg['input_settings']
         for input_item in cfg['input']:
+            input_item = {**master_settings, **input_item}
             process.crawl(SpiderScrapy, input_item=input_item, cfg=cfg)
 
         process.start()
@@ -67,7 +69,8 @@ class SpiderScrapy(scrapy.Spider):
     def parse_csv_data(self, response): 
         label = self.input_item['label']
         API_number = self.input_item['input_box']['value']
-        file_path = os.path.join(r'src\assetutilities\tests\test_data\web_scraping\results\Data', f'{label}.csv')
+        output_path = self.input_item['output_dir']
+        file_path = os.path.join(output_path, f"{label}.csv")
 
         if response.status == 200:
             with open(file_path, 'wb') as f:

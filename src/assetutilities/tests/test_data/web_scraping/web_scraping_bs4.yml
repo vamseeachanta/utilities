@@ -11,6 +11,7 @@ web_scrape_engine: bs4
 input_settings:
   save_csv: True
   url: https://www.data.bsee.gov/Well/APD/Default.aspx
+  output_dir: src\assetutilities\tests\test_data\web_scraping\results\Data
 
 input:
   - label: well_data_1

@@ -9,10 +9,11 @@ class DownloadingDataFromURL:
     
     def __init__(self):
         pass
-    
+
     def router(self,cfg):
         
         urls = cfg['input_data']['urls']
+        
         for url in urls.values():
             self.download_and_process_zip(url ,cfg)
 

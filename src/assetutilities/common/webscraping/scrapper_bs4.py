@@ -74,7 +74,8 @@ class BS4Scrapper:
         csv_response = session.post(url, data=csv_export_payload)
 
         label = input_item['label']
-        csv_path = os.path.join(r'src\assetutilities\tests\test_data\web_scraping\results\Data', f'{label}.csv')
+        output_path = input_item['output_dir']
+        csv_path = os.path.join(output_path, f"{label}.csv")
 
         if csv_response.status_code == 200:
             with open(csv_path, 'wb') as f:
