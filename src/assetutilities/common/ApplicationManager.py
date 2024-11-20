@@ -197,12 +197,15 @@ class ConfigureApplicationInputs:
         if not os.path.isfile(self.ApplicationInputFile):
             try:
                 self.ApplicationInputFile = (
-                    "tests/test_data/" + self.basename + "/" + self.basename + ".yml"
+                    "base_configs/" + self.basename + "/" + self.basename + ".yml"
                 )
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
-            except:
-                self.ApplicationInputFile = "tests/test_data/" + self.basename + ".yml"
-                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
+            except Exception:
+                raise FileNotFoundError(
+                    "Application input file {0} not found".format(
+                        self.ApplicationInputFile
+                    )
+                )
             self.ApplicationInputFile_dict = yaml.safe_load(data)
 
         # Get updated configuration file for Analysis
