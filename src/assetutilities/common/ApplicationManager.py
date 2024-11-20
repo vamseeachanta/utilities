@@ -196,9 +196,8 @@ class ConfigureApplicationInputs:
         self.get_custom_file()
         if not os.path.isfile(self.ApplicationInputFile):
             try:
-                self.ApplicationInputFile = (
-                    "base_configs/" + self.basename + "/" + self.basename + ".yml"
-                )
+                filename = os.path.join('base_configs', 'modules', self.basename, self.basename + '.yml')
+                self.ApplicationInputFile = filename
                 data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             except Exception:
                 raise FileNotFoundError(
