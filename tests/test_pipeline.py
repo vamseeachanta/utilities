@@ -2,9 +2,9 @@ import os
 
 def test_pass_pipeline():
 
-    library = 'assetutilities'
-    root_directory = f'src/{library}/tests/test_data'
-    summary_file = f'src/{library}/tests/test_data/yml_summary.txt'
+    #library = 'assetutilities'
+    root_directory = 'tests'
+    summary_file = 'tests/yml_summary.txt'
 
     
     with open(summary_file, 'r') as file:
