@@ -1,4 +1,4 @@
-import os
+#import os
 
 def test_pass_pipeline():
 
@@ -19,4 +19,6 @@ def test_pass_pipeline():
     expected_result = 28
 
     assert tests_passed == expected_result
+
+test_pass_pipeline()
 
