@@ -14,9 +14,9 @@ from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.webscraping.web_scraping import WebScraping
+from assetutilities.common.download_data.dwnld_from_zipurl import DownloadingDataFromURL
 from assetutilities.common.yml_utilities import ymlInput
-from assetutilities.tools.pdf.edit_pdf import EditPDF
-from assetutilities.tools.pdf.read_pdf import ReadPDF
+
 library_name = "assetutilities"
 
 de = DataExploration()
@@ -53,18 +53,18 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif basename in ["visualization"]:
         viz_comp = VisualizationComponents()
         viz_comp.visualization_router(cfg_base)
-    elif basename in ["read_pdf"]:
-        read_pdf = ReadPDF()
-        read_pdf.read_pdf(cfg_base)
+    # elif basename in ["read_pdf"]:
+    #     read_pdf = ReadPDF()
+    #     read_pdf.read_pdf(cfg_base)
     elif basename in ["file_management"]:
         fm = FileManagement()
         fm.router(cfg_base)
     elif basename in ["file_edit"]:
         fe = FileEdit()
         fe.router(cfg_base)
-    elif basename in ["edit_pdf"]:
-        edit_pdf = EditPDF()
-        edit_pdf.edit_pdf(cfg_base)
+    # elif basename in ["edit_pdf"]:
+    #     edit_pdf = EditPDF()
+    #     edit_pdf.edit_pdf(cfg_base)
     elif basename in ["gitpython"]:
         # Reader imports
         from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
@@ -85,6 +85,10 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif cfg["basename"] == "web_scraping":
         ws = WebScraping()
         cfg_base = ws.router(cfg_base)
+        
+    elif cfg["basename"] == "download_data":
+        ddfu = DownloadingDataFromURL()
+        cfg_base = ddfu.router(cfg_base)
 
     else:
         raise (Exception(f"Analysis for basename: {basename} not found. ... FAIL"))

@@ -8,8 +8,14 @@ from scrapy.utils.response import (  # noqa useful while program is running
 )
 import os #noqa
 from io import BytesIO #noqa
+import logging #noqa
 
+from colorama import Fore, Style
+from colorama import init as colorama_init
 
+colorama_init()
+
+logging.getLogger('scrapy').propagate = False
 class SpiderScrapy(scrapy.Spider):
 
     name = 'API_well_data'
@@ -22,42 +28,48 @@ class SpiderScrapy(scrapy.Spider):
 
     def router(self, cfg):
 
-        process = CrawlerProcess()
+        settings = {
+            'LOG_LEVEL': 'CRITICAL',
+            'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7'
+        }
 
+        process = CrawlerProcess(settings=settings)
+ 
+        input_settings = cfg['input_settings']
         for input_item in cfg['input']:
+            input_item = {**input_settings, **input_item}
             process.crawl(SpiderScrapy, input_item=input_item, cfg=cfg)
 
         process.start()
 
     def parse(self, response):
-        api_value = self.input_item['input_box']['value']
-        api_value = str(api_value)
-        data = {
-            'ASPxFormLayout1$ASPxTextBoxAPI': api_value,
-            'ASPxFormLayout1$ASPxButtonSubmitQ': 'Submit Query'
-        }
-        yield FormRequest.from_response(response,formdata=data, callback=self.step2)
+        
+        first_request_data = self.cfg['form_data']['first_request']
+
+        yield FormRequest.from_response(response,formdata=first_request_data, callback=self.step2)
 
     def step2(self, response):
+        if response.status == 200:
+            print(f"{Fore.GREEN} submitted given form data successfully!{Style.RESET_ALL}")
+        else:
+            print(f"{Fore.RED}Failed to submit the form data {Style.RESET_ALL}. Status code: {response.status}") 
 
-        api_value = self.input_item['input_box']['value']
-        api_value = str(api_value)
-        data = {
-            'ASPxFormLayout1$ASPxTextBoxAPI': api_value,
-            '__EVENTTARGET': 'ASPxFormLayout2$btnCsvExport',
-            '__EVENTARGUMENT': 'Click'
-        }
-        yield FormRequest.from_response(response,formdata=data, callback=self.parse_csv_data)
+        second_request_data = self.cfg['form_data']['second_request']
+
+        yield FormRequest.from_response(response,formdata=second_request_data, callback=self.parse_csv_data)
 
     def parse_csv_data(self, response): 
         label = self.input_item['label']
-        API_number = self.input_item['input_box']['value']
-        file_path = os.path.join(r'src\assetutilities\tests\test_data\web_scraping\results\Data', f'{label}.csv')
+        output_path = self.input_item['output_dir']
+        file_path = os.path.join(output_path, f"{label}.csv")
 
-        with open(file_path, 'wb') as f:
-            f.write(response.body)
-            self.scraped_data = pd.read_csv(BytesIO(response.body))
-            print()
-            print(f"\n****The Scraped data of {API_number} ****\n")
-            print(self.scraped_data)
+        if response.status == 200:
+            with open(file_path, 'wb') as f:
+                f.write(response.body)
+                self.scraped_data = pd.read_csv(BytesIO(response.body))
+                print()
+                print("\n****The Scraped data of given parameter ****\n")
+                print(self.scraped_data)
+        else:
+            print(f"{Fore.RED}Failed to export CSV file.{Style.RESET_ALL} Status code: {response.status}")
 
