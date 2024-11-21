@@ -32,4 +32,6 @@ jobs:
 
       - name: Test with pytest
         run: |
+          python test_all_yml.py
           pytest tests/test_pipeline.py
+
