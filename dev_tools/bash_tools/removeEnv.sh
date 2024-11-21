@@ -18,6 +18,7 @@ env_name=$(grep 'name:' "$env_file" | awk '{print $2}')
 if conda info --envs | grep -q "$env_name"; then
     conda deactivate
     conda env remove -n "$env_name"
+    conda clean --all
     echo "Siva - Environment '$env_name' has been removed."
 else
     echo "Siva - Environment '$env_name' does not exist."

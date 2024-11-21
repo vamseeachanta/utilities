@@ -8,6 +8,15 @@
 
 # hardcoded. fix this soon. 
 proj_home="/c/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/"
+conda_home="/c/Users/sivak/miniconda3/"
+
+# Get the absolute path to this script
+# script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+# echo "script_dir = $script_dir"
+# cd "$script_dir/.."
+# echo "project home = $(pwd)"
+# return 1 
+
 env_file_path="${proj_home}dev_tools/"
 env_file=${env_file_path}"environment.yml"
 
@@ -15,6 +24,7 @@ env_file=${env_file_path}"environment.yml"
 env_name=$(grep 'name:' "$env_file" | awk '{print $2}')
 
 # conda init 
+source $conda_home"etc/profile.d/conda.sh"
 conda init 
 
 # List conda environments and check if env_name exists
