@@ -7,6 +7,7 @@ def test_pass_pipeline():
     root_directory = 'tests'
     summary_file = 'tests/yml_summary.txt'
 
+    df = pd.read_csv(summary_file_pytest)
 
     with open(summary_file, 'r') as file:
         content = file.read()
@@ -18,6 +19,12 @@ def test_pass_pipeline():
             break
 
     expected_result = 28
+
+    #TODO 
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.equals.html
+    summary_file_pytest = 'tests/all_yml_status.csv'
+    df_expected = pd.read_csv(summary_file_pytest)
+    df.equals(df_expected)
 
 
     summary_file_pytest = 'tests/yml_summary_pytest.txt'
