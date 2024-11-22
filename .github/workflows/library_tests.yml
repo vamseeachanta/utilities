@@ -27,7 +27,7 @@ jobs:
         run: python -c "import sys; print(sys.version)"
 
       - name: All YML Tests Count | Check
-      run: |
-        python test_all_yml.py
-        pytest tests/test_pipeline.py
+        run: |
+          python test_all_yml.py
+          pytest tests/test_pipeline.py
 
