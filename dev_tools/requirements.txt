@@ -21,12 +21,15 @@ deepdiff
 pandoc
 wkhtmltopdf
 python-docx
+zipfile
 
 black
 isort
 # poetry # why do we need poetry here? we are not using it anywhere. we use setup tools instead now.
 
 scrapy
+bs4
+requests
 
 gitpython==3.1.31
 excel2img; sys_platform == 'win32'
