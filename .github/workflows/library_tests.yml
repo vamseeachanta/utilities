@@ -28,6 +28,6 @@ jobs:
 
       - name: All YML Tests Count | Check
         run: |
-          python test_all_yml.py
-          pytest tests/test_pipeline.py
+          python tests\modules\all_yml_tests\test_all_yml.py
+          pytest tests\modules\pipeline\test_pipeline.py
 
