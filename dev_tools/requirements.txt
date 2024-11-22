@@ -21,7 +21,7 @@ deepdiff
 pandoc
 wkhtmltopdf
 python-docx
-zipfile
+
 
 black
 isort
@@ -29,7 +29,6 @@ isort
 
 scrapy
 bs4
-requests
 
 gitpython==3.1.31
 excel2img; sys_platform == 'win32'
