@@ -30,62 +30,76 @@ yaml.add_representer(type(None), represent_none)
 
 def ymlInput(defaultYml, updateYml=None):
 
-    if not is_file_valid_func(defaultYml):
-        raise Exception("Not valid file. Please check the file path.")
-
-    with open(defaultYml, "r") as ymlfile:
-        try:
-            cfg = yaml.safe_load(ymlfile)
-        except yaml.composer.ComposerError:
-            cfg = yml_read_stream(defaultYml)
-
-    if updateYml != None:
-        #  Update values file
-        try:
-            with open(updateYml, "r") as ymlfile:
-                cfgUpdateValues = yaml.safe_load(ymlfile)
-            #  Convert to logs
-            # print(cfgUpdateValues)
-            cfg = update_deep(cfg, cfgUpdateValues)
-        except:
-            print(
-                "Update Input file could not be loaded successfully. Running program default values"
-            )
-
-    return cfg
+    return WorkingWithYAML().ymlInput(defaultYml, updateYml)
 
 
 def update_deep(d, u):
-    for k, v in u.items():
-        # this condition handles the problem
-        if not isinstance(d, Mapping):
-            d = u
-        elif isinstance(v, Mapping):
-            r = update_deep(d.get(k, {}), v)
-            d[k] = r
-        else:
-            d[k] = u[k]
 
-    return d
+    return WorkingWithYAML().update_deep(d, u)
 
-
-def yml_read_stream(yaml_file_name):
-    stream_dict = {}
-    try:
-        with open(yaml_file_name, "r") as ymlfile:
-            docs = yaml.safe_load_all(ymlfile)
-            if type(docs) is types.GeneratorType:
-                for doc in docs:
-                    if type(doc) is dict:
-                        stream_dict = update_deep(stream_dict, doc)
-    except:
-        raise Exception("Stopping Program")
-
-    return stream_dict
 
 
 class WorkingWithYAML:
 
+    def __init__(self):
+        pass
+
+    def router(self, cfg):
+        pass
+
+    def ymlInput(self, defaultYml, updateYml=None):
+        if not is_file_valid_func(defaultYml):
+            raise Exception("Not valid file. Please check the file path.")
+
+        with open(defaultYml, "r") as ymlfile:
+            try:
+                cfg = yaml.safe_load(ymlfile)
+            except yaml.composer.ComposerError:
+                cfg = yml_read_stream(defaultYml)
+
+        if updateYml != None:
+            #  Update values file
+            try:
+                with open(updateYml, "r") as ymlfile:
+                    cfgUpdateValues = yaml.safe_load(ymlfile)
+                #  Convert to logs
+                # print(cfgUpdateValues)
+                cfg = update_deep(cfg, cfgUpdateValues)
+            except:
+                print(
+                    "Update Input file could not be loaded successfully. Running program default values"
+                )
+
+        return cfg
+        
+    def yml_read_stream(self, yaml_file_name):
+        stream_dict = {}
+        try:
+            with open(yaml_file_name, "r") as ymlfile:
+                docs = yaml.safe_load_all(ymlfile)
+                if type(docs) is types.GeneratorType:
+                    for doc in docs:
+                        if type(doc) is dict:
+                            stream_dict = update_deep(stream_dict, doc)
+        except:
+            raise Exception("Stopping Program")
+
+        return stream_dict
+
+    def update_deep(self, d, u):
+        for k, v in u.items():
+            # this condition handles the problem
+            if not isinstance(d, Mapping):
+                d = u
+            elif isinstance(v, Mapping):
+                r = update_deep(d.get(k, {}), v)
+                d[k] = r
+            else:
+                d[k] = u[k]
+
+        return d
+
+        
     # Analyze Yaml file
     def analyze_yaml_keys(self, file_name):
         file_name_content = ymlInput(file_name)
@@ -193,3 +207,15 @@ class WorkingWithYAML:
                 raise FileNotFoundError()
 
         return filename_with_lib_path
+
+    # Divide yaml file by primary keys into individual yaml files and save them
+    def divide_yaml_file_by_keys(self, cfg):
+        file_name = cfg["file_name"]
+        file_name_content = ymlInput(file_name)
+        primary_keys = cfg["primary_keys"]
+        file_directory = os.path.dirname(file_name)
+        for key in primary_keys:
+            file_name_key = f"{file_directory}/{key}.yml"
+            with open(file_name_key, "w") as f:
+                yaml.dump(file_name_content[key], f, default_flow_style=False)
+                print(f"{key}.yml has been saved in the current file directory")

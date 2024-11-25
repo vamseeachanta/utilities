@@ -1,3 +1,14 @@
+
+## Summary
+
+The key things for using AI are:
+
+- Prompt engineering
+- Workflows Refinement
+- Tests for each workflow steps
+
+## Siva's Input
+
 How to use AI tools?
 
 <https://cursor.directory/>
@@ -34,3 +45,7 @@ Here are some best practices we?ve learned for using Cursor:
 
 AI tools feel like magic, but like any craft, they take practice to master. ? It?s more than just creating boilerplate ? the real work is in the fine-tuning
 
+### References
+
+
+https://podcasts.apple.com/us/podcast/ipek-ozkaya-on-gen-ai-for-software-architecture/id120906714?i=1000663141387

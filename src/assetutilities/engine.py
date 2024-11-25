@@ -7,6 +7,7 @@ import sys
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import SaveData
 from assetutilities.common.data_exploration import DataExploration
+from assetutilities.common.download_data.dwnld_from_zipurl import DownloadingDataFromURL
 from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.text_analytics import TextAnalytics
@@ -14,20 +15,20 @@ from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.webscraping.web_scraping import WebScraping
-from assetutilities.common.download_data.dwnld_from_zipurl import DownloadingDataFromURL
-from assetutilities.common.yml_utilities import ymlInput
+from assetutilities.common.yml_utilities import WorkingWithYAML
 
 library_name = "assetutilities"
 
 de = DataExploration()
 fm = FileManagement()
 save_data = SaveData()
+wwyaml = WorkingWithYAML()
 
 
 def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) -> dict:
     if cfg is None:
         inputfile = validate_arguments_run_methods(inputfile)
-        cfg = ymlInput(inputfile, updateYml=None)
+        cfg = wwyaml.ymlInput(inputfile, updateYml=None)
         cfg = AttributeDict(cfg)
         if cfg is None:
             raise ValueError("cfg is None")
@@ -76,7 +77,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif basename in ["word_utilities"]:
         # Reader imports
         from assetutilities.common.word_utilities import WordUtilities
-        
+
         wu = WordUtilities()
         wu.router(cfg_base)
     elif cfg["basename"] == "data_exploration":
@@ -89,6 +90,9 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif cfg["basename"] == "download_data":
         ddfu = DownloadingDataFromURL()
         cfg_base = ddfu.router(cfg_base)
+
+    elif cfg["basename"] == "yaml_utlities":
+        cfg_base = wwyaml.router(cfg_base)
 
     else:
         raise (Exception(f"Analysis for basename: {basename} not found. ... FAIL"))

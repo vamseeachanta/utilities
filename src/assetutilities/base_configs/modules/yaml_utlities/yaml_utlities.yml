@@ -1,0 +1,12 @@
+basename: yaml_utlities
+
+default:
+  log_level: DEBUG
+  config:
+    overwrite:
+      output: True
+
+analysis:
+  divide: 
+    flag: True
+    by: primary_key
