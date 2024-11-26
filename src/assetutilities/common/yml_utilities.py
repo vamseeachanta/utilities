@@ -45,7 +45,9 @@ class WorkingWithYAML:
         pass
 
     def router(self, cfg):
-        pass
+        if cfg['analysis']['divide']['flag']:
+            cfg_divide = cfg['analysis']['divide']
+            self.divide_yaml_file_by_keys(cfg_divide)
 
     def ymlInput(self, defaultYml, updateYml=None):
         if not is_file_valid_func(defaultYml):
