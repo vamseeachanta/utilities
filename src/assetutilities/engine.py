@@ -7,7 +7,7 @@ import sys
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import SaveData
 from assetutilities.common.data_exploration import DataExploration
-from assetutilities.common.download_data.dwnld_from_zipurl import DownloadingDataFromURL
+from assetutilities.common.download_data.dwnld_from_zipurl import DownloadDataFromURL
 from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.text_analytics import TextAnalytics
@@ -88,7 +88,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
         cfg_base = ws.router(cfg_base)
         
     elif cfg["basename"] == "download_data":
-        ddfu = DownloadingDataFromURL()
+        ddfu = DownloadDataFromURL()
         cfg_base = ddfu.router(cfg_base)
 
     elif cfg["basename"] == "yaml_utlities":
