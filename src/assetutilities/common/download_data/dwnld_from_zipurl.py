@@ -1,11 +1,15 @@
-import requests
-import zipfile
+# Standard library imports
 import io
-import pandas as pd
 import os
+import zipfile
 from urllib.parse import urlparse
 
-class DownloadingDataFromURL:
+# Third party imports
+import pandas as pd
+import requests
+
+
+class DownloadDataFromURL:
     
     def __init__(self):
         pass
