@@ -6,12 +6,12 @@ import os
 
 # Third party imports
 import pandas as pd
-from pandas.api.types import is_numeric_dtype, is_string_dtype
 
 # Reader imports
 from assetutilities.common.data import ReadData
 from assetutilities.common.data_management import DataManagement
 from assetutilities.common.update_deep import update_deep_dictionary
+from pandas.api.types import is_numeric_dtype, is_string_dtype
 
 read_data = ReadData()
 dm = DataManagement()
@@ -102,14 +102,14 @@ class DataExploration:
             df_statistics = self.get_df_with_basic_statistics(cfg_df_basic_statistics, df)
             filename = os.path.join(
                 cfg["Analysis"]["result_folder"],
-                cfg["Analysis"]["file_name"] + "_" + "basic_statistics.csv",
+                cfg["Analysis"]["file_name"] + "_" + label + ".csv",
             )
-            
+
             df_statistics.to_csv(filename, index=False)
-            
+
             basic_statistic_array.append({'data': filename, 'label': label})
-            
-        cfg[cfg['basename']] = {'df_basic_statistics': basic_statistic_array}
+
+        cfg[cfg['basename']] = {'df_basic_statistics': {'groups': basic_statistic_array}}
 
     def get_df_with_basic_statistics(self, cfg_df_basic_statistics, df):
         df_column_data_types = self.get_inferred_df_data_types(df)

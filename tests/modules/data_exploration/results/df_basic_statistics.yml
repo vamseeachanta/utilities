@@ -9,7 +9,7 @@ dictitems:
       df: true
     df_basic_statistics:
       flag: true
-      add_to_df: true
+      add_to_df: false
   data:
     type: csv
     groups:
@@ -44,19 +44,19 @@ dictitems:
   Analysis:
     basename: data_exploration
     analysis_root_folder: k:\github\assetutilities\tests\modules\data_exploration
-    file_name: df_basic_statistics_add_to_df
-    file_name_for_overwrite: df_basic_statistics_add_to_df
+    file_name: df_basic_statistics
+    file_name_for_overwrite: df_basic_statistics
     result_folder: k:\github\assetutilities\tests\modules\data_exploration\results
     log_folder: k:\github\assetutilities\tests\modules\data_exploration\logs
-    start_time: 2024-11-28 12:19:00.226131
+    start_time: 2024-11-28 12:19:00.154184
     cfg_array_file_names: ~
     DefaultInputFile: ~
-    CustomInputFile: k:\github\assetutilities\tests\modules\data_exploration\df_basic_statistics_add_to_df.yml
+    CustomInputFile: k:\github\assetutilities\tests\modules\data_exploration\df_basic_statistics.yml
     fe_folder: k:\github\assetutilities\tests\modules\data_exploration\results
   data_exploration:
     df_basic_statistics:
       groups:
-      - data: k:\github\assetutilities\tests\modules\data_exploration\results\df_basic_statistics_add_to_df_FST1.csv
+      - data: k:\github\assetutilities\tests\modules\data_exploration\results\df_basic_statistics_FST1.csv
         label: FST1
-      - data: k:\github\assetutilities\tests\modules\data_exploration\results\df_basic_statistics_add_to_df_FST2.csv
+      - data: k:\github\assetutilities\tests\modules\data_exploration\results\df_basic_statistics_FST2.csv
         label: FST2
