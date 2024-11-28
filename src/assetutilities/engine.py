@@ -6,7 +6,6 @@ import sys
 # Reader imports
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import SaveData
-from assetutilities.common.data_exploration import DataExploration
 from assetutilities.common.download_data.dwnld_from_zipurl import DownloadingDataFromURL
 from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.file_management import FileManagement
@@ -16,6 +15,7 @@ from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.webscraping.web_scraping import WebScraping
 from assetutilities.common.yml_utilities import WorkingWithYAML
+from assetutilities.modules.data_exploration.data_exploration import DataExploration
 
 library_name = "assetutilities"
 

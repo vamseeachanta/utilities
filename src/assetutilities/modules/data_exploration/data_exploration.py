@@ -43,9 +43,14 @@ class DataExploration:
 
         if cfg["type"]["df_statistics"]["flag"]:
             if cfg["type"]["df_statistics"]["df_array"]:
-                self.get_df_statistics_summary(cfg)
+                self.get_df_array_statistics_summary(cfg)
 
-    def get_df_statistics_summary(self, cfg, df_array=None):
+        elif cfg["type"]["df_min_max_mean"]["flag"]:
+                self.get_df_array_with_basic_statistics(cfg)
+        else:
+            logging.info("No data exploration type selected.")
+
+    def get_df_array_statistics_summary(self, cfg, df_array=None):
         if df_array is None:
             df_array = dm.get_df_data(cfg)
 
@@ -83,6 +88,62 @@ class DataExploration:
                 cfg["Analysis"]["file_name"] + "_" + column + "_T.csv",
             )
             df_T.to_csv(filename, index=False)
+
+    def get_df_array_with_basic_statistics(self, cfg):
+        df_array = dm.get_df_data(cfg)
+        for df_item in df_array:
+            label = next(iter(df_item.keys()))
+            df = df_item.get(label, pd.DataFrame())
+            df_statistics = self.get_df_with_basic_statistics(df)
+            filename = os.path.join(
+                cfg["Analysis"]["result_folder"],
+                cfg["Analysis"]["file_name"] + "_" + "basic_statistics.csv",
+            )
+            df_statistics.to_csv(filename, index=False)
+
+
+    def get_df_with_basic_statistics(self, df):
+        df_column_data_types = self.get_inferred_df_data_types(df)
+        df_columns = list(df.columns)
+
+        df_statistics = pd.DataFrame(columns=df_columns)
+        
+        df_col_min_list = []
+        df_col_max_list = []
+        df_col_mean_list = []
+        df_col_stdev_list = []
+        
+        for column in df_columns:
+            df_column = column
+            data_type = df_column_data_types[column_index]
+            if data_type == "datetime":
+                df[column] = pd.to_datetime(df[column])
+
+            if data_type in ["numeric", "datetime"]:
+                df_col_min = df[column].min()
+                df_col_max = df[column].max()
+                df_col_mean = df[column].mean()
+                df_col_stdev = df[column].std()
+            else:
+                df_col_min = None
+                df_col_max = None
+                df_col_mean = None
+                df_col_stdev = None
+
+            df_col_min_list.append(df_col_min)
+            df_col_max_list.append(df_col_max)
+            df_col_mean_list.append(df_col_mean)
+            df_col_stdev_list.append(df_col_stdev)
+
+        df_statistics.loc["min"] = df_col_min_list
+        df_statistics.loc["max"] = df_col_max_list
+        df_statistics.loc["mean"] = df_col_mean_list
+        df_statistics.loc["stdev"] = df_col_stdev_list
+
+        if cfg["type"]["df_min_max_mean"]["add_to_df"]:
+            df = pd.concat([df, df_statistics])
+        else:
+            return df_statistics
 
     def get_df_statistics_summary_columns(self, df_statistics_summary):
         column_df = df_statistics_summary["column"]
