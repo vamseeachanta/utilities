@@ -101,6 +101,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
         save_application_cfg(cfg_base=cfg_base)
 
     logging.info(f"{basename}, application ... END")
+    save_cfg(cfg_base=cfg_base)
 
     return cfg_base
 
@@ -133,3 +134,10 @@ def validate_arguments_run_methods(inputfile):
     return inputfile
 
 
+def save_cfg(cfg_base):
+    output_dir = cfg_base.Analysis["analysis_root_folder"]
+
+    filename = cfg_base.Analysis["file_name"]
+    filename_path = os.path.join(output_dir, "results", filename)
+
+    save_data.saveDataYaml(cfg_base, filename_path, default_flow_style=False)

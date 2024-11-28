@@ -4,7 +4,7 @@ import os
 import zipfile
 from urllib.parse import urlparse
 
-class DownloadingDataFromURL:
+class DownloadDataFromURL:
     
     def __init__(self):
         pass

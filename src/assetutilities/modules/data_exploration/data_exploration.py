@@ -1,8 +1,8 @@
 # Standard library imports
+import copy
 import datetime
 import logging
 import os
-import copy
 
 # Third party imports
 import pandas as pd
@@ -45,10 +45,12 @@ class DataExploration:
             if cfg["type"]["df_statistics"]["df_array"]:
                 self.get_df_array_statistics_summary(cfg)
 
-        elif cfg["type"]["df_min_max_mean"]["flag"]:
-                self.get_df_array_with_basic_statistics(cfg)
+        elif cfg["type"]["df_basic_statistics"]["flag"]:
+            self.get_df_array_with_basic_statistics(cfg)
         else:
             logging.info("No data exploration type selected.")
+
+        return cfg
 
     def get_df_array_statistics_summary(self, cfg, df_array=None):
         if df_array is None:
@@ -91,29 +93,36 @@ class DataExploration:
 
     def get_df_array_with_basic_statistics(self, cfg):
         df_array = dm.get_df_data(cfg)
+        cfg_df_basic_statistics = cfg["type"]["df_basic_statistics"]
+
+        basic_statistic_array = []
         for df_item in df_array:
             label = next(iter(df_item.keys()))
             df = df_item.get(label, pd.DataFrame())
-            df_statistics = self.get_df_with_basic_statistics(df)
+            df_statistics = self.get_df_with_basic_statistics(cfg_df_basic_statistics, df)
             filename = os.path.join(
                 cfg["Analysis"]["result_folder"],
                 cfg["Analysis"]["file_name"] + "_" + "basic_statistics.csv",
             )
+            
             df_statistics.to_csv(filename, index=False)
+            
+            basic_statistic_array.append({'data': filename, 'label': label})
+            
+        cfg[cfg['basename']] = {'df_basic_statistics': basic_statistic_array}
 
-
-    def get_df_with_basic_statistics(self, df):
+    def get_df_with_basic_statistics(self, cfg_df_basic_statistics, df):
         df_column_data_types = self.get_inferred_df_data_types(df)
         df_columns = list(df.columns)
 
         df_statistics = pd.DataFrame(columns=df_columns)
-        
+
         df_col_min_list = []
         df_col_max_list = []
         df_col_mean_list = []
         df_col_stdev_list = []
-        
-        for column in df_columns:
+
+        for column_index, column in enumerate(df_columns):
             df_column = column
             data_type = df_column_data_types[column_index]
             if data_type == "datetime":
@@ -139,9 +148,12 @@ class DataExploration:
         df_statistics.loc["max"] = df_col_max_list
         df_statistics.loc["mean"] = df_col_mean_list
         df_statistics.loc["stdev"] = df_col_stdev_list
+        
+        df_statistics['statistic'] = df_statistics.index
 
-        if cfg["type"]["df_min_max_mean"]["add_to_df"]:
+        if cfg_df_basic_statistics is not None and cfg_df_basic_statistics["add_to_df"]:
             df = pd.concat([df, df_statistics])
+            return df
         else:
             return df_statistics
 
