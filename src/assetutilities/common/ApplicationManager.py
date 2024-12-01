@@ -359,8 +359,8 @@ class ConfigureApplicationInputs:
         self.cfg = AttributeDict(self.cfg)
 
 
-class SaveApplicationResults:
-
+class SaveApplicationResults_superseded:
+    # TODO Delete after 02/01/2025
     def __init__(self):
         pass
 
