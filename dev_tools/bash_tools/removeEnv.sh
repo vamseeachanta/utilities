@@ -7,9 +7,9 @@
 # 3. miniconda 
 
 # hardcoded. fix this soon. 
-proj_home="/c/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/"
-env_file_path="${proj_home}dev_tools/"
-env_file=${env_file_path}"environment.yml"
+proj_home="/c/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities"
+env_file_path="${proj_home}/dev_tools"
+env_file=${env_file_path}"/environment.yml"
 
 # locate the env name for this env 
 env_name=$(grep 'name:' "$env_file" | awk '{print $2}')

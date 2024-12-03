@@ -43,3 +43,4 @@ excel2img; sys_platform == 'win32'
 # siva - adding this to make ``python -m assetutilities ./test_data/visualization/visualization_polar_plotly.yml``
 PyPDF2
 tabula
+sympy>=1.13.3

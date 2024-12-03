@@ -131,3 +131,6 @@ dmypy.json
 # donot include developer private stuff. 
 _dev-private/* 
 _dashboards/*
+
+# ignore all reportgen output files 
+*.out.*

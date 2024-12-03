@@ -6,9 +6,20 @@
 # 2. python 
 # 3. miniconda 
 
-# hardcoded. fix this soon. 
-proj_home="/c/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/"
-conda_home="/c/Users/sivak/miniconda3/"
+#conda_home="/c/Users/sivak/miniconda3/"
+conda_home="/c/ProgramData/miniconda3"
+
+# shell script to perform daily git operations
+repo_root=$(git rev-parse --show-toplevel)
+# get to repo root
+cd "$repo_root"
+
+repo_name=$(basename $(git rev-parse --show-toplevel))
+bash_tools_home="dev_tools/bash_tools"
+today=$(date '+%Y%m%d')
+
+# source common utilities
+source ${bash_tools_home}/common.sh
 
 # Get the absolute path to this script
 # script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -17,14 +28,13 @@ conda_home="/c/Users/sivak/miniconda3/"
 # echo "project home = $(pwd)"
 # return 1 
 
-env_file_path="${proj_home}dev_tools/"
-env_file=${env_file_path}"environment.yml"
+env_file="${repo_root}/dev_tools/environment.yml"
 
 # locate the env name for this env 
 env_name=$(grep 'name:' "$env_file" | awk '{print $2}')
 
 # conda init 
-source $conda_home"etc/profile.d/conda.sh"
+source $conda_home"/etc/profile.d/conda.sh"
 conda init 
 
 # List conda environments and check if env_name exists
@@ -38,3 +48,6 @@ else
 fi
 
 conda activate $env_name
+
+# return back to where you started. 
+cd - 

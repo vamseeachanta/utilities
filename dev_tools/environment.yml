@@ -6,5 +6,6 @@ dependencies:
   - python=3.11
   - pip
   - pip:
-       - -r dev_tools/requirements.txt  # source pip specific requirements 
+      - -r requirements.txt  # source pip specific requirements 
+#       - -r dev_tools/requirements.txt  # source pip specific requirements 
 
