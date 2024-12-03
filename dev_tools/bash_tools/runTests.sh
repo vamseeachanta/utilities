@@ -19,6 +19,15 @@ log_message "green" "Running tests for module = ${repo_name}, project_root = ${p
 # Initialize counter
 counter=0
 
+# invoking custom test client
+config_file="${template_module_home}/reportgen/reportgen-sympy_function_1_cfg.yml"
+python_script="${template_module_home}/reportgen/test-clients/sympy_function_1.py"
+((counter++))
+log_message "normal" "----------------------------------------------"
+log_message "normal" "Test #${counter} python ${python_script} ${config_file}"
+pause_for_user
+python ${python_script} ${config_file}
+
 # this is succeeding. 
 config_file="${template_module_home}/file_edit/file_edit_split.yml"
 ((counter++))
