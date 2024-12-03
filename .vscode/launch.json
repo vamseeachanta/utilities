@@ -25,7 +25,7 @@
             "justMyCode": true
         },
         {
-            "name": "assetUtilities - reportgen",
+            "name": "reportgen",
             "type": "python",
             "request": "launch",
             "module": "assetutilities",
@@ -36,7 +36,7 @@
             "justMyCode": true
         },
         {
-            "name": "assetUtilities - reportgen",
+            "name": "reportgen-md",
             "type": "python",
             "request": "launch",
             "module": "assetutilities",
@@ -47,7 +47,7 @@
             "justMyCode": true
         },
         {
-            "name": "assetUtilities - reportgen",
+            "name": "reportgen-docx",
             "type": "python",
             "request": "launch",
             "module": "assetutilities",
@@ -58,7 +58,7 @@
             "justMyCode": true
         },
         {
-            "name": "assetUtilities - reportgen",
+            "name": "reportgen-20in-md",
             "type": "python",
             "request": "launch",
             "module": "assetutilities",
@@ -69,7 +69,7 @@
             "justMyCode": true
         },
         {
-            "name": "assetUtilities - reportgen",
+            "name": "reportgen-20in-docx",
             "type": "python",
             "request": "launch",
             "module": "assetutilities",
