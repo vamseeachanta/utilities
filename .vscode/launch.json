@@ -12,6 +12,72 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "timeout": 30
+        },
+        {
+            "name": "assetUtilities - file_edit_split",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/file_edit/file_edit_split.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "assetUtilities - reportgen",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-cfg.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "assetUtilities - reportgen",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-cfg-md.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "assetUtilities - reportgen",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-cfg-docx.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "assetUtilities - reportgen",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-cfg-20in-md.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "assetUtilities - reportgen",
+            "type": "python",
+            "request": "launch",
+            "module": "assetutilities",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-cfg-20in-docx.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
