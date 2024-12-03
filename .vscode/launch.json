@@ -78,6 +78,17 @@
             ],
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "name": "reportgen-sympy_function_1",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/modules/reportgen/test-clients/sympy_function_1.py",
+            "args": [
+                "${workspaceFolder}/tests/modules/reportgen/reportgen-sympy_function_1_cfg.yml"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
