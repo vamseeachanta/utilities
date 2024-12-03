@@ -93,6 +93,4 @@ log_message "normal" "Test #${counter} python -m ${repo_name} ${config_file}"
 pause_for_user
 python -m ${repo_name} ${config_file}
 
-
-
 python src/assetutilities/tests/test_data/test_all_yml.py 
