@@ -1,0 +1,75 @@
+&id001 !!python/object/new:assetutilities.common.data.AttributeDict
+state: *id001
+dictitems:
+  basename: reportgen
+  default:
+    log_level: DEBUG
+    config:
+      overwrite:
+        output: true
+  important_paths:
+    project_root: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities
+    inputs_path: tests/modules/reportgen/inputs
+    assets_path: tests/modules/reportgen/assets
+    outputs_path: tests/modules/reportgen/outputs
+  report_details:
+    name: Pandula pai pakshapatam
+    client_logo: client-logo.png
+    project_name: Pemex Zama FEED
+    project_num: '61850'
+    engineer: Vamsee Achanta
+    reviewer: TBD
+    date: 2021/10/22
+    target_file_stub: pandulu-kukkalu
+    target_report_type: docx
+  sections_L1:
+  - name: Pandula pempakam
+    paragraphs:
+    - - Kakinadalo nedu pandulano neti garela to pushtiga balango penchutunnaru.
+    - - Neti garelu tinna pandulu pushti ga balanga tayarayyayi.
+  - name: Kukkala pempakam
+    paragraphs:
+    - - Kukkalanu maatram chaala heenanga , deenanga penchutunnaru
+    - - Kukkalaku garelu kaadu sari kada, korikesina chicken mukka kooda dakkatam
+        ledu
+  - name: Vinnapam
+    paragraphs:
+    - - Needey babugari prabhutvam ee taara tamyanni parishkarinchaali
+  - name: Appendix
+    sections_L2:
+    - name: subsection 1
+      paragraphs:
+      - - Table1a - 2024 census of street dogs in kakinada
+      - - type: markdown_table
+          content: '| Dog Breed | count |
+
+            |---|---|
+
+            | black | 10 |
+
+            | spotted | 5 |
+
+            | brown | 40 |'
+    - name: subsection 2
+      paragraphs:
+      - - Table1b - 2024 census of pigs dogs in kakinada
+      - - type: markdown_table
+          content: '| pig breed | count |
+
+            |---|---|
+
+            | wild | 40 |
+
+            | tea cup | 300 |'
+  Analysis:
+    basename: reportgen
+    analysis_root_folder: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/tests/modules/reportgen
+    file_name: reportgen-cfg-docx
+    file_name_for_overwrite: reportgen-cfg-docx
+    result_folder: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/tests/modules/reportgen\results
+    log_folder: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/tests/modules/reportgen\logs
+    start_time: 2024-12-02 18:48:44.076879
+    cfg_array_file_names: ~
+    DefaultInputFile: ~
+    CustomInputFile: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/tests/modules/reportgen/reportgen-cfg-docx.yml
+    fe_folder: C:/Users/sivak/Desktop/siva/personal/2024-odd-projects/assetutilities/tests/modules/reportgen\results
