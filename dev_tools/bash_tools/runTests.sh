@@ -19,6 +19,20 @@ log_message "green" "Running tests for module = ${repo_name}, project_root = ${p
 # Initialize counter
 counter=0
 
+# this is succeeding. 
+config_file="${template_module_home}/file_edit/file_edit_split.yml"
+((counter++))
+log_message "normal" "----------------------------------------------"
+log_message "normal" "Test #${counter} python -m ${repo_name} ${config_file}"
+pause_for_user
+python -m ${repo_name} ${config_file}
+
+log_message "normal" "----------------------------------------------"
+log_message "normal" "press any key to exit"
+pause_for_user
+
+exit 1
+
 # invoking custom test client
 config_file="${template_module_home}/reportgen/reportgen-sympy_function_1_cfg.yml"
 python_script="${template_module_home}/reportgen/test-clients/sympy_function_1.py"
@@ -27,14 +41,6 @@ log_message "normal" "----------------------------------------------"
 log_message "normal" "Test #${counter} python ${python_script} ${config_file}"
 pause_for_user
 python ${python_script} ${config_file}
-
-# this is succeeding. 
-config_file="${template_module_home}/file_edit/file_edit_split.yml"
-((counter++))
-log_message "normal" "----------------------------------------------"
-log_message "normal" "Test #${counter} python -m ${repo_name} ${config_file}"
-pause_for_user
-python -m ${repo_name} ${config_file}
 
 # basic reportgen works
 config_file="${template_module_home}/reportgen/reportgen-cfg.yml"
@@ -85,12 +91,5 @@ cd -
 
 exit 1 
 
-# now to setup reportgen
-config_file="${template_module_home}/reportgen/reportgen-cfg-docx.yml"
-((counter++))
-log_message "normal" "----------------------------------------------"
-log_message "normal" "Test #${counter} python -m ${repo_name} ${config_file}"
-pause_for_user
-python -m ${repo_name} ${config_file}
 
 python src/assetutilities/tests/test_data/test_all_yml.py 
