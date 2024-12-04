@@ -15,7 +15,6 @@ from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
 from assetutilities.common.webscraping.web_scraping import WebScraping
 from assetutilities.common.yml_utilities import WorkingWithYAML
-from assetutilities.common.reportgen import reportgen
 from assetutilities.modules.data_exploration.data_exploration import DataExploration
 
 library_name = "assetutilities"
@@ -96,6 +95,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
         cfg_base = wwyaml.router(cfg_base)
 
     elif cfg["basename"] == "reportgen":
+        from assetutilities.common.reportgen import reportgen
         # init and run reportgen using config
         reportgen.run(cfg_base)
 
