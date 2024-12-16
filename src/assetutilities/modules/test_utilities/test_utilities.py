@@ -1,5 +1,6 @@
 # Standard library imports
 
+# Standard library imports
 import os
 
 # Third party imports
@@ -22,7 +23,7 @@ class TestUtilities:
 
         df_file1 = pd.read_csv(file1)
         df_file2 = pd.read_csv(file2)
-        
+
         file_match_result = df_file1.equals(df_file2)
-        
+
         return file_match_result
