@@ -45,9 +45,8 @@ class WorkingWithYAML:
         pass
 
     def router(self, cfg):
-        if cfg['analysis']['divide']['flag']:
-            cfg_divide = cfg['analysis']['divide']
-            self.divide_yaml_file_by_keys(cfg_divide)
+        if cfg['yml_analysis']['divide']['flag']:
+            self.divide_yaml_files(cfg)
 
     def ymlInput(self, defaultYml, updateYml=None):
         if not is_file_valid_func(defaultYml):
@@ -102,13 +101,18 @@ class WorkingWithYAML:
         return d
 
         
-    # Analyze Yaml file
     def analyze_yaml_keys(self, file_name):
+        '''
+        Analyze Yaml file
+        '''
         file_name_content = ymlInput(file_name)
         print(file_name_content.keys())
 
-    # Compare 2 yaml files
     def compare_yaml_root_keys(self, file_name1, file_name2):
+        '''
+        Compare 2 yaml files
+        '''
+
         file_name1_content = ymlInput(file_name1)
         file_name2_content = ymlInput(file_name2)
         file_name1_keys = file_name1_content.keys()
@@ -119,8 +123,10 @@ class WorkingWithYAML:
             print(f"The root keys for {file_name1}: {file_name1_keys}")
             print(f"The root keys for {file_name2}: {file_name2_keys}")
 
-    # Compare 2 yaml files using DeepDiff
     def compare_yaml_files_deepdiff(self, cfg):
+        '''
+        Compare 2 yaml files using DeepDiff
+        '''
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         file_name1_content = ymlInput(file_name1)
@@ -131,7 +137,9 @@ class WorkingWithYAML:
         else:
             # get file root directory
             file_directory = os.path.dirname(file_name1)
-            uniquebasename = get_common_name_from_2_filenames(file_name1, file_name2)
+            uniquebasename = get_common_name_from_2_filenames(
+                file_name1, file_name2
+            )
             self.save_diff_files(file_diff, file_directory, uniquebasename)
 
     def compare_yaml_file_contents_deepdiff(self, cfg):
@@ -149,7 +157,7 @@ class WorkingWithYAML:
 
         self.save_diff_files(file_diff, cfg)
 
-    def save_diff_files(self, file_diff, cfg, deepdiff_save=False):
+    def save_diff_files(self, file_diff: dict, cfg: dict, deepdiff_save: bool = False) -> None:
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         if file_diff == {}:  # if there is no difference
@@ -210,14 +218,29 @@ class WorkingWithYAML:
 
         return filename_with_lib_path
 
-    # Divide yaml file by primary keys into individual yaml files and save them
-    def divide_yaml_file_by_keys(self, cfg):
-        file_name = cfg["file_name"]
+    def divide_yaml_files(self, cfg) -> None:
+        '''
+        Iterate through yml files
+        '''
+        yml_files = cfg['file_management']['input_files']['yml']
+        for file_name in yml_files:
+            cfg_divide = cfg['yml_analysis']['divide']
+            if cfg_divide['by'] == 'primary_key':
+                self.divide_yaml_file_by_primary_keys(cfg, file_name)
+            else:
+                raise Exception("No divide by method specified")
+        
+    def divide_yaml_file_by_primary_keys(self, cfg, file_name) -> None:
+        '''
+        Divide yaml file by primary keys into individual yaml files and save them
+        '''
         file_name_content = ymlInput(file_name)
-        primary_keys = cfg["primary_keys"]
-        file_directory = os.path.dirname(file_name)
-        for key in primary_keys:
-            file_name_key = f"{file_directory}/{key}.yml"
+        primary_keys = list(file_name_content.keys())
+        result_folder = cfg['Analysis']['result_folder']
+        for primary_key in primary_keys:
+            output_file_name = f"{primary_key}.yml"
+            output_file_path = os.path.join(result_folder)
+            file_name_key = f"{file_directory}/{primary_key}.yml"
             with open(file_name_key, "w") as f:
-                yaml.dump(file_name_content[key], f, default_flow_style=False)
-                print(f"{key}.yml has been saved in the current file directory")
+                yaml.dump(file_name_content[primary_key], f, default_flow_style=False)
+                print(f"{primary_key}.yml has been saved in the current file directory")

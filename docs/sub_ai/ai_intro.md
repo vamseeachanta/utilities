@@ -49,3 +49,24 @@ AI tools feel like magic, but like any craft, they take practice to master. ? It
 
 
 https://podcasts.apple.com/us/podcast/ipek-ozkaya-on-gen-ai-for-software-architecture/id120906714?i=1000663141387
+
+https://github.com/steven2358/awesome-generative-ai
+
+https://github.com/genieincodebottle/generative-ai/blob/main/GenAI_Roadmap.md
+
+https://github.com/aishwaryanr/awesome-generative-ai-guide
+
+https://github.com/GoogleCloudPlatform/generative-ai
+
+Mastering AI tools with VS Code, Github and Azure
+https://www.youtube.com/watch?v=Go1aQslQvrs
+
+Mathew versaggi 
+- [https://youtu.be/BaXxWMkl5g4](https://youtu.be/BaXxWMkl5g4)
+- [https://youtu.be/LD2rZe1T-EM](https://youtu.be/LD2rZe1T-EM)
+- [https://youtu.be/4hW0THcheaQ](https://youtu.be/4hW0THcheaQ)
+- [https://youtu.be/tVcopEpWDlw](https://youtu.be/tVcopEpWDlw) 
+
+https://www.linkedin.com/posts/johnrushx_ive-replaced-100-of-my-marketing-sales-activity-7274649527326756864-b7UM?utm_source=share&utm_medium=member_desktop
+
+https://github.com/microsoft/generative-ai-for-beginners
