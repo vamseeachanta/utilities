@@ -235,12 +235,20 @@ class WorkingWithYAML:
         Divide yaml file by primary keys into individual yaml files and save them
         '''
         file_name_content = ymlInput(file_name)
+    
+
         primary_keys = list(file_name_content.keys())
+
+        file_name_stem = Path(file_name).stem
         result_folder = cfg['Analysis']['result_folder']
+
         for primary_key in primary_keys:
-            output_file_name = f"{primary_key}.yml"
-            output_file_path = os.path.join(result_folder)
-            file_name_key = f"{file_directory}/{primary_key}.yml"
-            with open(file_name_key, "w") as f:
+
+            primary_key_clean = primary_key.encode('ascii', 'ignore').decode('ascii')
+            output_file_name = f"{file_name_stem}_{primary_key_clean}.yml"
+            output_file_path = os.path.join(result_folder, output_file_name)
+
+            with open(output_file_path, "w") as f:
                 yaml.dump(file_name_content[primary_key], f, default_flow_style=False)
-                print(f"{primary_key}.yml has been saved in the current file directory")
+                print(f"{primary_key_clean}.yml has been saved in the current file directory")
+
