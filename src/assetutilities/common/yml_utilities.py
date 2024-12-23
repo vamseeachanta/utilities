@@ -48,6 +48,8 @@ class WorkingWithYAML:
         if cfg['yml_analysis']['divide']['flag']:
             self.divide_yaml_files(cfg)
 
+        return cfg
+
     def ymlInput(self, defaultYml, updateYml=None):
         if not is_file_valid_func(defaultYml):
             raise Exception("Not valid file. Please check the file path.")
@@ -223,13 +225,15 @@ class WorkingWithYAML:
         Iterate through yml files
         '''
         yml_files = cfg['file_management']['input_files']['yml']
+        cfg[cfg['basename']] = {'divide': {'groups':[]}}
         for file_name in yml_files:
             cfg_divide = cfg['yml_analysis']['divide']
             if cfg_divide['by'] == 'primary_key':
-                self.divide_yaml_file_by_primary_keys(cfg, file_name)
+                output_file_name_array = self.divide_yaml_file_by_primary_keys(cfg, file_name)
+                cfg[cfg['basename']]['divide']['groups'].append(output_file_name_array)
             else:
                 raise Exception("No divide by method specified")
-        
+
     def divide_yaml_file_by_primary_keys(self, cfg, file_name) -> None:
         '''
         Divide yaml file by primary keys into individual yaml files and save them
@@ -242,6 +246,7 @@ class WorkingWithYAML:
         file_name_stem = Path(file_name).stem
         result_folder = cfg['Analysis']['result_folder']
 
+        output_file_name_array = []
         for primary_key in primary_keys:
 
             primary_key_clean = primary_key.encode('ascii', 'ignore').decode('ascii')
@@ -252,3 +257,6 @@ class WorkingWithYAML:
                 yaml.dump(file_name_content[primary_key], f, default_flow_style=False)
                 print(f"{primary_key_clean}.yml has been saved in the current file directory")
 
+            output_file_name_array.append({'data': output_file_path})
+        
+        return output_file_name_array
