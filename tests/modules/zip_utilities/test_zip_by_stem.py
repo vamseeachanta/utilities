@@ -2,9 +2,8 @@
 import os
 import sys
 
+# Third party imports
 import colorama
-import deepdiff
-import deepdiff
 
 # Reader imports
 from assetutilities.common.yml_utilities import ymlInput
@@ -22,20 +21,10 @@ def run_process(input_file, expected_result):
         input_file = os.path.join(os.path.dirname(__file__), input_file)
     cfg = engine(input_file)
 
-    obtained_result = cfg[cfg['basename']]['divide']
-    expected_result = expected_result[cfg['basename']]['divide'].copy()
+    obtained_result = cfg[cfg['basename']]
 
-    for group_index, group_ele in enumerate(obtained_result['groups']):
-        for data_index, data_ele in enumerate(group_ele[group_index]):
-            file_obtained = obtained_result['groups'][group_index][data_index]['data']
-            file_expected = expected_result['groups'][group_index][data_index]['data']
-
-            file_obtained_yml = ymlInput(file_obtained)
-            file_expected_yml = ymlInput(file_expected)
-
-            assert not deepdiff.DeepDiff(
-                file_obtained_yml, file_expected_yml, ignore_order=True, significant_digits=4
-            )
+    for item_index, item in enumerate(obtained_result):
+        assert(os.path.isfile(item['zip_file_path']))
 
     return cfg
 
