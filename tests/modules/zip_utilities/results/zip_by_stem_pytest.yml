@@ -1,4 +1,4 @@
-basename: zip_utilities
+basename: zip_utlities
 
 default:
   log_level: INFO
@@ -9,8 +9,6 @@ default:
 analysis_settings:
   flag: True
   by: stem
-  directory: csv
-  file_extensions: [csv]
 
 file_management:
   flag: True
@@ -19,7 +17,7 @@ file_management:
     files_in_current_directory:
       flag: False
       auto_read: True
-      directory: yml
-      file_extensions: [yml]
+      directory: csv
+      file_extensions: [csv]
       filename_pattern: NULL
     output_directory: NULL

@@ -32,7 +32,7 @@ def run_process(input_file, expected_result):
 
             file_obtained_yml = ymlInput(file_obtained)
             file_expected_yml = ymlInput(file_expected)
-            
+
             assert not deepdiff.DeepDiff(
                 file_obtained_yml, file_expected_yml, ignore_order=True, significant_digits=4
             )
