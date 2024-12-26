@@ -1,10 +1,13 @@
 # Standard library imports
+import logging
 import os
 from os.path import basename
 from zipfile import ZipFile
 
 # Reader imports
 from assetutilities.common.utilities import is_dir_valid_func
+
+
 
 class ZipUtilities:
     def __init__(self):
@@ -41,7 +44,7 @@ class ZipUtilities:
             files = []
             for file in os.listdir(input_file_directory):
                 for input_file_extension in input_file_extenstions:
-                    if file.endswith(input_file_extension):
+                    if file.__contains__(stem) and file.endswith(input_file_extension):
                         file_path = os.path.join(input_file_directory, file)
                         files.append(file_path)
 
@@ -56,6 +59,8 @@ class ZipUtilities:
         with ZipFile(zip_file_path, 'w') as zip:
             for file in files:
                 zip.write(file, basename(file))
+
+        logging.info(f"Zip file: {zip_name} ... SUCCESS")
 
         return zip_file_path
 
