@@ -16,7 +16,8 @@ Prior to pull request, make sure the branch is up to date with the master branch
 - You should be in the branch you are currently modifying (not master) 
 - First merge master into this branch: To do merging:
   - Under source control, click the three dots 
-  - Select in the menu Branch -> Merge Branch (see screenshot) 
+  - Select in the menu Branch -> Merge Branch (see screenshot)
+- ![merge branch with master](image-2.png) 
   - Select Master. 
   - Based on changes, 
     - It may have conflicts that need to be resolve manually, 
