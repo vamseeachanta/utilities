@@ -1,4 +1,5 @@
 # Standard library imports
+import os
 import logging
 import operator
 from datetime import datetime
@@ -396,7 +397,7 @@ class ReadData:
 
         with open(cfg["io"], "r") as f:
             for line in f:
-                all_lines.append(line.strip())
+                all_lines.append(line)
 
         start_line = 1
         end_line = len(all_lines)
@@ -588,7 +589,8 @@ class SaveData:
             with open(fileName + ".yml", "w") as f:
                 ruamel.yaml.round_trip_dump(data, f)
         else:
-            with open(fileName + ".yml", "w") as f:
+            file_path = fileName + ".yml"
+            with open(file_path, "w") as f:
                 yaml.dump(
                     data, f, default_flow_style=default_flow_style, sort_keys=sort_keys
                 )

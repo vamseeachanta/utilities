@@ -5,6 +5,8 @@ import os
 import matplotlib.pyplot as plt  # noqa
 import numpy as np
 import pandas as pd  # noqa
+from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+from PIL import Image
 
 
 class VisualizationCommon:
@@ -249,15 +251,71 @@ class VisualizationCommon:
 
         return marker_settings
 
+    def add_image_to_polar_plot(self, cfg, plt_settings,plt_properties):
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"].get("flag", False):
+
+            img_path = plt_settings['add_image']['image_path']
+            transparency = plt_settings['add_image']['transperancy']
+            r = plt_settings['add_image']['r']
+            theta = plt_settings['add_image']['theta_center']
+            
+            img = Image.open(img_path)
+
+            im_array = np.array(img.convert("RGBA"))
+            im_array[:, :, 3] = (im_array[:, :, 3].astype(float) * transparency).astype(np.uint8)
+    
+            fig = plt_properties["fig"]
+            ax = plt_properties["ax"]
+
+            # theta_center = theta  
+            theta_center = np.radians(theta)
+            r_center = r 
+            zoom_factor = 0.5
+
+            image_box = OffsetImage(im_array, zoom=zoom_factor)
+    
+            ab = AnnotationBbox(image_box, (theta_center, r_center), frameon=False, xycoords='polar')
+            
+            ax.add_artist(ab)   
+            #ax.set_ylim(0, 14)
+    
+            # plt.show() 
+            #plt.savefig('docs/leg_pycodes/polar_plot_delete.png')
+
+    def add_image_to_xy_plot(self, cfg, plt_settings):
+        plt_properties = None
+        if "add_image" in cfg["settings"] and cfg["settings"]["add_image"].get("flag", False):
+
+            img_path = plt_settings['add_image']['image_path']
+            transparency = plt_settings['add_image']['transperancy']
+            x = plt_settings['add_image']['x']
+            y = plt_settings['add_image']['y']
+            img = Image.open(img_path)
+
+            fig, ax = plt.subplots()
+            # ax = plt_properties['ax']
+            
+            image_extent = [x['min'], x['max'], y['min'], y['max']]
+            # image_extent = [-2, 1, -2, 1] 
+
+            # Add the image to the plot
+            # ax.imshow(img, extent=image_extent, alpha=transparency, zorder=-1)
+            ax.imshow(img, aspect='auto', extent=image_extent, alpha=transparency, zorder=-1)
+
+            plt_properties = {"fig": fig, "ax": ax, "plt": plt}
+        else:
+            print("add_image data is not available")    
+
+
+        return plt_properties
+
     def get_plot_properties_for_df(self, cfg, df):
 
         plot_count_dict = self.get_plot_count_array_for_df(cfg)
         cfg["settings"]["color"] = self.get_plot_colors_for_df(plot_count_dict, cfg)
-        cfg["settings"]["linestyle"] = self.get_plot_linestyle_for_df(plot_count_dict)
-        cfg["settings"]["markerprops"] = self.get_plot_markerprops_for_df(
-            plot_count_dict
-        )
-        cfg["settings"]["alpha"] = self.get_plot_alpha_for_df(plot_count_dict)
+        cfg["settings"]["linestyle"] = self.get_plot_linestyle_for_df(cfg, plot_count_dict)
+        cfg["settings"]["markerprops"] = self.get_plot_markerprops_for_df(cfg, plot_count_dict)
+        cfg["settings"]["alpha"] = self.get_plot_alpha_for_df(cfg, plot_count_dict)
 
         return cfg
 
@@ -295,8 +353,6 @@ class VisualizationCommon:
 
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
         if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
             repeat_flag = False
 
@@ -310,7 +366,7 @@ class VisualizationCommon:
 
         return color_list
 
-    def get_plot_linestyle_for_df(self, plot_count_dict, key="linestyle"):
+    def get_plot_linestyle_for_df(self, cfg, plot_count_dict, key="linestyle"):
 
         default_linestyle_list = ["-", "--", "-.", ":"]
         x_count_array = plot_count_dict["x_count_array"]
@@ -318,8 +374,8 @@ class VisualizationCommon:
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         linestyle_list = []
         if repeat_flag:
@@ -328,11 +384,14 @@ class VisualizationCommon:
             ):
                 linestyle_list = linestyle_list + [linestyle_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, linestyle_item in zip(
+                plot_count_array, default_linestyle_list
+            ):
+                linestyle_list = linestyle_list + [default_linestyle_list[0]] * plot_count
 
         return linestyle_list
 
-    def get_plot_markerprops_for_df(self, plot_count_dict, key="marker"):
+    def get_plot_markerprops_for_df(self, cfg, plot_count_dict, key="marker"):
 
         default_marker_list = [
             "o",
@@ -351,21 +410,20 @@ class VisualizationCommon:
             "P",
             "X",
         ]
-        default_markersize_list = [4, 5, 6, 7]
+        default_markersize_list = [2, 2, 2, 2]
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # x_count_array = plot_count_dict['x_count_array']
-        # y_count_array = plot_count_dict['y_count_array']
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         marker_list = []
         if repeat_flag:
             for plot_count, marker_item in zip(plot_count_array, default_marker_list):
                 marker_list = marker_list + [marker_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, marker_item in zip(plot_count_array, default_marker_list):
+                marker_list = marker_list + [None] * plot_count
 
         markersize_list = []
         if repeat_flag:
@@ -374,7 +432,10 @@ class VisualizationCommon:
             ):
                 markersize_list = markersize_list + [markersize_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, markersize_item in zip(
+                plot_count_array, default_markersize_list
+            ):
+                markersize_list = markersize_list + [None] * plot_count
 
         markerprops_list = []
         for marker, markersize in zip(marker_list, markersize_list):
@@ -382,22 +443,23 @@ class VisualizationCommon:
 
         return markerprops_list
 
-    def get_plot_alpha_for_df(self, plot_count_dict, key="alpha"):
+    def get_plot_alpha_for_df(self, cfg, plot_count_dict, key="alpha"):
 
-        default_alpha_list = [round(1 - n * 0.05, 2) for n in range(0, 10)]
+        default_alpha_list = [round(1 - n * 0.05, 2) for n in range(0, 20)]
         x_count_array = plot_count_dict["x_count_array"]
         y_count_array = plot_count_dict["y_count_array"]
         plot_count_array = plot_count_dict["plot_count_array"]
 
         repeat_flag = True
-        # if len(list(set(x_count_array))) != 1 or len(list(set(y_count_array))) != 1:
-        #     repeat_flag = False
+        if 'pairs' in cfg['settings'] and not cfg['settings']['pairs']:
+            repeat_flag = False
 
         alpha_list = []
         if repeat_flag:
             for plot_count, alpha_item in zip(plot_count_array, default_alpha_list):
                 alpha_list = alpha_list + [alpha_item] * plot_count
         else:
-            raise ValueError("Not implemented")
+            for plot_count, alpha_item in zip(plot_count_array, default_alpha_list):
+                alpha_list = alpha_list + [default_alpha_list[0]] * plot_count
 
         return alpha_list

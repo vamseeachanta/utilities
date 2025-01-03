@@ -196,13 +196,15 @@ class ConfigureApplicationInputs:
         self.get_custom_file()
         if not os.path.isfile(self.ApplicationInputFile):
             try:
-                self.ApplicationInputFile = (
-                    "tests/test_data/" + self.basename + "/" + self.basename + ".yml"
+                filename = os.path.join('base_configs', 'modules', self.basename, self.basename + '.yml')
+                self.ApplicationInputFile = filename
+                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
+            except Exception:
+                raise FileNotFoundError(
+                    "Application input file {0} not found".format(
+                        self.ApplicationInputFile
+                    )
                 )
-                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
-            except:
-                self.ApplicationInputFile = "tests/test_data/" + self.basename + ".yml"
-                data = pkgutil.get_data(library_name, self.ApplicationInputFile)
             self.ApplicationInputFile_dict = yaml.safe_load(data)
 
         # Get updated configuration file for Analysis
@@ -357,8 +359,8 @@ class ConfigureApplicationInputs:
         self.cfg = AttributeDict(self.cfg)
 
 
-class SaveApplicationResults:
-
+class SaveApplicationResults_superseded:
+    # TODO Delete after 02/01/2025
     def __init__(self):
         pass
 

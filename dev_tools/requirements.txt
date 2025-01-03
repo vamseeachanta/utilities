@@ -22,18 +22,16 @@ pandoc
 wkhtmltopdf
 python-docx
 
+
 black
 isort
-poetry
+# poetry # why do we need poetry here? we are not using it anywhere. we use setup tools instead now.
+
+scrapy
+bs4
 
 gitpython==3.1.31
-
-
 excel2img; sys_platform == 'win32'
-
- 
-
-
 
 # imp
 # git
@@ -41,6 +39,8 @@ excel2img; sys_platform == 'win32'
 # pdfannots
 # fitz
 # camelot
-# tabula
 # GitPython
-# PyPDF2
+# siva - adding this to make ``python -m assetutilities ./test_data/visualization/visualization_polar_plotly.yml``
+PyPDF2
+tabula
+sympy>=1.13.3

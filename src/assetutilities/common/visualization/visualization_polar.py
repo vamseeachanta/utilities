@@ -1,9 +1,9 @@
 
 # Third party imports
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt #noqa
+from matplotlib import gridspec
 import numpy as np
 import pandas as pd
-
 
 # Reader imports
 from assetutilities.common.visualization.visualization_common import VisualizationCommon
@@ -16,14 +16,16 @@ class VisualizationPolar:
     def __init__(self):
         pass
 
-    def polar_plot_set_up(self, cfg, plt_settings):
+    def polar_plot_set_up_and_save(self, cfg, plt_settings):
         data_df = self.get_polar_data(cfg)
         plt_settings["traces"] = int(len(data_df.columns) / 2)
         if cfg["settings"]["plt_engine"] == "plotly":
-            plt = self.get_polar_plot_plotly(data_df, plt_settings)
+            plt_properties = self.get_polar_plot_plotly(data_df, plt_settings)
+            visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
             self.save_polar_plot_and_close_plotly(plt, cfg)
         elif cfg["settings"]["plt_engine"] == "matplotlib":
             plt_properties = self.get_polar_plot_matplotlib(data_df, plt_settings, cfg)
+            visualization_common.add_image_to_polar_plot(cfg, plt_settings,plt_properties)
             self.save_polar_plot_and_close_matplotlib(plt_properties, cfg)
 
     def get_polar_data(self, cfg):
@@ -69,7 +71,7 @@ class VisualizationPolar:
         return rect_polar
 
     def get_polar_plot_plotly(self, df, plt_settings):
-        if plt_settings["plt_kind"] == "polar":
+        if "plt_kind" in plt_settings and plt_settings["plt_kind"] == "polar":
             # Radial line
 
             plt.polar(df["x"], df["y"], label=plt_settings["label"])
@@ -80,12 +82,14 @@ class VisualizationPolar:
 
             plt = px.scatter_polar(df, r=df["r_0"], theta=df["theta_0"])
 
-        return plt
+        plt_properties = {"plt": plt, "fig": None}
+
+        return plt_properties
 
     def get_polar_plot_matplotlib(self, df, plt_settings, cfg):
 
-        # Third party imports
-        import matplotlib.pyplot as plt
+        import matplotlib.pyplot as plt #noqa
+
 
         if (
             "plt_properties" in plt_settings
@@ -101,6 +105,7 @@ class VisualizationPolar:
             fig, ax = plt.subplots(
                 subplot_kw={"projection": "polar"}, facecolor=facecolor, alpha=alpha
             )
+
         else:
             fig = plt_settings["plt_properties"]["fig"]
             rect = plt_settings["rect"]
@@ -113,29 +118,38 @@ class VisualizationPolar:
 
         # Add trace or plot style
         for index in range(0, plt_settings["traces"]):
-            if plt_settings["type"][index] == "polar":
+
+            label = None
+            if "legend" in plt_settings:
+                label=plt_settings["legend"]["label"][index]
+            
+            if plt_settings["type"] == "polar":
                 ax.plot(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     color=cfg["data"]["color"][index],
                     linestyle=cfg["data"]["linestyle"][index],
                     alpha=cfg["data"]["alpha"][index],
                 )
-            elif plt_settings["type"][index] == "polar_scatter":
+            elif plt_settings["type"] == "polar_scatter":
                 ax.scatter(
                     df["theta_" + str(index)],
                     df["r_" + str(index)],
-                    label=plt_settings["legend"]["label"][index],
+                    label=label,
                     color=cfg["data"]["color"][index],
                     linestyle=cfg["data"]["linestyle"][index],
                     alpha=cfg["data"]["alpha"][index],
                 )
 
-        legend_flag = plt_settings["legend"].get("flag", True)
+        legend_flag = True
+        if "legend" in plt_settings:
+            legend_flag = plt_settings["legend"].get("flag", True)
         if legend_flag:
             ax.legend(loc="best")
-            prop = plt_settings["legend"].get("prop", None)
+            prop = None
+            if "legend" in plt_settings and "prop" in plt_settings["legend"]:
+                prop = plt_settings["legend"].get("prop", None)
             if prop is not None:
                 plt.legend(prop=prop)
 
@@ -172,7 +186,9 @@ class VisualizationPolar:
         if "add_axes" in cfg and len(cfg.add_axes) > 0:
             visualization_common.add_axes_to_plt(plt_properties, cfg)
 
-        return {"plt": plt, "fig": fig}
+        plt_properties = {"plt": plt,"fig": fig, "ax": ax}
+
+        return plt_properties
 
     def save_polar_plot_and_close_plotly(self, plt, cfg):
         plot_name_paths = self.get_plot_name_path(cfg)
@@ -190,3 +206,5 @@ class VisualizationPolar:
         plt = plt_properties["plt"]
         for file_name in plot_name_paths:
             plt.savefig(file_name, dpi=800)
+
+        plt.close()

@@ -21,7 +21,6 @@ def get_module_path(module=None):
     module_path = module_info[1]
     return module_path
 
-
 # Determine if file is valid
 def is_dir_valid_func(dir, analysis_root_folder=None):
     dir_is_valid = True

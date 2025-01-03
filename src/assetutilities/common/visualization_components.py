@@ -1,16 +1,14 @@
 # Standard library imports
 import logging
+import copy
 
 # Reader imports
 from assetutilities.common.update_deep import update_deep_dictionary
-from assetutilities.common.visualization.visualization_xy import VisualizationXY
 from assetutilities.common.visualization.visualization_polar import VisualizationPolar
+from assetutilities.common.visualization.visualization_xy import VisualizationXY
 
 
 class VisualizationComponents:
-    # https://plot.ly/python/v3/fft-filters/
-    # http://scipy-lectures.org/intro/scipy/auto_examples/plot_fftpack.html
-    # https://dsp.stackexchange.com/questions/724/low-pass-filter-and-fft-for-beginners-with-python
 
     def __init__(self, cfg=None):
         self.cfg = cfg
@@ -23,13 +21,13 @@ class VisualizationComponents:
         plt_settings = cfg["settings"]
         if "polar" in cfg["settings"]["type"]:
             visualization_polar = VisualizationPolar()
-            visualization_polar.polar_plot_set_up(cfg, plt_settings)
+            visualization_polar.polar_plot_set_up_and_save(cfg, plt_settings)
         elif "xy" in cfg["settings"]["type"]:
             visualization_xy = VisualizationXY()
             visualization_xy.xy_plot_set_up_and_save(cfg, plt_settings)
         else:
             raise (Exception("Other plots coding to be completed ... FAIL"))
-
+        
         logging.info("Starting visualization application ...")
 
     def get_cfg_with_master_data(self, cfg):
@@ -40,6 +38,6 @@ class VisualizationComponents:
             for group_index in range(0, len(data_settings["groups"])):
                 group = data_settings["groups"][group_index].copy()
                 group = update_deep_dictionary(master_settings["groups"], group)
-                data_settings["groups"][group_index] = group.copy()
+                data_settings["groups"][group_index] = copy.deepcopy(group)
 
         return cfg
