@@ -94,8 +94,8 @@
             "type": "bashdb",
             "request": "launch",
             "name": "Bash simple",
-            // "cwd": "${workspaceFolder}",
-            "cwd": "k:/github/assetutilities",
+            "cwd": "${workspaceFolder}",
+            // "cwd": "k:/github/assetutilities",
             "program": "${file}",
             "terminalKind": "integrated"   <---- This attaches the integrated terminal.
         },
