@@ -16,7 +16,7 @@ log_message() {
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
     local msg=${timestamp}" | ${0} | "$2
-    
+
     case $color in
         "red") echo -e "${RED}$msg${RESET}" ;;
         "green") echo -e "${GREEN}$msg${RESET}" ;;

@@ -19,13 +19,11 @@ else
   git checkout -b $branch_name
 fi
 
-
 # perform git operations
 git pull
 git add --all
 git commit -m "$today"
 git push
-
 
 repo_name=$(basename $(git rev-parse --show-toplevel))
 bash_tools_home="dev_tools/bash_tools"
