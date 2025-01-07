@@ -8,6 +8,10 @@ agents:
         parameters:
           data: "data.csv"
           method: "analyze"
+    references:
+      - steve jobs books
+      - documents
+      - websites
 
   - name: python_programmer
     notes: Based on clean code programmer uncle bob
@@ -17,6 +21,15 @@ agents:
         description: "Write Python code"
         parameters:
           code: "print('Hello, World!')"
+    references:
+      - folder
+      - documents
+      - websites
+    principles:
+      - clean code
+      - DRY
+      - keep it simple stupid
+      - etc.
 
   - name: devops_engineer
     notes: Based on devops ci-cd
