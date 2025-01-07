@@ -70,3 +70,6 @@ Mathew versaggi
 https://www.linkedin.com/posts/johnrushx_ive-replaced-100-of-my-marketing-sales-activity-7274649527326756864-b7UM?utm_source=share&utm_medium=member_desktop
 
 https://github.com/microsoft/generative-ai-for-beginners
+
+
+https://blogs.microsoft.com/on-the-issues/2025/01/03/the-golden-opportunity-for-american-ai/
