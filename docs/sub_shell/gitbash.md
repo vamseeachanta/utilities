@@ -1,4 +1,10 @@
 
+
+# Common commands
+
+
+
+
 https://stackoverflow.com/questions/69064682/javascript-debug-terminal-keeps-opening-using-powershell-instead-of-git-bash
 
 "terminal.integrated.profiles.windows": {
