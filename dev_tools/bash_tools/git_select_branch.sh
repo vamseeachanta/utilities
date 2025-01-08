@@ -19,8 +19,7 @@ branch_name=$year_month
 # Check current branch matches branch_name
 current_branch=$(git branch --show-current)
 if [ "$current_branch" == "$branch_name" ]; then
-  echo "Already on branch $branch_name"
-  exit 1
+
 else
   git fetch
   # if branch exists at origin, checkout else create new branch, checkout and push to origin

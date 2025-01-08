@@ -1,0 +1,9 @@
+name: devops_engineer
+  notes: Based on devops ci-cd
+  role: "Manages CI/CD pipelines"
+  tasks:
+    - task_id: 1
+      description: "Deploy code"
+      parameters:
+        code: "code.zip"
+        method: "deploy"

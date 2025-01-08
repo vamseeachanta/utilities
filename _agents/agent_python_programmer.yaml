@@ -1,4 +1,4 @@
-- name: python_programmer
+name: python_programmer
   notes: Based on clean code principles (Uncle Bob's best practices)
   role: 
     - clean code
@@ -42,6 +42,8 @@
 
   principles:
     - Follow PEP8 guidelines for code style
+    - use 4 spaces indent, no tabs!
+    - use snake case (using underscores)
     - Use meaningful variable and function names
     - DRY (Don't Repeat Yourself)
     - Keep It Simple, Stupid (KISS)
@@ -56,7 +58,7 @@
         - os
         - sys
         - logging
-  
+
   development_environment:
     python_version: ">=3.7"
     tools:
