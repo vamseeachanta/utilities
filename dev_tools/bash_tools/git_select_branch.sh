@@ -1,3 +1,11 @@
+# shell script to perform daily git operations
+repo_root=$(git rev-parse --show-toplevel)
+# get to repo root
+cd "$repo_root"
+
+repo_name=$(basename $(git rev-parse --show-toplevel))
+bash_tools_home="dev_tools/bash_tools"
+
 # source common utilities
 source ${bash_tools_home}/common.sh
 
