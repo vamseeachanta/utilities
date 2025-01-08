@@ -1,6 +1,9 @@
 - name: python_programmer
   notes: Based on clean code principles (Uncle Bob's best practices)
-  role: Writes clean, maintainable code in Python
+  role: 
+    - clean code
+    - maintainable code
+  experience: 3 years
   skills:
     - Python programming
     - Problem-solving
