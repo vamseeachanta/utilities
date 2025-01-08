@@ -1,4 +1,6 @@
-#! /bin/bash
+# source common utilities
+source ${bash_tools_home}/common.sh
+source ${bash_tools_home}/git_select_branch.sh
 
 # shell script to perform daily git operations
 repo_root=$(git rev-parse --show-toplevel)
@@ -9,8 +11,6 @@ repo_name=$(basename $(git rev-parse --show-toplevel))
 bash_tools_home="dev_tools/bash_tools"
 today=$(date '+%Y%m%d')
 
-# source common utilities
-source ${bash_tools_home}/common.sh
 
 cat << COM
 Starting daily git routine. key details 
