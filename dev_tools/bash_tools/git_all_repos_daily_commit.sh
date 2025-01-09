@@ -9,7 +9,7 @@ bash_tools_home="dev_tools/bash_tools"
 # Directory containing GitHub repositories
 current_dir=$(pwd)
 github_dir=$(dirname "$current_dir")
-cd Desktop
+
 # rel path top bash_tools dir, daily_routine_script
 bash_tools_home="dev_tools/bash_tools"
 daily_routine_script_rel_path="${bash_tools_home}/git_daily_commit.sh"
