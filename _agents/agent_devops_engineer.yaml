@@ -20,7 +20,7 @@
       parameters:
       input: "Pipeline logs or error messages"
       output: "Diagnosed root cause and suggested fixes"
-    - task_id: 4
+    - task_id: 3
       description: "Set up automated testing in CI pipeline"
       parameters:
       input: "Test framework and application details"
@@ -32,7 +32,7 @@
       - resolve the errors in file paths
       - Optimize a slow-running Python script
       - resolve the errors occur in the deployment process
-      - Debug pipeline issues
+      - Debug pipeline failures 
     
   principles:
   - Automate repetitive tasks
