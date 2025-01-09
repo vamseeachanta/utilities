@@ -1,4 +1,4 @@
-name: python_programmer
+- name: python_programmer
   notes: Based on clean code principles (Uncle Bob's best practices)
   role: 
     - clean code
@@ -26,7 +26,7 @@ name: python_programmer
 
   problem_solving_approach:
     methodology:
-      - Understand: Understand the problem statement completely point to point
+      - Understand: Understand the problem statement completely point to point.
       - Plan: Break down the problem into smaller, manageable tasks if it is hard to understand
       - Code: Write clean, readable and maintainable Python code
       - Test: Validate functionality with appropriate test cases
