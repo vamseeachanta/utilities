@@ -16,13 +16,13 @@ cd "$repo_root"
 year_month=$(date '+%Y%m')
 year_month_branch_name=$year_month
 
-# Check current branch matches branch_name
+# Check current branch matches year_month_branch_name
 current_branch=$(git branch --show-current)
 if [ "$current_branch" == "$year_month_branch_name" ]; then
-
+  source ${bash_tools_home}/git_daily_commit.sh
 else
   git fetch
-  # if branch exists at origin, checkout else create new branch, checkout and push to origin
+  # if branch exists at origin, checkout else create new year_month_branch_name, checkout and push to origin
   if git ls-remote --heads origin $year_month_branch_name | grep -q $year_month_branch_name; then
     echo "Branch $year_month_branch_name exists"
     git checkout -b $year_month_branch_name origin/$year_month_branch_name

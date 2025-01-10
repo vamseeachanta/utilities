@@ -44,10 +44,13 @@ for branch in "${branches[@]}"; do
                     echo "GitHub CLI not installed. Skipping PR creation for $branch"
                 fi
 
-                # Delete local branch
-                git checkout "$DEFAULT_BRANCH"
-                git branch -D "$branch"
-                echo "Successfully processed $branch"
+                if [ "$current_branch" == "$year_month_branch_name" ]; then
+                    echo "Skipping branch deletion: $year_month_branch_name"
+                else
+                    # Delete local branch
+                    git checkout "$year_month_branch_name"
+                    git branch -D "$branch"
+                    echo "Successfully processed $branch"
             else
                 echo "Failed to push $branch to origin"
             fi
