@@ -12,24 +12,27 @@ get_default_branch() {
 # Get the default branch name
 DEFAULT_BRANCH=$(get_default_branch)
 
-# Store current branch
+# Store year_month_branch_name and current branch
+year_month=$(date '+%Y%m')
+year_month_branch_name=$year_month
 CURRENT_BRANCH=$(git branch --show-current)
 
 # Fetch latest changes from remote
 git fetch origin
 
 # Get all local branches except the default branch
-LOCAL_BRANCHES=$(git branch | grep -v "^*" | grep -v "$DEFAULT_BRANCH" | tr -d ' ')
+branches=()
+eval "$(git for-each-ref --shell --format='branches+=(%(refname))' refs/heads/)"
 
 # Process each local branch
-for branch in $LOCAL_BRANCHES; do
+for branch in "${branches[@]}"; do
     echo "Processing branch: $branch"
-    
+
     # Checkout the branch
     if git checkout "$branch"; then
         # Update the default branch
         git fetch origin "$DEFAULT_BRANCH":"$DEFAULT_BRANCH"
-        
+
         # Merge default branch into current branch
         if git merge "$DEFAULT_BRANCH"; then
             # Push to origin
