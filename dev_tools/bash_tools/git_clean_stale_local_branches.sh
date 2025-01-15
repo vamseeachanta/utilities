@@ -26,10 +26,10 @@ eval "$(git for-each-ref --shell --format='branches+=(%(refname))' refs/heads/)"
 
 # Process each local branch
 for branch in "${branches[@]}"; do
-    echo "Processing branch: $$(basename "$branch")"
+    echo "Processing branch: $(basename "$branch")"
 
     # Checkout the branch
-    if git checkout "$$(basename "$branch")"; then
+    if git checkout "$(basename "$branch")"; then
         # Update the default branch
         git fetch origin "$MAIN_BRANCH":"$MAIN_BRANCH"
 
