@@ -51,6 +51,7 @@ for branch in "${branches[@]}"; do
                     git checkout "$year_month_branch_name"
                     git branch -D "$branch"
                     echo "Successfully processed $branch"
+                fi
             else
                 echo "Failed to push $branch to origin"
             fi
