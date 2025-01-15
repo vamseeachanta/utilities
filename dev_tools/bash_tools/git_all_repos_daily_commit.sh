@@ -6,6 +6,9 @@ cd "$repo_root"
 repo_name=$(basename $(git rev-parse --show-toplevel))
 bash_tools_home="dev_tools/bash_tools"
 
+# source common utilities
+source ${bash_tools_home}/common.sh
+
 # Directory containing GitHub repositories
 current_dir=$(pwd)
 github_dir=$(dirname "$current_dir")
@@ -13,28 +16,8 @@ github_dir=$(dirname "$current_dir")
 # rel path top bash_tools dir, daily_routine_script
 bash_tools_home="dev_tools/bash_tools"
 daily_routine_script_rel_path="${bash_tools_home}/git_daily_commit.sh"
-daily_routine_script_abs_path="${bash_tools_home}/git_daily_commit.sh"
-
-# Define ANSI color codes as static variables
-readonly RED="\033[31m"
-readonly GREEN="\033[32m"
-readonly YELLOW="\033[33m"
-readonly NORMAL="\033[37m"  # Normal/White Color
-readonly RESET="\033[0m"
-
-# Print a message with timestamp
-log_message() {
-    local color=$1
-    local msg=$2
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    case $color in
-        "red") echo -e "${RED}$msg${RESET}" ;;
-        "green") echo -e "${GREEN}$msg${RESET}" ;;
-        "yellow") echo -e "${YELLOW}$msg${RESET}" ;;
-        "normal") echo -e "${NC}$msg${RESET}" ;;
-    esac
-    echo "[${timestamp}] ${msg}" # >> "${LOG_FILE}"
-}
+clean_stale_branches_rel_path="${bash_tools_home}/git_clean_stale_local_branches.sh"
+select_year_month_branch_rel_path = "${bash_tools_home}/git_select_year_month_branch.sh"
 
 cd ${github_dir}
 log_message "normal" "Starting repository check-in routine process in $(pwd)..."
@@ -66,8 +49,39 @@ for dir in "$github_dir"/*/ ; do
                     log_message "green" "Daily routine completed in $(basename "$dir") ..."
                 fi
             fi
+
+            clean_stale_branches_script = "${dir}/${clean_stale_branches_rel_path}"
+            if [ -f "$clean_stale_branches_script" ]; then
+                log_message "green" "Running clean stale branches script in $(basename "$dir") ..."
+                bash "$clean_stale_branches_script"
+                log_message "green" "Clean stale branches completed in $(basename "$dir") ..."
+            else
+                # Execute clean stale branches script from assetutilities if it exists
+                log_message "red" "Clean stale branches script not found: $clean_stale_branches_script"
+                clean_stale_branches_script="assetutilities/${clean_stale_branches_rel_path}"
+                if [ -f "$clean_stale_branches_script" ]; then
+                    log_message "green" "Running clean stale branches script in $(basename "$dir") ..."
+                    bash "$clean_stale_branches_script"
+                    log_message "green" "Clean stale branches completed in $(basename "$dir") ..."
+                fi
+            fi
+
         else
             log_message "green" "No changes detected in $(basename "$dir") ..."
+        fi
+
+        select_year_month_branch_script="${dir}/${select_year_month_branch_rel_path}"
+        if [ -f "$select_year_month_branch_script" ]; then
+            bash "$select_year_month_branch_script"
+            log_message "green" "Select year_month branch completed in $(basename "$dir") ..."
+        else
+            # Execute select branch script from assetutilities if it exists
+            log_message "red" "Select branch script not found: $select_year_month_branch_script"
+            select_year_month_branch_script="assetutilities/${select_year_month_branch_script}"
+            if [ -f "$select_year_month_branch_script" ]; then
+                bash "$select_year_month_branch_script"
+                log_message "green" "Select year_month branch completed in $(basename "$dir") ..."
+            fi
         fi
     fi
 done

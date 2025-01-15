@@ -26,6 +26,7 @@ log_message() {
     esac
 }
 
+
 pause_for_user() {
     read -n 1 -s -r -p "Pausing - press any key to continue... "
     echo -e "\n"

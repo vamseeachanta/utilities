@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Function to determine if we're using 'main' or 'master' as the default branch
-get_default_branch() {
+get_main_branch() {
     if git rev-parse --verify origin/main >/dev/null 2>&1; then
         echo "main"
     else
@@ -10,7 +10,7 @@ get_default_branch() {
 }
 
 # Get the default branch name
-DEFAULT_BRANCH=$(get_default_branch)
+MAIN_BRANCH=$(get_main_branch)
 
 # Store year_month_branch_name and current branch
 year_month=$(date '+%Y%m')
@@ -31,20 +31,20 @@ for branch in "${branches[@]}"; do
     # Checkout the branch
     if git checkout "$branch"; then
         # Update the default branch
-        git fetch origin "$DEFAULT_BRANCH":"$DEFAULT_BRANCH"
+        git fetch origin "$MAIN_BRANCH":"$MAIN_BRANCH"
 
         # Merge default branch into current branch
-        if git merge "$DEFAULT_BRANCH"; then
+        if git merge "$MAIN_BRANCH"; then
             # Push to origin
             if git push origin "$branch"; then
                 # Create pull request using GitHub CLI if installed
                 if command -v gh &> /dev/null; then
-                    gh pr create --base "$DEFAULT_BRANCH" --head "$branch" --title "Merge $branch into $DEFAULT_BRANCH" --body "Automated PR created by maintenance script"
+                    gh pr create --base "$MAIN_BRANCH" --head "$branch" --title "Merge $branch into $MAIN_BRANCH" --body "Automated PR created by maintenance script"
                 else
                     echo "GitHub CLI not installed. Skipping PR creation for $branch"
                 fi
 
-                if [ "$current_branch" == "$year_month_branch_name" ]; then
+                if [ "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
                     echo "Skipping branch deletion: $year_month_branch_name"
                 else
                     # Delete local branch
@@ -55,7 +55,7 @@ for branch in "${branches[@]}"; do
                 echo "Failed to push $branch to origin"
             fi
         else
-            echo "Failed to merge $DEFAULT_BRANCH into $branch"
+            echo "Failed to merge $MAIN_BRANCH into $branch"
         fi
     else
         echo "Failed to checkout $branch"
