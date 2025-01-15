@@ -8,7 +8,7 @@ bash_tools_home="dev_tools/bash_tools"
 
 # source common utilities
 source ${bash_tools_home}/common.sh
-source ${bash_tools_home}/git_select_branch.sh
+# source ${bash_tools_home}/git_select_year_month_branch.sh
 
 today=$(date '+%Y%m%d')
 
@@ -30,7 +30,4 @@ git add --all
 git commit -m "$today"
 git push
 
-# todo convert this to green.
-# standardize the shell scripts in both assetutilities (2024-aug) and digitalmodel  (202409)
-# make changes or tag vamsee 
 log_message "green" "Repo : ${repo_name} : Daily git operations completed"
