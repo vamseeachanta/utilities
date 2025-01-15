@@ -1,0 +1,7 @@
+<<<<<<< HEAD:src/assetutilities/tests/test_data/data_exploration/results/df_statistics_row_count_per_unique_values_T.csv
+Heading,Cx,Cy,Cz,Cnx,Cny,"Cnz,Cnzz",input_file
+=======
+Heading,Cx,Cy,Cz,Cnx,Cny,"Cnzz,Cnz",input_file
+>>>>>>> main:tests/modules/data_exploration/results/df_statistics_row_count_per_unique_values_T.csv
+1.0,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,FST1
+1.0,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,1.0416666666666667,FST2

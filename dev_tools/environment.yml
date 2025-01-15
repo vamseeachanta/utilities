@@ -6,6 +6,7 @@ dependencies:
   - python=3.11
   - pip
   - pip:
+<<<<<<< HEAD
       - assetutilities
 
       - build
@@ -50,3 +51,8 @@ dependencies:
       # - tabula
       # - GitPython
       # - PyPDF2
+=======
+      - -r requirements.txt  # source pip specific requirements 
+#       - -r dev_tools/requirements.txt  # source pip specific requirements 
+
+>>>>>>> main

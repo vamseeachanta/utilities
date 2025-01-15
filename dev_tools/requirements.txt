@@ -22,6 +22,7 @@ pandoc
 wkhtmltopdf
 python-docx
 
+<<<<<<< HEAD
 black
 isort
 poetry
@@ -35,12 +36,33 @@ excel2img; sys_platform == 'win32'
 
 
 
+=======
+
+black
+isort
+# poetry # why do we need poetry here? we are not using it anywhere. we use setup tools instead now.
+
+scrapy
+bs4
+
+gitpython==3.1.31
+excel2img; sys_platform == 'win32'
+
+>>>>>>> main
 # imp
 # git
 # popplerqt5 Only available in linux systems
 # pdfannots
 # fitz
 # camelot
+<<<<<<< HEAD
 # tabula
 # GitPython
 # PyPDF2
+=======
+# GitPython
+# siva - adding this to make ``python -m assetutilities ./test_data/visualization/visualization_polar_plotly.yml``
+PyPDF2
+tabula
+sympy>=1.13.3
+>>>>>>> main

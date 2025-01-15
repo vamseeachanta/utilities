@@ -1,4 +1,8 @@
 # Standard library imports
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> main
 import logging
 import operator
 from datetime import datetime
@@ -588,7 +592,12 @@ class SaveData:
             with open(fileName + ".yml", "w") as f:
                 ruamel.yaml.round_trip_dump(data, f)
         else:
+<<<<<<< HEAD
             with open(fileName + ".yml", "w") as f:
+=======
+            file_path = fileName + ".yml"
+            with open(file_path, "w") as f:
+>>>>>>> main
                 yaml.dump(
                     data, f, default_flow_style=default_flow_style, sort_keys=sort_keys
                 )

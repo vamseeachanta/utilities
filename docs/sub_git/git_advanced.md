@@ -9,6 +9,26 @@ Git is a Verson control tool
 Other history using flog
 ![alt text](image-1.png)
 
+<<<<<<< HEAD
+=======
+### Pull Request
+
+Prior to pull request, make sure the branch is up to date with the master branch. The key steps in VS Code are below
+
+- You should be in the branch you are currently modifying (not master) 
+- First merge master into this branch: To do merging:
+  - Under source control, click the three dots 
+  - Select in the menu Branch -> Merge Branch (see screenshot)
+- ![merge branch with master](image-2.png) 
+  - Select Master. 
+  - Based on changes, 
+    - It may have conflicts that need to be resolve manually, 
+    - Following conflict resolution, should be clear to go.
+
+<https://phoenixnap.com/kb/git-merge-master-into-branch>
+<https://www.git-tower.com/learn/git/faq/git-pull-origin-master>
+
+>>>>>>> main
 ## Rebase
 
 - Manipulate commmits message

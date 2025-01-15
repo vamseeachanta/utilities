@@ -32,4 +32,6 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest src/assetutilities/tests
+          python tests/modules/all_yml_tests/test_all_yml.py
+          pytest tests/modules/pipeline/test_pipeline.py
+

@@ -26,6 +26,8 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
-      - name: Test with pytest
+      - name: All YML Tests Count | Check
         run: |
-          pytest src/assetutilities/tests
+         python tests/modules/all_yml_tests/test_all_yml.py
+          pytest tests/modules/pipeline/test_pipeline.py
+

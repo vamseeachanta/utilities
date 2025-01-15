@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# Standard library imports
+>>>>>>> main
 import importlib.util
 import os
 import pkgutil
@@ -5,19 +9,30 @@ import types
 from collections.abc import Mapping
 from pathlib import Path
 
+<<<<<<< HEAD
 import yaml
 from deepdiff import DeepDiff
 
+=======
+# Third party imports
+import yaml
+from deepdiff import DeepDiff
+
+# Reader imports
+>>>>>>> main
 from assetutilities.common.data import ReadData
 from assetutilities.common.saveData import saveDataYaml
 from assetutilities.common.utilities import (
     get_common_name_from_2_filenames,
     is_file_valid_func,
 )
+<<<<<<< HEAD
 from assetutilities.common.utilities import (
     get_common_name_from_2_filenames,
     is_file_valid_func,
 )
+=======
+>>>>>>> main
 
 read_data = ReadData()
 
@@ -31,6 +46,7 @@ yaml.add_representer(type(None), represent_none)
 
 def ymlInput(defaultYml, updateYml=None):
 
+<<<<<<< HEAD
     if not is_file_valid_func(defaultYml):
         raise Exception("Not valid file. Please check the file path.")
 
@@ -54,22 +70,17 @@ def ymlInput(defaultYml, updateYml=None):
             )
 
     return cfg
+=======
+    return WorkingWithYAML().ymlInput(defaultYml, updateYml)
+>>>>>>> main
 
 
 def update_deep(d, u):
-    for k, v in u.items():
-        # this condition handles the problem
-        if not isinstance(d, Mapping):
-            d = u
-        elif isinstance(v, Mapping):
-            r = update_deep(d.get(k, {}), v)
-            d[k] = r
-        else:
-            d[k] = u[k]
 
-    return d
+    return WorkingWithYAML().update_deep(d, u)
 
 
+<<<<<<< HEAD
 def yml_read_stream(yaml_file_name):
     stream_dict = {}
     try:
@@ -81,19 +92,89 @@ def yml_read_stream(yaml_file_name):
                         stream_dict = update_deep(stream_dict, doc)
     except:
         raise Exception("Stopping Program")
-
-    return stream_dict
-
+=======
+>>>>>>> main
 
 class WorkingWithYAML:
 
-    # Analyze Yaml file
+    def __init__(self):
+        pass
+
+<<<<<<< HEAD
+class WorkingWithYAML:
+=======
+    def router(self, cfg):
+        if cfg['yml_analysis']['divide']['flag']:
+            self.divide_yaml_files(cfg)
+>>>>>>> main
+
+        return cfg
+
+    def ymlInput(self, defaultYml, updateYml=None):
+        if not is_file_valid_func(defaultYml):
+            raise Exception("Not valid file. Please check the file path.")
+
+        with open(defaultYml, "r") as ymlfile:
+            try:
+                cfg = yaml.safe_load(ymlfile)
+            except yaml.composer.ComposerError:
+                cfg = yml_read_stream(defaultYml)
+
+        if updateYml != None:
+            #  Update values file
+            try:
+                with open(updateYml, "r") as ymlfile:
+                    cfgUpdateValues = yaml.safe_load(ymlfile)
+                #  Convert to logs
+                # print(cfgUpdateValues)
+                cfg = update_deep(cfg, cfgUpdateValues)
+            except:
+                print(
+                    "Update Input file could not be loaded successfully. Running program default values"
+                )
+
+        return cfg
+        
+    def yml_read_stream(self, yaml_file_name):
+        stream_dict = {}
+        try:
+            with open(yaml_file_name, "r") as ymlfile:
+                docs = yaml.safe_load_all(ymlfile)
+                if type(docs) is types.GeneratorType:
+                    for doc in docs:
+                        if type(doc) is dict:
+                            stream_dict = update_deep(stream_dict, doc)
+        except:
+            raise Exception("Stopping Program")
+
+        return stream_dict
+
+    def update_deep(self, d, u):
+        for k, v in u.items():
+            # this condition handles the problem
+            if not isinstance(d, Mapping):
+                d = u
+            elif isinstance(v, Mapping):
+                r = update_deep(d.get(k, {}), v)
+                d[k] = r
+            else:
+                d[k] = u[k]
+
+        return d
+
+        
     def analyze_yaml_keys(self, file_name):
+        '''
+        Analyze Yaml file
+        '''
         file_name_content = ymlInput(file_name)
         print(file_name_content.keys())
 
-    # Compare 2 yaml files
     def compare_yaml_root_keys(self, file_name1, file_name2):
+        '''
+        Compare 2 yaml files
+        '''
+
         file_name1_content = ymlInput(file_name1)
         file_name2_content = ymlInput(file_name2)
         file_name1_keys = file_name1_content.keys()
@@ -104,8 +185,13 @@ class WorkingWithYAML:
             print(f"The root keys for {file_name1}: {file_name1_keys}")
             print(f"The root keys for {file_name2}: {file_name2_keys}")
 
-    # Compare 2 yaml files using DeepDiff
     def compare_yaml_files_deepdiff(self, cfg):
+<<<<<<< HEAD
+=======
+        '''
+        Compare 2 yaml files using DeepDiff
+        '''
+>>>>>>> main
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         file_name1_content = ymlInput(file_name1)
@@ -116,7 +202,13 @@ class WorkingWithYAML:
         else:
             # get file root directory
             file_directory = os.path.dirname(file_name1)
+<<<<<<< HEAD
             uniquebasename = get_common_name_from_2_filenames(file_name1, file_name2)
+=======
+            uniquebasename = get_common_name_from_2_filenames(
+                file_name1, file_name2
+            )
+>>>>>>> main
             self.save_diff_files(file_diff, file_directory, uniquebasename)
 
     def compare_yaml_file_contents_deepdiff(self, cfg):
@@ -134,7 +226,11 @@ class WorkingWithYAML:
 
         self.save_diff_files(file_diff, cfg)
 
+<<<<<<< HEAD
     def save_diff_files(self, file_diff, cfg, deepdiff_save=False):
+=======
+    def save_diff_files(self, file_diff: dict, cfg: dict, deepdiff_save: bool = False) -> None:
+>>>>>>> main
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         if file_diff == {}:  # if there is no difference
@@ -194,3 +290,47 @@ class WorkingWithYAML:
                 raise FileNotFoundError()
 
         return filename_with_lib_path
+<<<<<<< HEAD
+=======
+
+    def divide_yaml_files(self, cfg) -> None:
+        '''
+        Iterate through yml files
+        '''
+        yml_files = cfg['file_management']['input_files']['yml']
+        cfg[cfg['basename']] = {'divide': {'groups':[]}}
+        for file_name in yml_files:
+            cfg_divide = cfg['yml_analysis']['divide']
+            if cfg_divide['by'] == 'primary_key':
+                output_file_name_array = self.divide_yaml_file_by_primary_keys(cfg, file_name)
+                cfg[cfg['basename']]['divide']['groups'].append(output_file_name_array)
+            else:
+                raise Exception("No divide by method specified")
+
+    def divide_yaml_file_by_primary_keys(self, cfg, file_name) -> None:
+        '''
+        Divide yaml file by primary keys into individual yaml files and save them
+        '''
+        file_name_content = ymlInput(file_name)
+    
+
+        primary_keys = list(file_name_content.keys())
+
+        file_name_stem = Path(file_name).stem
+        result_folder = cfg['Analysis']['result_folder']
+
+        output_file_name_array = []
+        for primary_key in primary_keys:
+
+            primary_key_clean = primary_key.encode('ascii', 'ignore').decode('ascii')
+            output_file_name = f"{file_name_stem}_{primary_key_clean}.yml"
+            output_file_path = os.path.join(result_folder, output_file_name)
+
+            with open(output_file_path, "w") as f:
+                yaml.dump(file_name_content[primary_key], f, default_flow_style=False)
+                print(f"{primary_key_clean}.yml has been saved in the current file directory")
+
+            output_file_name_array.append({'data': output_file_path})
+        
+        return output_file_name_array
+>>>>>>> main

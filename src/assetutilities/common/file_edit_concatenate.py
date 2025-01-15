@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 import os
 import itertools
 import shutil
+=======
+# Standard library imports
+import itertools
+import os
+import shutil
+
+
+# Reader imports
+>>>>>>> main
 from assetutilities.common.utilities import is_file_valid_func
 
 
@@ -15,6 +25,7 @@ class FileConcatenate:
 
     def concatenate_files(self, cfg):
         if cfg["concatenate_type"] == "array":
+<<<<<<< HEAD
             self.concatenate_files_array(cfg)
         elif cfg["concatenate_type"] == "2d_array":
             self.concatenate_files_2d_array(cfg)
@@ -24,6 +35,23 @@ class FileConcatenate:
         for input_set in cfg["input"]:
             output_files = {"ext": [], "no_ext": []}
             input_file_groups = input_set["input_files"]
+=======
+            cfg, batch_filename = self.concatenate_files_array(cfg)
+        elif cfg["concatenate_type"] == "2d_array":
+            cfg, batch_filename = self.concatenate_files_2d_array(cfg)
+
+        return cfg, batch_filename
+
+    def concatenate_files_array(self, cfg):
+
+        output_filename_array = []
+        batch_filename_array = []
+        for idx in range(0, len(cfg["input"])):
+            input_set = cfg["input"][idx]
+            output_files = {"ext": [], "no_ext": []}
+            input_file_groups = input_set["input_files"]
+            input_idx_output_filename_array = []
+>>>>>>> main
             for input_file_group_indx in range(0, len(input_file_groups)):
                 input_file_group = input_file_groups[input_file_group_indx]
                 output_filename = (
@@ -31,6 +59,11 @@ class FileConcatenate:
                     + "_"
                     + input_set["input_file_labels"][input_file_group_indx]
                 )
+<<<<<<< HEAD
+=======
+                input_idx_output_filename_array.append(output_filename)
+
+>>>>>>> main
                 output_dir = input_set.get("output_dir", None)
                 if output_dir is None:
                     output_dir = cfg["Analysis"]["analysis_root_folder"]
@@ -52,9 +85,20 @@ class FileConcatenate:
                     cfg, input_file_group, output_filename_path
                 )
 
+<<<<<<< HEAD
             self.prepare_custom_batch(input_set, output_files, cfg)
 
         return cfg
+=======
+            output_filename_array.append(input_idx_output_filename_array)
+            batch_filename = self.prepare_custom_batch(cfg, input_set, idx, output_files)
+        
+        batch_filename_array.append(batch_filename)
+
+        cfg[cfg['basename']] = {"output_filename": output_filename_array, 'batch_filename': batch_filename_array}
+
+        return cfg, batch_filename
+>>>>>>> main
 
     def concatenate_one_set(self, cfg, input_files, output_filename_path):
         analysis_root_folder = cfg["Analysis"]["analysis_root_folder"]
@@ -111,6 +155,7 @@ class FileConcatenate:
 
                 cfg = self.concatenate_one_set(cfg, file_array, output_filename_path)
 
+<<<<<<< HEAD
             self.prepare_custom_batch(input_set, output_files, cfg)
 
         return cfg
@@ -120,6 +165,17 @@ class FileConcatenate:
         batch_filename = os.path.join(
             cfg["Analysis"]["analysis_root_folder"],
             cfg["Analysis"]["file_name"] + ".bat",
+=======
+            batch_filename = self.prepare_custom_batch(input_set, output_files, cfg)
+
+        return cfg, batch_filename
+
+    def prepare_custom_batch(self, cfg, input_set, idx, output_files):
+        batch_cfg = input_set.get("batch", None)
+        batch_filename = os.path.join(
+            cfg["Analysis"]["analysis_root_folder"],
+            cfg["Analysis"]["file_name"] + '_' + str(idx) + ".bat",
+>>>>>>> main
         )
         if batch_cfg is not None and batch_cfg["flag"]:
             with open(batch_filename, "w") as the_file:
@@ -133,3 +189,8 @@ class FileConcatenate:
                         the_file.write(
                             batch_cfg["content"] + " " + output_file_name + "\n"
                         )
+<<<<<<< HEAD
+=======
+
+        return batch_filename
+>>>>>>> main

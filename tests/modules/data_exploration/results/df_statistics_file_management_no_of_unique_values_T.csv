@@ -1,0 +1,7 @@
+<<<<<<< HEAD:src/assetutilities/tests/test_data/data_exploration/results/df_statistics_file_management_no_of_unique_values_T.csv
+Heading,Cx,Cy,Cz,Cnx,Cny,"Cnz,Cnzz",input_file
+=======
+Heading,Cx,Cy,Cz,Cnx,Cny,"Cnzz,Cnz",input_file
+>>>>>>> main:tests/modules/data_exploration/results/df_statistics_file_management_no_of_unique_values_T.csv
+25,24,24,24,24,24,24,test_1.csv
+25,24,24,24,24,24,24,test_2.csv

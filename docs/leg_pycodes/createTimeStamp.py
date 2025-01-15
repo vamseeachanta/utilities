@@ -4,6 +4,7 @@ Created on Thu Feb 15 17:24:37 2018
 
 @author: vamsee.achanta
 """
+import datetime
 
 def createTimeStamp(programRunIntervalTime):
     timeNow = datetime.datetime.now()
