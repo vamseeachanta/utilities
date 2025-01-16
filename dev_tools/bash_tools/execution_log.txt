@@ -1,0 +1,32 @@
+git_all_repos_daily_commit.sh: line 21: select_year_month_branch_rel_path: command not found
+git_all_repos_daily_commit.sh: line 23: cd: too many arguments
+2025-01-16 11:04:50 | git_all_repos_daily_commit.sh | Starting repository check-in routine process in /c/Users/Sk Samdan/Desktop/github/assetutilities...[0m
+2025-01-16 11:04:50 | git_all_repos_daily_commit.sh | Processing repo: 20241030-AceEngineer-Consultation[0m
+[32m2025-01-16 11:04:50 | git_all_repos_daily_commit.sh | No changes detected in 20241030-AceEngineer-Consultation ...[0m
+git_all_repos_daily_commit.sh: line 59: select_year_month_branch_script: command not found
+/c/Users/Sk Samdan/Desktop/github/assetutilities/: /c/Users/Sk Samdan/Desktop/github/assetutilities/: Is a directory
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Select year_month branch completed in 20241030-AceEngineer-Consultation ...[0m
+2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Processing repo: AquaResistivity[0m
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | No changes detected in AquaResistivity ...[0m
+git_all_repos_daily_commit.sh: line 59: select_year_month_branch_script: command not found
+/c/Users/Sk Samdan/Desktop/github/assetutilities/: /c/Users/Sk Samdan/Desktop/github/assetutilities/: Is a directory
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Select year_month branch completed in AquaResistivity ...[0m
+2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Processing repo: aceengineercode[0m
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | No changes detected in aceengineercode ...[0m
+git_all_repos_daily_commit.sh: line 59: select_year_month_branch_script: command not found
+/c/Users/Sk Samdan/Desktop/github/assetutilities/: /c/Users/Sk Samdan/Desktop/github/assetutilities/: Is a directory
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Select year_month branch completed in aceengineercode ...[0m
+2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Processing repo: assethold[0m
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | No changes detected in assethold ...[0m
+git_all_repos_daily_commit.sh: line 59: select_year_month_branch_script: command not found
+/c/Users/Sk Samdan/Desktop/github/assetutilities/: /c/Users/Sk Samdan/Desktop/github/assetutilities/: Is a directory
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Select year_month branch completed in assethold ...[0m
+2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Processing repo: assetutilities[0m
+[33m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Changes detected in repo: assetutilities[0m
+[32m2025-01-16 11:04:51 | git_all_repos_daily_commit.sh | Daily routine ... START[0m
+Starting daily git routine. key details 
+  - Repository name: Sk
+  - Repository root: C:/Users/Sk Samdan/Desktop/github/assetutilities
+  - Daily Commit message: 20250116
+Executing git operations now 
+[33m2025-01-16 11:04:52 | /c/Users/Sk Samdan/Desktop/github/assetutilities//dev_tools/bash_tools/git_daily_commit.sh | Changes detected in repo: [0m
