@@ -12,13 +12,15 @@ get_main_branch() {
 # Get the default branch name
 MAIN_BRANCH=$(get_main_branch)
 
+# Fetch latest changes from remote
+git fetch origin
+# Update the default branch
+git pull origin $MAIN_BRANCH
+
 # Store year_month_branch_name and current branch
 year_month=$(date '+%Y%m')
 year_month_branch_name=$year_month
 CURRENT_BRANCH=$(git branch --show-current)
-
-# Fetch latest changes from remote
-git fetch origin
 
 # Get all local branches except the default branch
 branches=()
@@ -29,37 +31,37 @@ for branch in "${branches[@]}"; do
     echo "Processing branch: $(basename "$branch")"
 
     # Checkout the branch
-    if git checkout "$(basename "$branch")"; then
-        # Update the default branch
-        git fetch origin "$MAIN_BRANCH":"$MAIN_BRANCH"
+    if [ ! "$MAIN_BRANCH" == "$(basename "$branch")"]; then
+        if [git checkout "$(basename "$branch")"]; then
+             # Merge default branch into current branch
+            if git merge "$MAIN_BRANCH"; then
+                # Push to origin
+                if git push origin "$branch"; then
+                    # Create pull request using GitHub CLI if installed
+                    if command -v gh &> /dev/null; then
+                        gh pr create --base "$MAIN_BRANCH" --head "$branch" --title "Merge $branch into $MAIN_BRANCH" --body "Automated PR created by maintenance script"
+                    else
+                        echo "GitHub CLI not installed. Skipping PR creation for $branch"
+                    fi
 
-        # Merge default branch into current branch
-        if git merge "$MAIN_BRANCH"; then
-            # Push to origin
-            if git push origin "$branch"; then
-                # Create pull request using GitHub CLI if installed
-                if command -v gh &> /dev/null; then
-                    gh pr create --base "$MAIN_BRANCH" --head "$branch" --title "Merge $branch into $MAIN_BRANCH" --body "Automated PR created by maintenance script"
-                else
-                    echo "GitHub CLI not installed. Skipping PR creation for $branch"
-                fi
-
-                if [ "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
-                    echo "Skipping branch deletion: $year_month_branch_name"
-                else
-                    # Delete local branch
                     git checkout "$year_month_branch_name"
-                    git branch -D "$branch"
-                    echo "Successfully processed $branch"
+                    if [ "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
+                        echo "Skipping branch deletion: $year_month_branch_name"
+                    else
+                        # Delete local branch
+                        git branch -D "$branch"
+                        echo "Cleaned stale branch: $branch"
+                    fi
+                else
+                    echo "Failed to push $branch to origin"
                 fi
             else
-                echo "Failed to push $branch to origin"
+                echo "Failed to merge $MAIN_BRANCH into $branch"
             fi
         else
-            echo "Failed to merge $MAIN_BRANCH into $branch"
-        fi
+            echo "Failed to checkout $branch"
     else
-        echo "Failed to checkout $branch"
+        echo "Skipping clean and deletion of branch : $branch"
     fi
 done
 
