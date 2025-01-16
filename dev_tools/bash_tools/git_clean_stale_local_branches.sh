@@ -28,9 +28,9 @@ eval "$(git for-each-ref --shell --format='branches+=(%(refname))' refs/heads/)"
 
 # Process each local branch
 for branch in "${branches[@]}"; do
-    if [ ! "$MAIN_BRANCH" == "$(basename "$branch")"]; then
+    if [ ! "$MAIN_BRANCH" == "$(basename "$branch")" ]; then
         # Checkout the branch
-        if [git checkout "$(basename "$branch")"]; then
+        if git checkout "$(basename "$branch")"; then
             echo "Processing branch: $(basename "$branch")"
              # Merge default branch into current branch
             if git merge "$MAIN_BRANCH"; then
@@ -44,9 +44,7 @@ for branch in "${branches[@]}"; do
                     fi
 
                     git checkout "$year_month_branch_name"
-                    if [ "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
-                        echo "Skipping branch deletion: $year_month_branch_name"
-                    else
+                    if [ ! "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
                         # Delete local branch
                         git branch -D "$branch"
                         echo "Cleaned stale branch: $branch"
