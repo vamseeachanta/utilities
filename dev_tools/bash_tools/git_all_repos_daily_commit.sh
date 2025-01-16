@@ -18,7 +18,7 @@ assetutilities_dir="${github_dir}/assetutilities"
 bash_tools_home="dev_tools/bash_tools"
 daily_commit_script_rel_path="${bash_tools_home}/git_daily_commit.sh"
 clean_stale_branches_rel_path="${bash_tools_home}/git_clean_stale_local_branches.sh"
-select_year_month_branch_rel_path = "${bash_tools_home}/git_select_year_month_branch.sh"
+select_year_month_branch_rel_path="${bash_tools_home}/git_select_year_month_branch.sh"
 
 cd ${github_dir}
 log_message "normal" "Starting repository check-in routine process in $(pwd)..."
@@ -44,7 +44,7 @@ for dir in "$github_dir"/*/ ; do
             log_message "green" "Daily routine in $(basename "$dir") ... FINISH"
 
             # loop through stale branches and create PR and delete branch
-            clean_stale_branches_script = "${dir}/${clean_stale_branches_rel_path}"
+            clean_stale_branches_script="${dir}/${clean_stale_branches_rel_path}"
             if [ ! -f "$clean_stale_branches_script" ]; then
                 clean_stale_branches_script="${assetutilities_dir}/${clean_stale_branches_rel_path}"
             fi
@@ -56,7 +56,7 @@ for dir in "$github_dir"/*/ ; do
         fi
 
         # select_year_month_branch
-        select_year_month_branch_script = "${dir}/${select_year_month_branch_rel_path}"
+        select_year_month_branch_script="${dir}/${select_year_month_branch_rel_path}"
         if [ ! -f "$select_year_month_branch_script" ]; then
             select_year_month_branch_script="${assetutilities_dir}/${select_year_month_branch_rel_path}"
         fi
