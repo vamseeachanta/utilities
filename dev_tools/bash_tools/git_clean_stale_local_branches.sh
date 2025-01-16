@@ -28,11 +28,10 @@ eval "$(git for-each-ref --shell --format='branches+=(%(refname))' refs/heads/)"
 
 # Process each local branch
 for branch in "${branches[@]}"; do
-    echo "Processing branch: $(basename "$branch")"
-
-    # Checkout the branch
     if [ ! "$MAIN_BRANCH" == "$(basename "$branch")"]; then
+        # Checkout the branch
         if [git checkout "$(basename "$branch")"]; then
+            echo "Processing branch: $(basename "$branch")"
              # Merge default branch into current branch
             if git merge "$MAIN_BRANCH"; then
                 # Push to origin
@@ -60,6 +59,7 @@ for branch in "${branches[@]}"; do
             fi
         else
             echo "Failed to checkout $branch"
+        fi
     else
         echo "Skipping clean and deletion of branch : $branch"
     fi
