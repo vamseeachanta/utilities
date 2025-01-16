@@ -53,3 +53,41 @@ Starting daily git routine. key details
 Executing git operations now 
 [33m2025-01-16 11:14:33 | /c/Users/Sk Samdan/Desktop/github/assetutilities//dev_tools/bash_tools/git_daily_commit.sh | Changes detected in repo: [0m
 Already up to date.
+warning: in the working copy of 'dev_tools/bash_tools/execution_log.txt', LF will be replaced by CRLF the next time Git touches it
+[202501 b08b4a5] 20250116
+ 2 files changed, 52 insertions(+), 29 deletions(-)
+To https://github.com/vamseeachanta/assetutilities.git
+   be3c8d6..b08b4a5  202501 -> 202501
+[32m2025-01-16 11:14:37 | /c/Users/Sk Samdan/Desktop/github/assetutilities//dev_tools/bash_tools/git_daily_commit.sh | Repo : Sk : Daily git operations completed[0m
+[32m2025-01-16 11:14:37 | git_all_repos_daily_commit.sh | Daily routine in assetutilities ... FINISH[0m
+From https://github.com/vamseeachanta/assetutilities
+ * branch            main       -> FETCH_HEAD
+Already up to date.
+error: Your local changes to the following files would be overwritten by checkout:
+	dev_tools/bash_tools/execution_log.txt
+Please commit your changes or stash them before you switch branches.
+Aborting
+Failed to checkout refs/heads/2024
+M	dev_tools/bash_tools/execution_log.txt
+Your branch is up to date with 'origin/202501'.
+Already on '202501'
+Processing branch: 202501
+Already up to date.
+Everything up-to-date
+Warning: 1 uncommitted change
+pull request create failed: GraphQL: A pull request already exists for vamseeachanta:202501. (createPullRequest)
+M	dev_tools/bash_tools/execution_log.txt
+Your branch is up to date with 'origin/202501'.
+Already on '202501'
+Skipping clean and deletion of branch : refs/heads/main
+M	dev_tools/bash_tools/execution_log.txt
+Your branch is up to date with 'origin/202501'.
+Already on '202501'
+Branch maintenance complete!
+[32m2025-01-16 11:14:43 | git_all_repos_daily_commit.sh | Clean stale branches completed in assetutilities ...[0m
+Starting daily git routine. key details 
+  - Repository name: Sk
+  - Repository root: C:/Users/Sk Samdan/Desktop/github/assetutilities
+  - Daily Commit message: 20250116
+Executing git operations now 
+[33m2025-01-16 11:14:44 | /c/Users/Sk Samdan/Desktop/github/assetutilities//dev_tools/bash_tools/git_select_year_month_branch.sh | Changes detected in repo: [0m
