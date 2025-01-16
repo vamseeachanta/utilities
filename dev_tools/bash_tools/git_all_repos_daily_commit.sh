@@ -56,7 +56,7 @@ for dir in "$github_dir"/*/ ; do
         fi
 
         # select_year_month_branch
-        select_year_month_branch_script="${dir}/${select_year_month_branch_rel_path}"
+        select_year_month_branch_script = "${dir}/${select_year_month_branch_rel_path}"
         if [ ! -f "$select_year_month_branch_script" ]; then
             select_year_month_branch_script="${assetutilities_dir}/${select_year_month_branch_rel_path}"
         fi
