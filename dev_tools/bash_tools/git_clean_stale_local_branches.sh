@@ -15,24 +15,23 @@ MAIN_BRANCH=$(get_main_branch)
 # Fetch latest changes from remote
 git fetch origin
 # Update the default branch
-git pull origin $MAIN_BRANCH
+git pull origin "$MAIN_BRANCH"
 
-# Store year_month_branch_name and current branch
-year_month=$(date '+%Y%m')
-year_month_branch_name=$year_month
+# Store the current branch
 CURRENT_BRANCH=$(git branch --show-current)
 
 # Get all local branches except the default branch
 branches=()
-eval "$(git for-each-ref --shell --format='branches+=(%(refname))' refs/heads/)"
+eval "$(git for-each-ref --shell --format='branches+=(%(refname:short))' refs/heads/)"
 
 # Process each local branch
 for branch in "${branches[@]}"; do
-    if [ ! "$MAIN_BRANCH" == "$(basename "$branch")" ]; then
+    # Skip the default branch and the current working branch
+    if [[ "$branch" != "$MAIN_BRANCH" && "$branch" != "$CURRENT_BRANCH" ]]; then
         # Checkout the branch
-        if git checkout "$(basename "$branch")"; then
-            echo "Processing branch: $(basename "$branch")"
-             # Merge default branch into current branch
+        if git checkout "$branch"; then
+            echo "Processing branch: $branch"
+            # Merge default branch into current branch
             if git merge "$MAIN_BRANCH"; then
                 # Push to origin
                 if git push origin "$branch"; then
@@ -43,12 +42,11 @@ for branch in "${branches[@]}"; do
                         echo "GitHub CLI not installed. Skipping PR creation for $branch"
                     fi
 
-                    git checkout "$year_month_branch_name"
-                    if [ ! "$CURRENT_BRANCH" == "$year_month_branch_name" ]; then
-                        # Delete local branch
-                        git branch -D "$branch"
-                        echo "Cleaned stale branch: $branch"
-                    fi
+                    # Switch to the default branch before deleting
+                    git checkout "$MAIN_BRANCH"
+                    # Delete the stale branch locally
+                    git branch -D "$branch"
+                    echo "Cleaned stale branch: $branch"
                 else
                     echo "Failed to push $branch to origin"
                 fi
@@ -59,11 +57,11 @@ for branch in "${branches[@]}"; do
             echo "Failed to checkout $branch"
         fi
     else
-        echo "Skipping clean and deletion of branch : $branch"
+        echo "Skipping clean and deletion of branch: $branch"
     fi
 done
 
-# Return to original branch
+# Return to the original branch
 git checkout "$CURRENT_BRANCH"
 
 echo "Branch maintenance complete!"
