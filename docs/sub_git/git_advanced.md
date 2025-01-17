@@ -9,6 +9,8 @@ Git is a Verson control tool
 Other history using flog
 ![alt text](image-1.png)
 
+<<<<<<< HEAD
+=======
 ### Pull Request
 
 Prior to pull request, make sure the branch is up to date with the master branch. The key steps in VS Code are below
@@ -26,6 +28,7 @@ Prior to pull request, make sure the branch is up to date with the master branch
 <https://phoenixnap.com/kb/git-merge-master-into-branch>
 <https://www.git-tower.com/learn/git/faq/git-pull-origin-master>
 
+>>>>>>> main
 ## Rebase
 
 - Manipulate commmits message

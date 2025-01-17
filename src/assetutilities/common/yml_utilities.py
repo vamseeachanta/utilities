@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 # Standard library imports
+>>>>>>> main
 import importlib.util
 import os
 import pkgutil
@@ -6,17 +9,30 @@ import types
 from collections.abc import Mapping
 from pathlib import Path
 
+<<<<<<< HEAD
+import yaml
+from deepdiff import DeepDiff
+
+=======
 # Third party imports
 import yaml
 from deepdiff import DeepDiff
 
 # Reader imports
+>>>>>>> main
 from assetutilities.common.data import ReadData
 from assetutilities.common.saveData import saveDataYaml
 from assetutilities.common.utilities import (
     get_common_name_from_2_filenames,
     is_file_valid_func,
 )
+<<<<<<< HEAD
+from assetutilities.common.utilities import (
+    get_common_name_from_2_filenames,
+    is_file_valid_func,
+)
+=======
+>>>>>>> main
 
 read_data = ReadData()
 
@@ -30,7 +46,33 @@ yaml.add_representer(type(None), represent_none)
 
 def ymlInput(defaultYml, updateYml=None):
 
+<<<<<<< HEAD
+    if not is_file_valid_func(defaultYml):
+        raise Exception("Not valid file. Please check the file path.")
+
+    with open(defaultYml, "r") as ymlfile:
+        try:
+            cfg = yaml.safe_load(ymlfile)
+        except yaml.composer.ComposerError:
+            cfg = yml_read_stream(defaultYml)
+
+    if updateYml != None:
+        #  Update values file
+        try:
+            with open(updateYml, "r") as ymlfile:
+                cfgUpdateValues = yaml.safe_load(ymlfile)
+            #  Convert to logs
+            # print(cfgUpdateValues)
+            cfg = update_deep(cfg, cfgUpdateValues)
+        except:
+            print(
+                "Update Input file could not be loaded successfully. Running program default values"
+            )
+
+    return cfg
+=======
     return WorkingWithYAML().ymlInput(defaultYml, updateYml)
+>>>>>>> main
 
 
 def update_deep(d, u):
@@ -38,15 +80,33 @@ def update_deep(d, u):
     return WorkingWithYAML().update_deep(d, u)
 
 
+<<<<<<< HEAD
+def yml_read_stream(yaml_file_name):
+    stream_dict = {}
+    try:
+        with open(yaml_file_name, "r") as ymlfile:
+            docs = yaml.safe_load_all(ymlfile)
+            if type(docs) is types.GeneratorType:
+                for doc in docs:
+                    if type(doc) is dict:
+                        stream_dict = update_deep(stream_dict, doc)
+    except:
+        raise Exception("Stopping Program")
+=======
+>>>>>>> main
 
 class WorkingWithYAML:
 
     def __init__(self):
         pass
 
+<<<<<<< HEAD
+class WorkingWithYAML:
+=======
     def router(self, cfg):
         if cfg['yml_analysis']['divide']['flag']:
             self.divide_yaml_files(cfg)
+>>>>>>> main
 
         return cfg
 
@@ -126,9 +186,12 @@ class WorkingWithYAML:
             print(f"The root keys for {file_name2}: {file_name2_keys}")
 
     def compare_yaml_files_deepdiff(self, cfg):
+<<<<<<< HEAD
+=======
         '''
         Compare 2 yaml files using DeepDiff
         '''
+>>>>>>> main
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         file_name1_content = ymlInput(file_name1)
@@ -139,9 +202,13 @@ class WorkingWithYAML:
         else:
             # get file root directory
             file_directory = os.path.dirname(file_name1)
+<<<<<<< HEAD
+            uniquebasename = get_common_name_from_2_filenames(file_name1, file_name2)
+=======
             uniquebasename = get_common_name_from_2_filenames(
                 file_name1, file_name2
             )
+>>>>>>> main
             self.save_diff_files(file_diff, file_directory, uniquebasename)
 
     def compare_yaml_file_contents_deepdiff(self, cfg):
@@ -159,7 +226,11 @@ class WorkingWithYAML:
 
         self.save_diff_files(file_diff, cfg)
 
+<<<<<<< HEAD
+    def save_diff_files(self, file_diff, cfg, deepdiff_save=False):
+=======
     def save_diff_files(self, file_diff: dict, cfg: dict, deepdiff_save: bool = False) -> None:
+>>>>>>> main
         file_name1 = cfg["file_name1"]
         file_name2 = cfg["file_name2"]
         if file_diff == {}:  # if there is no difference
@@ -219,6 +290,8 @@ class WorkingWithYAML:
                 raise FileNotFoundError()
 
         return filename_with_lib_path
+<<<<<<< HEAD
+=======
 
     def divide_yaml_files(self, cfg) -> None:
         '''
@@ -260,3 +333,4 @@ class WorkingWithYAML:
             output_file_name_array.append({'data': output_file_path})
         
         return output_file_name_array
+>>>>>>> main

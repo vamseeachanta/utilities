@@ -2,6 +2,13 @@
 
 API tools to get data from websites. Web Scraping etc.
 
+<<<<<<< HEAD
+https://realpython.com/python-api/
+
+### Web Scrapping
+
+## Introduction
+=======
 <https://realpython.com/python-api/>
 
 ### Web Scrapping
@@ -121,6 +128,7 @@ These recommendations are based on their popularity, community support, and endo
 ## References
 
 https://www.youtube.com/watch?app=desktop&v=jTKL2qTw2Rc - best reference for scrapy implementation
+>>>>>>> main
 
 <https://www.digitalocean.com/community/tutorials/how-to-work-with-web-data-using-requests-and-beautiful-soup-with-python-3>
 
@@ -128,4 +136,7 @@ https://www.youtube.com/watch?app=desktop&v=jTKL2qTw2Rc - best reference for scr
 
 <https://youtu.be/lOzyQgv71_4> Tech With Tim
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main

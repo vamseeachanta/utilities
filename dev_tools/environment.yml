@@ -6,6 +6,53 @@ dependencies:
   - python=3.11
   - pip
   - pip:
+<<<<<<< HEAD
+      - assetutilities
+
+      - build
+      - twine
+      - bumpver
+
+      - pyyaml
+      - numpy
+      - pandas
+      - plotly
+      - matplotlib
+      - chardet
+      - python-certifi-win32
+
+      - webcolors
+      - xlsxwriter
+      - plantuml
+      - pytest
+      - deepdiff
+
+      - pandoc
+      - wkhtmltopdf
+      - python-docx
+
+      - excel2img
+
+      - black
+      - isort
+      - poetry
+      - gitpython==3.1.31
+
+
+      # - openpyxl
+      # - openpyxl-image-loader
+
+      # - imp
+      # - git
+      # - popplerqt5 Only available in linux systems
+      # - pdfannots
+      # - fitz
+      # - camelot
+      # - tabula
+      # - GitPython
+      # - PyPDF2
+=======
       - -r requirements.txt  # source pip specific requirements 
 #       - -r dev_tools/requirements.txt  # source pip specific requirements 
 
+>>>>>>> main

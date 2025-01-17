@@ -65,12 +65,16 @@ note Bottom
         2/ When user licensed software is going to be unused for more than 1 hour duration
         3/ Should not keep open to just block/hoard license unless there is an urgency.
 
+<<<<<<< HEAD
+        PS: Best solution is to have a shared common user/password to login and logout.
+=======
         **Best solution** : Shared username (eg: orcaflex, ansys etc.)/password pair to login and logout.
            **Full Transperency and Trust** and **No confidentiality** 
         Example solution providers:
         - tightVPN (free)
         - splashtop (USD 10/mo/user)
         - TeamViewer (USD 25/mo for 3 devices), etc.
+>>>>>>> main
 end note
 
 

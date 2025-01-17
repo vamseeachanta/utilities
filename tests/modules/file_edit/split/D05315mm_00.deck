@@ -2,9 +2,16 @@
 *********************************** DECK  0 ************************************
 ********************************************************************************
 JOB AQWA  LINE        da5ede6fd0eeab2a4d427ff2859e81d9eab3f9fc
+<<<<<<< HEAD:src/assetutilities/tests/test_data/file_edit/split/D05315mm_00.deck
+TITLE
+NUM_CORES        12
+OPTIONS GOON
+OPTIONS
+=======
 TITLE               
 NUM_CORES        12
 OPTIONS GOON 
 OPTIONS 
+>>>>>>> main:tests/modules/file_edit/split/D05315mm_00.deck
 OPTIONS LHFR SFBM MQTF REST END
 RESTART  1  5

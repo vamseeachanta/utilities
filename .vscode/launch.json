@@ -12,6 +12,8 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "timeout": 30
+<<<<<<< HEAD
+=======
         },
         {
             "name": "assetUtilities - file_edit_split",
@@ -89,6 +91,7 @@
             ],
             "console": "integratedTerminal",
             "justMyCode": true
+>>>>>>> main
         }
     ]
 }

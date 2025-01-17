@@ -6,27 +6,44 @@ import sys
 # Reader imports
 from assetutilities.common.ApplicationManager import ConfigureApplicationInputs
 from assetutilities.common.data import SaveData
+<<<<<<< HEAD
+from assetutilities.common.data_exploration import DataExploration
+=======
 from assetutilities.common.download_data.dwnld_from_zipurl import DownloadDataFromURL
+>>>>>>> main
 from assetutilities.common.file_edit import FileEdit
 from assetutilities.common.file_management import FileManagement
 from assetutilities.common.text_analytics import TextAnalytics
 from assetutilities.common.update_deep import AttributeDict
 from assetutilities.common.utilities import save_application_cfg
 from assetutilities.common.visualization_components import VisualizationComponents
+<<<<<<< HEAD
+from assetutilities.common.yml_utilities import ymlInput
+from assetutilities.tools.pdf.edit_pdf import EditPDF
+from assetutilities.tools.pdf.read_pdf import ReadPDF
+=======
 from assetutilities.common.webscraping.web_scraping import WebScraping
 from assetutilities.common.yml_utilities import WorkingWithYAML
 from assetutilities.modules.data_exploration.data_exploration import DataExploration
 from assetutilities.modules.zip_utilities.zip_utilities import ZipUtilities
+>>>>>>> main
 
 library_name = "assetutilities"
 
 de = DataExploration()
 fm = FileManagement()
 save_data = SaveData()
+<<<<<<< HEAD
+
+
+def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) -> dict:
+    fm = FileManagement()
+=======
 wwyaml = WorkingWithYAML()
 
 
 def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) -> dict:
+>>>>>>> main
     if cfg is None:
         inputfile = validate_arguments_run_methods(inputfile)
         cfg = wwyaml.ymlInput(inputfile, updateYml=None)
@@ -39,7 +56,10 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     application_manager.configure(cfg, library_name)
 
     if config_flag:
+<<<<<<< HEAD
+=======
         fm = FileManagement()
+>>>>>>> main
         cfg_base = application_manager.cfg
         cfg_base = fm.router(cfg_base)
     else:
@@ -55,18 +75,30 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif basename in ["visualization"]:
         viz_comp = VisualizationComponents()
         viz_comp.visualization_router(cfg_base)
+<<<<<<< HEAD
+    elif basename in ["read_pdf"]:
+        read_pdf = ReadPDF()
+        read_pdf.read_pdf(cfg_base)
+=======
     # elif basename in ["read_pdf"]:
     #     read_pdf = ReadPDF()
     #     read_pdf.read_pdf(cfg_base)
+>>>>>>> main
     elif basename in ["file_management"]:
         fm = FileManagement()
         fm.router(cfg_base)
     elif basename in ["file_edit"]:
         fe = FileEdit()
         fe.router(cfg_base)
+<<<<<<< HEAD
+    elif basename in ["edit_pdf"]:
+        edit_pdf = EditPDF()
+        edit_pdf.edit_pdf(cfg_base)
+=======
     # elif basename in ["edit_pdf"]:
     #     edit_pdf = EditPDF()
     #     edit_pdf.edit_pdf(cfg_base)
+>>>>>>> main
     elif basename in ["gitpython"]:
         # Reader imports
         from assetutilities.tools.git.git_python_utilities import GitPythonUtilities
@@ -78,12 +110,18 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
     elif basename in ["word_utilities"]:
         # Reader imports
         from assetutilities.common.word_utilities import WordUtilities
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> main
         wu = WordUtilities()
         wu.router(cfg_base)
     elif cfg["basename"] == "data_exploration":
         cfg_base = de.router(cfg_base)
 
+<<<<<<< HEAD
+=======
     elif cfg["basename"] == "web_scraping":
         ws = WebScraping()
         cfg_base = ws.router(cfg_base)
@@ -103,6 +141,7 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
         zu = ZipUtilities()
         cfg_base = zu.router(cfg_base)
 
+>>>>>>> main
     else:
         raise (Exception(f"Analysis for basename: {basename} not found. ... FAIL"))
 
@@ -110,7 +149,10 @@ def engine(inputfile: str = None, cfg: dict = None, config_flag: bool = True) ->
         save_application_cfg(cfg_base=cfg_base)
 
     logging.info(f"{basename}, application ... END")
+<<<<<<< HEAD
+=======
     save_cfg(cfg_base=cfg_base)
+>>>>>>> main
 
     return cfg_base
 
@@ -144,9 +186,16 @@ def validate_arguments_run_methods(inputfile):
 
 
 def save_cfg(cfg_base):
+<<<<<<< HEAD
+    output_dir = cfg_base.Analysis["result_folder"]
+
+    filename = cfg_base.Analysis["file_name"]
+    filename_path = os.path.join(output_dir, filename)
+=======
     output_dir = cfg_base.Analysis["analysis_root_folder"]
 
     filename = cfg_base.Analysis["file_name"]
     filename_path = os.path.join(output_dir, "results", filename)
+>>>>>>> main
 
     save_data.saveDataYaml(cfg_base, filename_path, default_flow_style=False)

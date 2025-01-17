@@ -43,6 +43,27 @@ def is_dir_valid_func(dir, analysis_root_folder=None):
 
 
 # Determine if file is valid
+def is_dir_valid_func(dir, analysis_root_folder=None):
+    dir_is_valid = True
+    if not os.path.isdir(dir):
+        file_name_cwd = os.path.join(os.getcwd(), dir)
+        if os.path.isdir(file_name_cwd):
+            dir = file_name_cwd
+        elif analysis_root_folder is not None:
+            file_name_analysis_root = os.path.join(analysis_root_folder, dir)
+            if os.path.isdir(file_name_analysis_root):
+                dir = file_name_analysis_root
+            else:
+                dir_is_valid = False
+                logging.error(f"File not found: {dir}")
+        else:
+            dir_is_valid = False
+            logging.error(f"File not found: {dir}")
+
+    return dir_is_valid, dir
+
+
+# Determine if file is valid
 def is_file_valid_func(file_name, analysis_root_folder=None):
     file_is_valid = True
     if not os.path.isfile(file_name):

@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
+    "python.formatting.provider": "yapf"
+=======
     "python.formatting.provider": "yapf",
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "python.defaultInterpreterPath": "C:\\Users\\sivak\\.conda\\envs\\assetutilities\\python.exe"
+>>>>>>> main
 }
