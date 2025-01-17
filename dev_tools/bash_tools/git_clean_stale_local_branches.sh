@@ -57,7 +57,14 @@ for branch in "${branches[@]}"; do
             echo "Failed to checkout $branch"
         fi
     else
-        echo "Skipping clean and deletion of branch: $branch"
+        # Improved message for non-stale branches
+        if [[ "$branch" == "$MAIN_BRANCH" ]]; then
+            echo "Branch '$branch' is the default branch. It is not considered stale."
+        elif [[ "$branch" == "$CURRENT_BRANCH" ]]; then
+            echo "Branch '$branch' is the currently active branch. It is not considered stale."
+        else
+            echo "Branch '$branch' is not stale. No cleanup required."
+        fi
     fi
 done
 
